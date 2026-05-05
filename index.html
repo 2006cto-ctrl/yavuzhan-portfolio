@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yavuzhan Önder — Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.075), transparent 32%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.045), transparent 28%),
+        linear-gradient(rgba(18, 18, 18, 0.70), rgba(10, 10, 10, 0.88)),
+        url('images/site-background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #f5f5f2;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: #f2f2f2;
+      color: #0d0d0d;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.045;
+      z-index: 999;
+      background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px);
+      background-size: 4px 4px;
+    }
+
+    .lang-tr {
+      display: none;
+    }
+
+    #language-tr:checked ~ .site .lang-en {
+      display: none;
+    }
+
+    #language-tr:checked ~ .site .lang-tr {
+      display: inline;
+    }
+
+    #language-tr:checked ~ .site p.lang-tr,
+    #language-tr:checked ~ .site h2.lang-tr,
+    #language-tr:checked ~ .site h3.lang-tr,
+    #language-tr:checked ~ .site span.lang-tr {
+      display: block;
+    }
+
+    #language-tr:checked ~ .site .nav-links .lang-tr,
+    #language-tr:checked ~ .site .button.lang-tr,
+    #language-tr:checked ~ .site .skill.lang-tr {
+      display: inline-flex;
+    }
+
+    #language-en:checked ~ .site .language-switch label[for="language-en"],
+    #language-tr:checked ~ .site .language-switch label[for="language-tr"] {
+      background: #f2f2f2;
+      color: #0d0d0d;
+    }
+
+    .site {
+      min-height: 100vh;
+      background: rgba(12, 12, 12, 0.34);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 15, 15, 0.72);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .logo {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      color: #b7b7b7;
+    }
+
+    .nav-links a {
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .language-switch {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      height: 36px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .language-switch label {
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+      background: transparent;
+      color: #bdbdb7;
+      font: inherit;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 180ms ease, color 180ms ease;
+      user-select: none;
+    }
+
+    .language-switch label:last-child {
+      border-right: 0;
+    }
+
+    .language-switch label:hover {
+      background: #f2f2f2;
+      color: #0d0d0d;
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      align-items: end;
+      gap: 40px;
+      padding: 92px 0 70px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .eyebrow {
+      color: #9b9b9b;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 12px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(58px, 11vw, 150px);
+      line-height: 0.88;
+      letter-spacing: -0.08em;
+      text-transform: uppercase;
+      max-width: 980px;
+      animation: rise 800ms ease both;
+    }
+
+    .hero-name-line {
+      display: block;
+    }
+
+    .hero-name-last {
+      display: block;
+      margin-top: 0.08em;
+    }
+
+    .hero-side {
+      align-self: end;
+      border-left: 1px solid #333333;
+      padding-left: 28px;
+      color: #cfcfcf;
+      animation: fade 900ms ease 180ms both;
+    }
+
+    .hero-side p {
+      max-width: 360px;
+      margin-bottom: 26px;
+      font-size: 15px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+      border-radius: 14px;
+    }
+
+    .button:hover {
+      background: #f2f2f2;
+      color: #0d0d0d;
+      transform: translateY(-2px);
+    }
+
+    .button.secondary {
+      border-color: #3a3a3a;
+      color: #cfcfcf;
+    }
+
+    .button.secondary:hover {
+      border-color: #f2f2f2;
+      color: #0d0d0d;
+    }
+
+    .button.lang-tr,
+    .skill.lang-tr {
+      display: none;
+    }
+
+    #language-tr:checked ~ .site .button.lang-en,
+    #language-tr:checked ~ .site .skill.lang-en {
+      display: none;
+    }
+
+    #language-tr:checked ~ .site .button.lang-tr,
+    #language-tr:checked ~ .site .skill.lang-tr {
+      display: inline-flex;
+    }
+
+    section {
+      padding: 92px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 40px;
+      margin-bottom: 42px;
+    }
+
+    .section-label {
+      color: #9b9b9b;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(30px, 5vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+      max-width: 760px;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .work-card {
+      min-height: 270px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 220ms ease, border-color 220ms ease, background 220ms ease, box-shadow 220ms ease;
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .work-card.has-background {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .work-card.has-background::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image: var(--card-bg);
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .work-card.has-background::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: rgba(0, 0, 0, 0.58);
+      opacity: 0;
+      transition: opacity 220ms ease;
+    }
+
+    .work-card.has-background:hover::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .work-card.has-background:hover::after {
+      opacity: 1;
+    }
+
+    .work-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.30);
+    }
+
+    .work-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      color: #9b9b9b;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .work-card h3 {
+      font-size: clamp(26px, 3vw, 42px);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .work-card p {
+      color: #bdbdbd;
+      max-width: 520px;
+      font-size: 14px;
+    }
+
+    .work-card-link {
+      display: flex;
+      min-height: 270px;
+      color: inherit;
+    }
+
+    .work-card-link .work-card {
+      width: 100%;
+    }
+
+    .work-open {
+      color: #8c8c8c;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 18px;
+      transition: color 180ms ease;
+    }
+
+    .work-card:hover .work-open {
+      color: #f2f2f2;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: none;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(8px);
+      overflow: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .modal::-webkit-scrollbar {
+      display: none;
+    }
+
+    .modal:target {
+      display: block;
+    }
+
+    .modal-window {
+      width: min(980px, 100%);
+      margin: 48px auto;
+      overflow: visible;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(16, 16, 16, 0.92);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.40);
+      border-radius: 22px;
+    }
+
+    .modal-bar {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      min-height: 54px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 0 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(16, 16, 16, 0.96);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+      color: #d5d5d0;
+      border-top-left-radius: 22px;
+      border-top-right-radius: 22px;
+    }
+
+    .modal-close {
+      min-width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #f2f2f2;
+      transition: background 180ms ease, color 180ms ease;
+      border-radius: 12px;
+    }
+
+    .modal-close:hover {
+      background: #f2f2f2;
+      color: #0d0d0d;
+    }
+
+    .modal-body {
+      padding: 28px;
+    }
+
+    .modal-head {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .modal-info,
+    .modal-description {
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      background: rgba(255, 255, 255, 0.045);
+      padding: 22px;
+      border-radius: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-info ul {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      color: #bdbdbd;
+      font-size: 14px;
+    }
+
+    .modal-info strong {
+      display: block;
+      color: #8c8c8c;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .modal-description h2 {
+      font-size: clamp(30px, 5vw, 62px);
+      line-height: 0.92;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .modal-description p {
+      color: #d0d0d0;
+      font-size: 16px;
+      max-width: 620px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-placeholder {
+      min-height: 230px;
+      border: 0;
+      display: grid;
+      place-items: center;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 18px;
+    }
+
+    .image-slot {
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+      border: 0;
+      color: transparent;
+      text-shadow: none;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.12)),
+        var(--slot-bg),
+        rgba(255, 255, 255, 0.03);
+      background-size: cover;
+      background-position: center;
+      transition: transform 200ms ease, filter 200ms ease, box-shadow 200ms ease;
+      cursor: zoom-in;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .image-slot:hover {
+      transform: translateY(-4px);
+      filter: brightness(1.06);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.26);
+    }
+
+    .image-slot::before {
+      content: "";
+      position: fixed;
+      inset: 50% auto auto 50%;
+      width: min(88vw, 1280px);
+      height: min(78vh, 860px);
+      transform: translate(-50%, -50%) scale(0.96);
+      z-index: 900;
+      pointer-events: none;
+      opacity: 0;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
+        var(--slot-bg);
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #050505;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.74);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .image-slot:hover::before {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .image-slot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .image-slot {
+      text-shadow: none;
+    }
+
+    .image-slot::before,
+    .image-slot:hover::before {
+      display: none;
+    }
+
+    .image-link {
+      display: block;
+      color: inherit;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: none;
+      place-items: center;
+      padding: 28px;
+      background: rgba(0, 0, 0, 0.86);
+      backdrop-filter: blur(14px);
+      cursor: zoom-out;
+    }
+
+    .image-lightbox:target {
+      display: grid;
+    }
+
+    .image-lightbox img {
+      max-width: min(96vw, 1800px);
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: #050505;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.78);
+    }
+
+    .image-lightbox span {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #f2f2f2;
+      background: rgba(13, 13, 13, 0.72);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .meta {
+      color: #7e7e7e;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 18px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .about-text {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      min-height: 260px;
+      border-radius: 18px;
+    }
+
+    .about-text p {
+      color: #d0d0d0;
+      font-size: clamp(18px, 2vw, 26px);
+      line-height: 1.25;
+      letter-spacing: -0.035em;
+    }
+
+    .info-panel {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 20px;
+      padding: 16px 0;
+      border-bottom: 1px solid #252525;
+      font-size: 14px;
+    }
+
+    .info-row:first-child {
+      padding-top: 0;
+    }
+
+    .info-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .info-row span:first-child {
+      color: #8c8c8c;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill {
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 12px 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-size: 12px;
+      color: #ecece8;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      border-radius: 14px;
+    }
+
+    .contact-box {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .contact-main {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 32px;
+      min-height: 230px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+    }
+
+    .contact-main h2 {
+      font-size: clamp(38px, 6vw, 82px);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .contact-main p {
+      color: #bdbdbd;
+      max-width: 520px;
+    }
+
+    .contact-links {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.025);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .contact-links a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px;
+      border-bottom: 1px solid #252525;
+      color: #d8d8d8;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 12px;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .contact-links a:last-child {
+      border-bottom: 0;
+    }
+
+    .contact-links a:hover {
+      background: #f2f2f2;
+      color: #0d0d0d;
+    }
+
+    footer {
+      padding: 32px 0;
+      color: #777777;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .test-notes {
+      display: none;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .nav {
+        height: auto;
+        min-height: 68px;
+        gap: 18px;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding: 16px 0;
+      }
+
+      .nav-right {
+        width: 100%;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .nav-links {
+        gap: 16px;
+        flex-wrap: wrap;
+        font-size: 11px;
+      }
+
+      .hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        padding: 76px 0 54px;
+      }
+
+      .hero-side {
+        border-left: 0;
+        border-top: 1px solid #333333;
+        padding-left: 0;
+        padding-top: 24px;
+      }
+
+      section {
+        padding: 68px 0;
+      }
+
+      .section-head,
+      .about-grid,
+      .contact-box {
+        grid-template-columns: 1fr;
+      }
+
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .work-card,
+      .work-card-link {
+        min-height: 230px;
+      }
+
+      .modal {
+        padding: 12px;
+      }
+
+      .modal-window {
+        margin: 24px auto;
+      }
+
+      .modal-head,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-body {
+        padding: 16px;
+      }
+
+      .info-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <input id="language-en" name="language" type="radio" checked />
+  <input id="language-tr" name="language" type="radio" />
+
+  <div class="site">
+    <div class="noise"></div>
+
+    <header>
+      <nav class="page nav">
+        <a href="#top" class="logo">Yavuzhan Önder</a>
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="#work"><span class="lang-en">Work</span><span class="lang-tr">Projeler</span></a>
+            <a href="#about"><span class="lang-en">About</span><span class="lang-tr">Hakkımda</span></a>
+            <a href="#skills"><span class="lang-en">Skills</span><span class="lang-tr">Yetenekler</span></a>
+            <a href="#contact"><span class="lang-en">Contact</span><span class="lang-tr">İletişim</span></a>
+          </div>
+
+          <div class="language-switch" aria-label="Language selector">
+            <label for="language-en">EN</label>
+            <label for="language-tr">TR</label>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top" class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow"><span class="lang-en">Portfolio / 2026</span><span class="lang-tr">Portfolyo / 2026</span></p>
+          <h1><span class="hero-name-line">Yavuzhan</span><span class="hero-name-last">Önder</span></h1>
+        </div>
+
+        <aside class="hero-side">
+          <p class="lang-en">3D artist and animation student focused on stylized environments, props, materials and clean visual systems.</p>
+          <p class="lang-tr">Stilize çevreler, proplar, materyaller ve temiz görsel sistemler üzerine çalışan 3D artist ve animasyon öğrencisi.</p>
+          <div class="button-row">
+            <a class="button lang-en" href="#work">View Work</a>
+            <a class="button lang-tr" href="#work">Projeleri Gör</a>
+            <a class="button secondary lang-en" href="#contact">Contact</a>
+            <a class="button secondary lang-tr" href="#contact">İletişim</a>
+          </div>
+        </aside>
+      </section>
+
+      <section id="work">
+        <div class="section-head">
+          <p class="section-label"><span class="lang-en">Selected Works</span><span class="lang-tr">Seçili Projeler</span></p>
+          <h2 class="section-title lang-en">3D, 2D, visual design and pencil drawing works.</h2>
+          <h2 class="section-title lang-tr">3D, 2D, görsel tasarım ve kara kalem çalışmaları.</h2>
+        </div>
+
+        <div class="works-grid">
+          <a class="work-card-link" href="#props-modal">
+            <article class="work-card has-background" style="--card-bg: url('images/props-cover.jpg');">
+              <div class="work-top">
+                <span>01</span>
+                <span>2026</span>
+              </div>
+              <div>
+                <h3 class="lang-en">Prop Collection</h3>
+                <h3 class="lang-tr">Prop Koleksiyonu</h3>
+                <p class="lang-en">A set of props designed with simple silhouettes, clean forms and clear functionality.</p>
+                <p class="lang-tr">Sade silüetler, temiz formlar ve net işlev üzerine tasarlanmış prop koleksiyonu.</p>
+                <p class="meta lang-en">Prop Design / Modeling</p>
+                <p class="meta lang-tr">Prop Tasarımı / Modelleme</p>
+                <p class="work-open"><span class="lang-en">Open Project</span><span class="lang-tr">Projeyi Aç</span></p>
+              </div>
+            </article>
+          </a>
+
+          <a class="work-card-link" href="#materials-modal">
+            <article class="work-card has-background" style="--card-bg: url('images/materials-cover.jpg');">
+              <div class="work-top">
+                <span>02</span>
+                <span>2026</span>
+              </div>
+              <div>
+                <h3 class="lang-en">Material Studies</h3>
+                <h3 class="lang-tr">Materyal Çalışmaları</h3>
+                <p class="lang-en">Texture and material experiments exploring metal, clay render looks, clean surface details and stylized shading.</p>
+                <p class="lang-tr">Metal, clay render görünümü, temiz yüzey detayları ve stilize shading üzerine texture ve materyal denemeleri.</p>
+                <p class="meta lang-en">Materials / Texturing</p>
+                <p class="meta lang-tr">Materyal / Texture</p>
+                <p class="work-open"><span class="lang-en">Open Project</span><span class="lang-tr">Projeyi Aç</span></p>
+              </div>
+            </article>
+          </a>
+
+          <a class="work-card-link" href="#character-modal">
+            <article class="work-card has-background" style="--card-bg: url('images/character-cover.jpg');">
+              <div class="work-top">
+                <span>03</span>
+                <span>2026</span>
+              </div>
+              <div>
+                <h3 class="lang-en">Character Design Study</h3>
+                <h3 class="lang-tr">Karakter Tasarım Çalışması</h3>
+                <p class="lang-en">Low poly and stylized character design studies with a focus on shape language, silhouette and animation-friendly forms.</p>
+                <p class="lang-tr">Şekil dili, silüet ve animasyona uygun formlar üzerine odaklanan low poly ve stilize karakter tasarım çalışmaları.</p>
+                <p class="meta lang-en">Character / Low Poly</p>
+                <p class="meta lang-tr">Karakter / Low Poly</p>
+                <p class="work-open"><span class="lang-en">Open Project</span><span class="lang-tr">Projeyi Aç</span></p>
+              </div>
+            </article>
+          </a>
+
+          <a class="work-card-link" href="#environment-modal">
+            <article class="work-card has-background" style="--card-bg: url('images/environment-scene.jpg');">
+              <div class="work-top">
+                <span>04</span>
+                <span>2026</span>
+              </div>
+              <div>
+                <h3 class="lang-en">Environment Scene Study</h3>
+                <h3 class="lang-tr">Çevre Sahnesi Çalışması</h3>
+                <p class="lang-en">Scene composition experiments focused on atmosphere, lighting direction, object placement and visual hierarchy.</p>
+                <p class="lang-tr">Atmosfer, ışık yönü, obje yerleşimi ve görsel hiyerarşi üzerine odaklanan sahne kompozisyonu denemeleri.</p>
+                <p class="meta lang-en">Scene Design / Lighting</p>
+                <p class="meta lang-tr">Sahne Tasarımı / Işık</p>
+                <p class="work-open"><span class="lang-en">Open Project</span><span class="lang-tr">Projeyi Aç</span></p>
+              </div>
+            </article>
+          </a>
+
+          <a class="work-card-link" href="#twod-modal">
+            <article class="work-card has-background" style="--card-bg: url('images/2d-cover.jpg');">
+              <div class="work-top">
+                <span>05</span>
+                <span>2026</span>
+              </div>
+              <div>
+                <h3 class="lang-en">2D Works</h3>
+                <h3 class="lang-tr">2D Çalışmalar</h3>
+                <p class="lang-en">Digital visual studies, edits and composition experiments created with a clean graphic approach.</p>
+                <p class="lang-tr">Temiz bir grafik yaklaşımıyla hazırlanmış dijital görsel çalışmalar, düzenlemeler ve kompozisyon denemeleri.</p>
+                <p class="meta">Photoshop</p>
+                <p class="work-open"><span class="lang-en">Open Project</span><span class="lang-tr">Projeyi Aç</span></p>
+              </div>
+            </article>
+          </a>
+
+          <a class="work-card-link" href="#drawing-modal">
+            <article class="work-card has-background" style="--card-bg: url('images/drawing-cover.jpg');">
+              <div class="work-top">
+                <span>06</span>
+                <span>2026</span>
+              </div>
+              <div>
+                <h3 class="lang-en">Pencil Drawing</h3>
+                <h3 class="lang-tr">Kara Kalem</h3>
+                <p class="lang-en">Traditional drawing studies focused on observation, form, shading and hand control.</p>
+                <p class="lang-tr">Gözlem, form, gölgelendirme ve el kontrolü üzerine odaklanan geleneksel çizim çalışmaları.</p>
+                <p class="meta lang-en">Pencil / Traditional</p>
+                <p class="meta lang-tr">Kalem / Geleneksel</p>
+                <p class="work-open"><span class="lang-en">Open Project</span><span class="lang-tr">Projeyi Aç</span></p>
+              </div>
+            </article>
+          </a>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="section-head">
+          <p class="section-label"><span class="lang-en">About</span><span class="lang-tr">Hakkımda</span></p>
+          <h2 class="section-title lang-en">Clean forms, readable composition and stylized 3D design.</h2>
+          <h2 class="section-title lang-tr">Temiz formlar, okunabilir kompozisyon ve stilize 3D tasarım.</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-text">
+            <p class="lang-en">I am a animation student focused on 3D modeling, stylized environments and visual storytelling. My work combines simple forms, strong silhouettes and game-oriented design thinking.</p>
+            <p class="lang-tr">3D modelleme, stilize çevre tasarımı ve görsel anlatım üzerine çalışan bir animasyon öğrencisiyim. Çalışmalarımda sade formları, güçlü silüetleri ve oyun odaklı tasarım düşüncesini birleştiriyorum.</p>
+          </div>
+
+          <div class="info-panel">
+            <div class="info-row">
+              <span><span class="lang-en">Focus</span><span class="lang-tr">Odak</span></span>
+              <span><span class="lang-en">3D Modeling, Environment Design, Prop Design</span><span class="lang-tr">3D Modelleme, Çevre Tasarımı, Prop Tasarımı</span></span>
+            </div>
+            <div class="info-row">
+              <span><span class="lang-en">Style</span><span class="lang-tr">Stil</span></span>
+              <span><span class="lang-en">Minimal, stylized, readable and game-oriented</span><span class="lang-tr">Minimal, stilize, okunabilir ve oyun odaklı</span></span>
+            </div>
+            <div class="info-row">
+              <span><span class="lang-en">Tools</span><span class="lang-tr">Araçlar</span></span>
+              <span>Blender, Photoshop</span>
+            </div>
+            <div class="info-row">
+              <span><span class="lang-en">Location</span><span class="lang-tr">Konum</span></span>
+              <span>Türkiye</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <div class="section-head">
+          <p class="section-label"><span class="lang-en">Skills</span><span class="lang-tr">Yetenekler</span></p>
+          <h2 class="section-title lang-en">Core areas I use while building visual projects.</h2>
+          <h2 class="section-title lang-tr">Görsel projeler üretirken kullandığım temel alanlar.</h2>
+        </div>
+
+        <div class="skills">
+          <span class="skill lang-en">3D Modeling</span>
+          <span class="skill lang-tr">3D Modelleme</span>
+          <span class="skill lang-en">Environment Design</span>
+          <span class="skill lang-tr">Çevre Tasarımı</span>
+          <span class="skill lang-en">Prop Design</span>
+          <span class="skill lang-tr">Prop Tasarımı</span>
+          <span class="skill lang-en">Texturing</span>
+          <span class="skill lang-tr">Texture</span>
+          <span class="skill lang-en">Lighting</span>
+          <span class="skill lang-tr">Işıklandırma</span>
+          <span class="skill lang-en">Composition</span>
+          <span class="skill lang-tr">Kompozisyon</span>
+          <span class="skill lang-en">Graphic Design</span>
+          <span class="skill lang-tr">Grafik Tasarım</span>
+          <span class="skill lang-en">Pencil Drawing</span>
+          <span class="skill lang-tr">Kara Kalem Çizim</span>
+          <span class="skill">Blender</span>
+          <span class="skill">Photoshop</span>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="contact-box">
+          <div class="contact-main">
+            <h2 class="lang-en">Contact</h2>
+            <h2 class="lang-tr">İletişim</h2>
+            <p class="lang-en">For portfolio reviews, collaboration or design related inquiries, you can reach me through mail or social platforms.</p>
+            <p class="lang-tr">Portfolyo değerlendirmesi, iş birliği veya tasarım odaklı iletişim için bana mail ya da sosyal medya üzerinden ulaşabilirsin.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="props-modal" class="modal" aria-label="Prop project modal">
+      <div class="modal-window">
+        <div class="modal-bar">
+          <span><span class="lang-en">Project / 01</span><span class="lang-tr">Proje / 01</span></span>
+          <a class="modal-close" href="#work" aria-label="Close">×</a>
+        </div>
+        <div class="modal-body">
+          <div class="modal-head">
+            <aside class="modal-info">
+              <ul>
+                <li><strong>Type</strong><span class="lang-en">Prop Design</span><span class="lang-tr">Prop Tasarımı</span></li>
+                <li><strong>Tools</strong>Blender</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Status</strong><span class="lang-en">In Progress / Archive</span><span class="lang-tr">Devam Ediyor / Arşiv</span></li>
+              </ul>
+            </aside>
+            <div class="modal-description">
+              <h2><span class="lang-en">Prop Collection</span><span class="lang-tr">Prop Koleksiyonu</span></h2>
+              <p class="lang-en">A space for prop works: object renders, wireframes, material tests and close-up details.</p>
+              <p class="lang-tr">Prop çalışmaları için alan: obje renderları, wireframe görüntüleri, materyal testleri ve yakın plan detaylar.</p>
+            </div>
+          </div>
+          <div class="gallery-grid">
+            <a class="image-link" href="#props-img-01"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/props-01.jpg');">Prop Image 01</div></a>
+            <a class="image-link" href="#props-img-02"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/props-02.jpg');">Prop Image 02</div></a>
+            <a class="image-link" href="#props-img-03"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/props-03.jpg');">Prop Image 03</div></a>
+            <a class="image-link" href="#props-img-04"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/props-04.jpg');">Prop Image 04</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="materials-modal" class="modal" aria-label="Material project modal">
+      <div class="modal-window">
+        <div class="modal-bar">
+          <span><span class="lang-en">Project / 02</span><span class="lang-tr">Proje / 02</span></span>
+          <a class="modal-close" href="#work" aria-label="Close">×</a>
+        </div>
+        <div class="modal-body">
+          <div class="modal-head">
+            <aside class="modal-info">
+              <ul>
+                <li><strong>Type</strong><span class="lang-en">Materials / Texturing</span><span class="lang-tr">Materyal / Texture</span></li>
+                <li><strong>Tools</strong>Blender</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Status</strong><span class="lang-en">Study Collection</span><span class="lang-tr">Çalışma Koleksiyonu</span></li>
+              </ul>
+            </aside>
+            <div class="modal-description">
+              <h2><span class="lang-en">Material Studies</span><span class="lang-tr">Materyal Çalışmaları</span></h2>
+              <p class="lang-en">A space for material and texture studies: clay renders, metal tests, shader experiments and surface details.</p>
+              <p class="lang-tr">Materyal ve texture çalışmaları için alan: clay renderlar, metal testleri, shader denemeleri ve yüzey detayları.</p>
+            </div>
+          </div>
+          <div class="gallery-grid">
+            <a class="image-link" href="#materials-img-01"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/materials-01.jpg');">Material Image 01</div></a>
+            <a class="image-link" href="#materials-img-02"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/materials-02.jpg');">Material Image 02</div></a>
+            <a class="image-link" href="#materials-img-03"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/materials-03.jpg');">Material Image 03</div></a>
+            <a class="image-link" href="#materials-img-04"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/materials-04.jpg');">Material Image 04</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="character-modal" class="modal" aria-label="Character project modal">
+      <div class="modal-window">
+        <div class="modal-bar">
+          <span><span class="lang-en">Project / 03</span><span class="lang-tr">Proje / 03</span></span>
+          <a class="modal-close" href="#work" aria-label="Close">×</a>
+        </div>
+        <div class="modal-body">
+          <div class="modal-head">
+            <aside class="modal-info">
+              <ul>
+                <li><strong>Type</strong><span class="lang-en">Character / Low Poly</span><span class="lang-tr">Karakter / Low Poly</span></li>
+                <li><strong>Tools</strong>Blender</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Status</strong><span class="lang-en">Design Study</span><span class="lang-tr">Tasarım Çalışması</span></li>
+              </ul>
+            </aside>
+            <div class="modal-description">
+              <h2><span class="lang-en">Character Design Study</span><span class="lang-tr">Karakter Tasarım Çalışması</span></h2>
+              <p class="lang-en">A space for character design works: front views, side views, silhouettes and animation-friendly forms.</p>
+              <p class="lang-tr">Karakter tasarım çalışmaları için alan: ön görünüş, yan görünüş, silüetler ve animasyona uygun formlar.</p>
+            </div>
+          </div>
+          <div class="gallery-grid">
+            <a class="image-link" href="#character-img-01"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/character-01.jpg');">Character Image 01</div></a>
+            <a class="image-link" href="#character-img-02"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/character-02.jpg');">Character Image 02</div></a>
+            <a class="image-link" href="#character-img-03"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/character-03.jpg');">Character Image 03</div></a>
+            <a class="image-link" href="#character-img-04"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/character-04.jpg');">Character Image 04</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="environment-modal" class="modal" aria-label="Environment project modal">
+      <div class="modal-window">
+        <div class="modal-bar">
+          <span><span class="lang-en">Project / 04</span><span class="lang-tr">Proje / 04</span></span>
+          <a class="modal-close" href="#work" aria-label="Close">×</a>
+        </div>
+        <div class="modal-body">
+          <div class="modal-head">
+            <aside class="modal-info">
+              <ul>
+                <li><strong>Type</strong><span class="lang-en">Scene Design / Lighting</span><span class="lang-tr">Sahne Tasarımı / Işık</span></li>
+                <li><strong>Tools</strong>Blender</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Status</strong><span class="lang-en">Scene Study</span><span class="lang-tr">Sahne Çalışması</span></li>
+              </ul>
+            </aside>
+            <div class="modal-description">
+              <h2><span class="lang-en">Environment Scene Study</span><span class="lang-tr">Çevre Sahnesi Çalışması</span></h2>
+              <p class="lang-en">A space for environment design works: final renders, lighting tests, scene breakdowns and composition studies.</p>
+              <p class="lang-tr">Çevre tasarımı çalışmaları için alan: final renderlar, ışık testleri, sahne parçalamaları ve kompozisyon çalışmaları.</p>
+            </div>
+          </div>
+          <div class="gallery-grid">
+            <a class="image-link" href="#environment-img-01"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/environment-01.jpg');">Environment Image 01</div></a>
+            <a class="image-link" href="#environment-img-02"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/environment-02.jpg');">Environment Image 02</div></a>
+            <a class="image-link" href="#environment-img-03"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/environment-03.jpg');">Environment Image 03</div></a>
+            <a class="image-link" href="#environment-img-04"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/environment-04.jpg');">Environment Image 04</div></a>
+            <a class="image-link" href="#environment-img-05"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/environment-05.jpg');">Environment Image 05</div></a>
+            <a class="image-link" href="#environment-img-06"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/environment-06.jpg');">Environment Image 06</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="twod-modal" class="modal" aria-label="2D works modal">
+      <div class="modal-window">
+        <div class="modal-bar">
+          <span><span class="lang-en">Project / 05</span><span class="lang-tr">Proje / 05</span></span>
+          <a class="modal-close" href="#work" aria-label="Close">×</a>
+        </div>
+        <div class="modal-body">
+          <div class="modal-head">
+            <aside class="modal-info">
+              <ul>
+                <li><strong>Type</strong><span class="lang-en">2D / Digital</span><span class="lang-tr">2D / Dijital</span></li>
+                <li><strong>Tools</strong>Photoshop</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Status</strong><span class="lang-en">Study Collection</span><span class="lang-tr">Çalışma Koleksiyonu</span></li>
+              </ul>
+            </aside>
+            <div class="modal-description">
+              <h2><span class="lang-en">2D Works</span><span class="lang-tr">2D Çalışmalar</span></h2>
+              <p class="lang-en">A space for digital 2D works: visual edits, poster-like studies, composition experiments and graphic image work.</p>
+              <p class="lang-tr">Dijital 2D çalışmalar için alan: görsel düzenlemeler, poster tarzı çalışmalar, kompozisyon denemeleri ve grafik görsel üretimler.</p>
+            </div>
+          </div>
+          <div class="gallery-grid">
+            <a class="image-link" href="#twod-img-01"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/2d-01.jpg');">2D Image 01</div></a>
+            <a class="image-link" href="#twod-img-02"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/2d-02.jpg');">2D Image 02</div></a>
+            <a class="image-link" href="#twod-img-03"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/2d-03.jpg');">2D Image 03</div></a>
+            <a class="image-link" href="#twod-img-04"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/2d-04.jpg');">2D Image 04</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="drawing-modal" class="modal" aria-label="Pencil drawing modal">
+      <div class="modal-window">
+        <div class="modal-bar">
+          <span><span class="lang-en">Project / 06</span><span class="lang-tr">Proje / 06</span></span>
+          <a class="modal-close" href="#work" aria-label="Close">×</a>
+        </div>
+        <div class="modal-body">
+          <div class="modal-head">
+            <aside class="modal-info">
+              <ul>
+                <li><strong>Type</strong><span class="lang-en">Traditional Drawing</span><span class="lang-tr">Geleneksel Çizim</span></li>
+                <li><strong>Tools</strong><span class="lang-en">Pencil</span><span class="lang-tr">Kalem</span></li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Status</strong><span class="lang-en">Sketch Collection</span><span class="lang-tr">Eskiz Koleksiyonu</span></li>
+              </ul>
+            </aside>
+            <div class="modal-description">
+              <h2><span class="lang-en">Pencil Drawing</span><span class="lang-tr">Kara Kalem</span></h2>
+              <p class="lang-en">A space for pencil drawing works: sketches, observation studies, shading practice and form exploration.</p>
+              <p class="lang-tr">Kara kalem çalışmaları için alan: eskizler, gözlem çalışmaları, gölgelendirme pratikleri ve form denemeleri.</p>
+            </div>
+          </div>
+          <div class="gallery-grid">
+            <a class="image-link" href="#drawing-img-01"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/drawing-01.jpg');">Drawing Image 01</div></a>
+            <a class="image-link" href="#drawing-img-02"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/drawing-02.jpg');">Drawing Image 02</div></a>
+            <a class="image-link" href="#drawing-img-03"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/drawing-03.jpg');">Drawing Image 03</div></a>
+            <a class="image-link" href="#drawing-img-04"><div class="gallery-placeholder image-slot" style="--slot-bg: url('images/drawing-04.jpg');">Drawing Image 04</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a id="props-img-01" class="image-lightbox" href="#props-modal"><span>×</span><img src="images/props-01.jpg" alt="Prop Image 01" /></a>
+    <a id="props-img-02" class="image-lightbox" href="#props-modal"><span>×</span><img src="images/props-02.jpg" alt="Prop Image 02" /></a>
+    <a id="props-img-03" class="image-lightbox" href="#props-modal"><span>×</span><img src="images/props-03.jpg" alt="Prop Image 03" /></a>
+    <a id="props-img-04" class="image-lightbox" href="#props-modal"><span>×</span><img src="images/props-04.jpg" alt="Prop Image 04" /></a>
+
+    <a id="materials-img-01" class="image-lightbox" href="#materials-modal"><span>×</span><img src="images/materials-01.jpg" alt="Material Image 01" /></a>
+    <a id="materials-img-02" class="image-lightbox" href="#materials-modal"><span>×</span><img src="images/materials-02.jpg" alt="Material Image 02" /></a>
+    <a id="materials-img-03" class="image-lightbox" href="#materials-modal"><span>×</span><img src="images/materials-03.jpg" alt="Material Image 03" /></a>
+    <a id="materials-img-04" class="image-lightbox" href="#materials-modal"><span>×</span><img src="images/materials-04.jpg" alt="Material Image 04" /></a>
+
+    <a id="character-img-01" class="image-lightbox" href="#character-modal"><span>×</span><img src="images/character-01.jpg" alt="Character Image 01" /></a>
+    <a id="character-img-02" class="image-lightbox" href="#character-modal"><span>×</span><img src="images/character-02.jpg" alt="Character Image 02" /></a>
+    <a id="character-img-03" class="image-lightbox" href="#character-modal"><span>×</span><img src="images/character-03.jpg" alt="Character Image 03" /></a>
+    <a id="character-img-04" class="image-lightbox" href="#character-modal"><span>×</span><img src="images/character-04.jpg" alt="Character Image 04" /></a>
+
+    <a id="environment-img-01" class="image-lightbox" href="#environment-modal"><span>×</span><img src="images/environment-01.jpg" alt="Environment Image 01" /></a>
+    <a id="environment-img-02" class="image-lightbox" href="#environment-modal"><span>×</span><img src="images/environment-02.jpg" alt="Environment Image 02" /></a>
+    <a id="environment-img-03" class="image-lightbox" href="#environment-modal"><span>×</span><img src="images/environment-03.jpg" alt="Environment Image 03" /></a>
+    <a id="environment-img-04" class="image-lightbox" href="#environment-modal"><span>×</span><img src="images/environment-04.jpg" alt="Environment Image 04" /></a>
+    <a id="environment-img-05" class="image-lightbox" href="#environment-modal"><span>×</span><img src="images/environment-05.jpg" alt="Environment Image 05" /></a>
+    <a id="environment-img-06" class="image-lightbox" href="#environment-modal"><span>×</span><img src="images/environment-06.jpg" alt="Environment Image 06" /></a>
+
+    <a id="twod-img-01" class="image-lightbox" href="#twod-modal"><span>×</span><img src="images/2d-01.jpg" alt="2D Image 01" /></a>
+    <a id="twod-img-02" class="image-lightbox" href="#twod-modal"><span>×</span><img src="images/2d-02.jpg" alt="2D Image 02" /></a>
+    <a id="twod-img-03" class="image-lightbox" href="#twod-modal"><span>×</span><img src="images/2d-03.jpg" alt="2D Image 03" /></a>
+    <a id="twod-img-04" class="image-lightbox" href="#twod-modal"><span>×</span><img src="images/2d-04.jpg" alt="2D Image 04" /></a>
+
+    <a id="drawing-img-01" class="image-lightbox" href="#drawing-modal"><span>×</span><img src="images/drawing-01.jpg" alt="Drawing Image 01" /></a>
+    <a id="drawing-img-02" class="image-lightbox" href="#drawing-modal"><span>×</span><img src="images/drawing-02.jpg" alt="Drawing Image 02" /></a>
+    <a id="drawing-img-03" class="image-lightbox" href="#drawing-modal"><span>×</span><img src="images/drawing-03.jpg" alt="Drawing Image 03" /></a>
+    <a id="drawing-img-04" class="image-lightbox" href="#drawing-modal"><span>×</span><img src="images/drawing-04.jpg" alt="Drawing Image 04" /></a>
+
+    <footer class="page">
+      <span class="lang-en">© 2026 Yavuzhan Önder — Portfolio</span>
+      <span class="lang-tr">© 2026 Yavuzhan Önder — Portfolyo</span>
+    </footer>
+
+    <section class="test-notes" aria-hidden="true">
+      Manual test cases:
+      1. Opening the file should not throw a SyntaxError.
+      2. EN should be selected by default.
+      3. Selecting TR should show Turkish navigation, headings, project text, skills and footer.
+      4. Selecting EN should show English navigation, headings, project text, skills and footer.
+      5. Illustrator and Figma should not appear anywhere in the visible page.
+      6. Stylized Bank Interior and Game UI Experiments should not appear in the project grid.
+      7. Pencil Drawing / Kara Kalem Çizim should appear in the skills list depending on selected language.
+    </section>
+  </div>
+</body>
+</html>
