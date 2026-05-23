@@ -1,2243 +1,595 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yavuzhan Önder — Editorial Archive Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --paper: #eceae4;
-      --paper-soft: #f7f5f0;
-      --ink: #101010;
-      --ink-soft: #2b2b2b;
-      --muted: #77736c;
-      --line: #c9c5bc;
-      --line-dark: #a9a49a;
-      --blue: #8eb6cf;
-      --blue-dark: #527c96;
-      --shadow: rgba(20, 20, 20, 0.16);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 0%, rgba(142, 182, 207, 0.16), transparent 32%),
-        linear-gradient(135deg, rgba(255,255,255,.28), rgba(255,255,255,0)),
-        var(--paper);
-      color: var(--ink);
-      font-family: "Inter", Arial, sans-serif;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      pointer-events: none;
-      opacity: .16;
-      background-image:
-        radial-gradient(rgba(16,16,16,.24) .55px, transparent .65px),
-        linear-gradient(90deg, rgba(16,16,16,.025) 1px, transparent 1px),
-        linear-gradient(rgba(16,16,16,.02) 1px, transparent 1px);
-      background-size: 3px 3px, 64px 64px, 64px 64px;
-      mix-blend-mode: multiply;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    input[type="radio"] { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-    .page { width: min(1220px, calc(100% - 42px)); margin: 0 auto; }
-
-    .lang-tr { display: none; }
-    #language-tr:checked ~ .site .lang-en { display: none; }
-    #language-tr:checked ~ .site .lang-tr { display: inline; }
-    #language-tr:checked ~ .site p.lang-tr,
-    #language-tr:checked ~ .site div.lang-tr,
-    #language-tr:checked ~ .site h2.lang-tr,
-    #language-tr:checked ~ .site h3.lang-tr,
-    #language-tr:checked ~ .site span.lang-tr { display: block; }
-    #language-tr:checked ~ .site .nav-links .lang-tr,
-    #language-tr:checked ~ .site .open-project.lang-tr,
-    #language-tr:checked ~ .site .lang-switch label.lang-tr { display: inline-flex; }
-    #language-en:checked ~ .site .lang-switch label[for="language-en"],
-    #language-tr:checked ~ .site .lang-switch label[for="language-tr"] { background: var(--ink); color: var(--paper-soft); }
-
-    h1, h2, h3, .poster-word, .project-title {
-      font-family: "Archivo Black", Arial, sans-serif;
-      letter-spacing: -0.075em;
-      line-height: .86;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(236, 234, 228, .84);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(16,16,16,.09);
-    }
-
-    .nav {
-      min-height: 68px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 28px;
-      font-size: 12px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .brand { font-weight: 800; }
-    .nav-right { display: flex; align-items: center; gap: 30px; }
-    .nav-links { display: flex; gap: 24px; color: var(--muted); font-weight: 700; }
-    .nav-links a { position: relative; transition: color 200ms ease; }
-    .nav-links a::after { content: ""; position: absolute; left: 0; bottom: -8px; width: 0; height: 1px; background: var(--ink); transition: width 200ms ease; }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-links a:hover::after { width: 100%; }
-
-    .lang-switch { display: flex; border: 1px solid var(--line); background: rgba(255,255,255,.28); font-size: 11px; overflow: hidden; }
-    .lang-switch label { display: inline-flex; align-items: center; padding: 9px 11px; cursor: pointer; font: inherit; letter-spacing: .12em; }
-
-    .hero {
-      min-height: calc(100vh - 68px);
-      display: grid;
-      grid-template-columns: minmax(0, .96fr) minmax(390px, .80fr);
-      gap: clamp(34px, 5vw, 78px);
-      align-items: stretch;
-      padding: 54px 0 70px;
-      border-bottom: 1px solid var(--line);
-      overflow: hidden;
-    }
-
-    .hero-left { position: relative; z-index: 5; display: flex; flex-direction: column; justify-content: space-between; min-height: 670px; padding: 12px 0; }
-
-    .kicker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 560px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 800; }
-    .kicker-grid strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 7px; }
-
-    .hero-title { position: relative; margin: 66px 0 40px; max-width: 100%; }
-    .hero-title h1 { font-size: clamp(68px, 9.4vw, 138px); max-width: 100%; overflow-wrap: normal; }
-    .hero-title .line-2 { display: block; margin-top: .13em; color: transparent; -webkit-text-stroke: 2px var(--ink); text-stroke: 2px var(--ink); }
-    .hero-title::before { content: "PORTFOLIO / 2026"; position: absolute; left: 4px; top: -28px; font-size: 12px; letter-spacing: .18em; font-weight: 900; color: var(--blue-dark); }
-
-    .hero-statement { max-width: 620px; font-size: clamp(20px, 2.2vw, 34px); line-height: 1.08; letter-spacing: -0.045em; font-weight: 700; color: var(--ink-soft); }
-
-    .hero-index { display: grid; gap: 13px; max-width: 620px; margin-top: 42px; border-top: 1px solid var(--line-dark); padding-top: 18px; }
-    .hero-index-row { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: baseline; font-size: 13px; line-height: 1.3; }
-    .hero-index-row span:first-child { width: 30px; height: 30px; display: inline-grid; place-items: center; border: 1px solid var(--ink); border-radius: 50%; font-size: 12px; font-weight: 800; }
-    .hero-index-row span:last-child { color: var(--muted); font-weight: 650; }
-
-    .barcode { display: flex; align-items: end; gap: 3px; height: 46px; margin-top: 34px; }
-    .barcode i { display: block; width: 3px; background: var(--ink); }
-    .barcode i:nth-child(2n) { height: 33px; }
-    .barcode i:nth-child(2n+1) { height: 46px; }
-    .barcode i:nth-child(3n) { width: 6px; }
-    .barcode i:nth-child(5n) { height: 24px; }
-
-    .hero-visual { position: relative; z-index: 1; min-height: 670px; background: var(--paper-soft); overflow: hidden; box-shadow: 0 30px 70px var(--shadow); }
-    .hero-visual::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(236,234,228,.96) 0%, rgba(236,234,228,.52) 28%, rgba(236,234,228,.05) 46%), url('images/hero-entry.jpg'); background-size: cover; background-position: center; filter: saturate(.85) contrast(1.02); }
-    .hero-visual::after { content: "ARCHIVE"; position: absolute; z-index: 2; right: -10px; top: 42px; writing-mode: vertical-rl; font-family: "Archivo Black", Arial, sans-serif; font-size: clamp(64px, 7vw, 112px); line-height: .8; color: rgba(142, 182, 207, .68); letter-spacing: -0.08em; mix-blend-mode: multiply; pointer-events: none; }
-
-    .visual-frame { position: absolute; z-index: 3; left: 46px; bottom: 46px; width: 58%; min-height: 190px; padding: 20px; background: rgba(247,245,240,.88); border: 1px solid rgba(16,16,16,.12); backdrop-filter: blur(7px); }
-    .visual-frame p { color: var(--muted); font-size: 13px; line-height: 1.45; font-weight: 650; }
-    .visual-frame strong { display: block; color: var(--ink); font-size: 13px; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 12px; }
-
-    .section { padding: 100px 0; border-bottom: 1px solid var(--line); }
-    .section-head { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 42px; margin-bottom: 54px; align-items: end; }
-    .section-label { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 900; }
-    .section-title { font-size: clamp(54px, 9vw, 132px); }
-
-    .works-layout { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; align-items: stretch; }
-    .project-card { position: relative; min-height: 660px; background: var(--paper-soft); border: 1px solid rgba(16,16,16,.11); overflow: hidden; color: var(--ink); box-shadow: 0 18px 46px rgba(16,16,16,.10); transition: transform 260ms ease, box-shadow 260ms ease; }
-    .project-card:hover { transform: translateY(-10px); box-shadow: 0 34px 70px rgba(16,16,16,.16); }
-    .project-card .num { position: absolute; left: 20px; top: 20px; z-index: 6; width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 800; background: rgba(247,245,240,.86); }
-    .project-card .year { position: absolute; right: 20px; top: 23px; z-index: 6; font-size: 12px; font-weight: 900; letter-spacing: .13em; color: var(--muted); }
-
-    .mountain-card { padding: 78px 18px 28px; display: grid; grid-template-columns: 72px 1fr; gap: 18px; }
-    .mountain-card .poster-word { position: relative; z-index: 2; writing-mode: vertical-rl; transform: rotate(180deg); font-size: clamp(60px, 7vw, 98px); color: rgba(82,124,150,.68); mix-blend-mode: multiply; align-self: stretch; text-align: center; white-space: nowrap; }
-    .mountain-image { position: absolute; z-index: 1; inset: 0 0 0 35%; background: linear-gradient(90deg, rgba(247,245,240,.98), rgba(247,245,240,.22) 38%, rgba(247,245,240,0)), url('images/environment-scene.jpg'); background-size: cover; background-position: center; transition: transform 260ms ease; }
-
-    .project-card:hover .mountain-image, .project-card:hover .split-image, .project-card:hover .collage-img { transform: scale(1.04); }
-    .project-content { position: relative; z-index: 5; align-self: end; display: flex; flex-direction: column; justify-content: end; gap: 16px; padding: 18px; margin: -18px; background: linear-gradient(180deg, rgba(247,245,240,0), rgba(247,245,240,.92) 24%, rgba(247,245,240,.98)); }
-    .project-title { font-size: clamp(31px, 3.5vw, 50px); }
-    .project-desc { color: var(--muted); font-size: 13px; line-height: 1.45; font-weight: 650; }
-    .meta { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 900; color: var(--blue-dark); }
-    .open-project { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 900; }
-    .open-project::after { content: "↗"; width: 28px; height: 28px; display: grid; place-items: center; color: var(--paper-soft); background: var(--ink); transition: transform 260ms ease; }
-    .project-card:hover .open-project::after { transform: translate(4px, -4px); }
-
-    .split-card, .collage-card { padding: 78px 24px 28px; display: flex; flex-direction: column; justify-content: end; }
-    .split-image { position: absolute; z-index: 1; inset: 84px 26px 245px 26px; background: linear-gradient(135deg, rgba(247,245,240,.20), rgba(247,245,240,.04)), url('images/props-cover.jpg'); background-size: cover; background-position: center; clip-path: polygon(0 0, 100% 0, 72% 100%, 0 100%); transition: transform 260ms ease; }
-    .split-card::after { content: ""; position: absolute; right: 28px; top: 84px; width: 34%; height: 320px; border: 10px solid rgba(142,182,207,.44); border-left: 0; z-index: 2; pointer-events: none; }
-    .collage-wrap { position: absolute; z-index: 1; inset: 80px 30px 245px; }
-    .collage-img { position: absolute; background-size: cover; background-position: center; border: 7px solid var(--paper-soft); box-shadow: 0 12px 22px rgba(16,16,16,.12); transition: transform 260ms ease; }
-    .collage-img.one { inset: 0 16% 18% 0; background-image: url('images/materials-cover.jpg'); }
-    .collage-img.two { right: 0; top: 20%; width: 43%; height: 58%; background-image: url('images/materials-01.jpg'); }
-    .collage-img.three { left: 10%; bottom: 0; width: 34%; height: 28%; background-image: url('images/materials-02.jpg'); }
-    .collage-card::before, .split-card::before { content: ""; position: absolute; z-index: 5; left: 24px; top: 72px; width: 54px; height: 2px; background: var(--blue-dark); }
-
-    .about-layout { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 56px; align-items: start; }
-    .about-text { font-size: clamp(30px, 4vw, 62px); line-height: .96; letter-spacing: -0.06em; font-weight: 800; }
-    .info-list { border-top: 1px solid var(--ink); }
-    .info-row { display: grid; grid-template-columns: 48px 120px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line-dark); font-size: 13px; line-height: 1.35; }
-    .info-row span:first-child { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--ink); border-radius: 50%; font-size: 11px; font-weight: 800; }
-    .info-row strong { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
-    .info-row p { color: var(--muted); font-weight: 650; }
-
-    .skills-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 54px; border-top: 1px solid var(--ink); }
-    .skill-row { display: grid; grid-template-columns: 60px 1fr; gap: 22px; padding: 20px 0; border-bottom: 1px solid var(--line-dark); font-size: clamp(20px, 2.4vw, 38px); font-weight: 900; letter-spacing: -0.04em; }
-    .skill-row span:first-child { font-size: 13px; letter-spacing: .12em; color: var(--muted); padding-top: 9px; }
-
-    .contact-section { position: relative; min-height: 520px; display: grid; align-items: center; overflow: hidden; }
-    .contact-section::before { content: "CONTACT"; position: absolute; left: -14px; top: 52px; font-family: "Archivo Black", Arial, sans-serif; font-size: clamp(92px, 17vw, 260px); letter-spacing: -0.08em; color: rgba(82,124,150,.20); pointer-events: none; }
-    .contact-box { position: relative; z-index: 2; max-width: 720px; margin-left: auto; border-top: 1px solid var(--ink); padding-top: 28px; }
-    .contact-box p { color: var(--muted); font-size: 18px; line-height: 1.45; margin-bottom: 28px; font-weight: 650; }
-    .contact-link { display: grid; grid-template-columns: 130px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line-dark); font-weight: 800; }
-    .contact-link span { color: var(--muted); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
-
-    .project-modal { position: fixed; inset: 0; z-index: 900; display: none; padding: 28px; overflow: auto; background: rgba(16,16,16,.28); backdrop-filter: blur(10px); }
-    .project-modal:target { display: block; }
-    .modal-window { width: min(980px, 100%); margin: 48px auto; background: var(--paper-soft); border: 1px solid rgba(16,16,16,.14); box-shadow: 0 44px 90px rgba(16,16,16,.24); }
-    .modal-bar { min-height: 58px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 900; color: var(--muted); }
-    .modal-close { width: 36px; height: 36px; display: grid; place-items: center; background: var(--ink); color: var(--paper-soft); }
-    .modal-body { padding: 28px; display: grid; gap: 22px; }
-    .modal-body h3 { font-size: clamp(46px, 7vw, 96px); }
-    .modal-body p { max-width: 740px; color: var(--muted); line-height: 1.55; font-weight: 650; }
-    .modal-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    .modal-shot { min-height: 260px; background-size: cover; background-position: center; border: 1px solid var(--line); }
-
-    footer { padding: 28px 0; color: var(--muted); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; }
-
-    @media (max-width: 980px) {
-      .hero, .about-layout { grid-template-columns: 1fr; }
-      .hero-left, .hero-visual { min-height: auto; }
-      .hero-visual { min-height: 520px; }
-      .works-layout { grid-template-columns: 1fr; }
-      .project-card { min-height: 620px; }
-      .hero-title h1 { font-size: clamp(66px, 17vw, 132px); }
-    }
-
-    @media (max-width: 700px) {
-      .page { width: min(100% - 24px, 1220px); }
-      .nav { height: auto; min-height: 72px; flex-direction: column; align-items: flex-start; justify-content: center; padding: 16px 0; }
-      .nav-right { width: 100%; align-items: flex-start; flex-direction: column; gap: 16px; }
-      .nav-links { flex-wrap: wrap; gap: 14px; }
-      .hero { padding: 38px 0 54px; gap: 34px; }
-      .kicker-grid { grid-template-columns: 1fr; }
-      .hero-title h1 { font-size: clamp(54px, 18vw, 104px); }
-      .hero-title .line-2 { margin-top: .16em; -webkit-text-stroke: 1px var(--ink); text-stroke: 1px var(--ink); }
-      .section { padding: 70px 0; }
-      .section-head { grid-template-columns: 1fr; gap: 18px; }
-      .mountain-card { grid-template-columns: 52px 1fr; }
-      .mountain-card .poster-word { font-size: 58px; }
-      .skills-index { grid-template-columns: 1fr; }
-      .info-row, .contact-link { grid-template-columns: 1fr; gap: 8px; }
-      .modal-gallery { grid-template-columns: 1fr; }
-    }
-
-    /* V3: more projects, thinner long editorial cards */
-    .works-layout {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .project-card.thin-card {
-      min-height: clamp(620px, 74vh, 760px);
-      padding: 62px 14px 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      background:
-        linear-gradient(180deg, rgba(247,245,240,.62), rgba(247,245,240,.98)),
-        var(--paper-soft);
-    }
-
-    .thin-card .thin-image {
-      position: absolute;
-      inset: 72px 12px 250px;
-      z-index: 1;
-      background-image:
-        linear-gradient(180deg, rgba(247,245,240,.08), rgba(247,245,240,.18)),
-        var(--img);
-      background-size: cover;
-      background-position: center;
-      filter: saturate(.86) contrast(1.02);
-      transition: transform 260ms ease, filter 260ms ease;
-    }
-
-    .thin-card:hover .thin-image {
-      transform: scale(1.045);
-      filter: saturate(.98) contrast(1.06);
-    }
-
-    .thin-card::before {
-      content: "";
-      position: absolute;
-      inset: 72px 12px 250px;
-      z-index: 2;
-      border: 1px solid rgba(16,16,16,.13);
-      pointer-events: none;
-    }
-
-    .thin-card::after {
-      content: "";
-      position: absolute;
-      left: 14px;
-      top: 54px;
-      z-index: 5;
-      width: 46px;
-      height: 2px;
-      background: var(--blue-dark);
-      transition: width 260ms ease;
-    }
-
-    .thin-card:hover::after {
-      width: 74px;
-    }
-
-    .thin-card .poster-word {
-      position: absolute;
-      left: 4px;
-      top: 82px;
-      z-index: 3;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      font-size: clamp(46px, 4.8vw, 82px);
-      color: rgba(82,124,150,.58);
-      mix-blend-mode: multiply;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-
-    .thin-card .project-content {
-      position: relative;
-      z-index: 8;
-      margin: 0;
-      padding: 18px 0 0;
-      background: transparent;
-      gap: 12px;
-    }
-
-    .thin-card .project-title {
-      font-size: clamp(22px, 2.15vw, 34px);
-      line-height: .9;
-      letter-spacing: -.07em;
-    }
-
-    .thin-card .project-desc {
-      font-size: 12px;
-      line-height: 1.42;
-    }
-
-    .thin-card .meta {
-      font-size: 9px;
-      line-height: 1.4;
-    }
-
-    .thin-card .open-project {
-      font-size: 10px;
-    }
-
-    .thin-card .open-project::after {
-      width: 24px;
-      height: 24px;
-    }
-
-    .thin-card.prop-card .thin-image { clip-path: polygon(0 0, 100% 0, 78% 100%, 0 100%); }
-    .thin-card.material-card .thin-image { clip-path: polygon(14% 0, 100% 0, 100% 86%, 0 100%, 0 18%); }
-    .thin-card.character-card .thin-image { clip-path: polygon(0 0, 86% 0, 100% 100%, 12% 100%); }
-    .thin-card.scene-card .thin-image { clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%, 0 72%); }
-    .thin-card.twod-card .thin-image { clip-path: polygon(0 8%, 100% 0, 90% 100%, 0 100%); }
-    .thin-card.drawing-card .thin-image { clip-path: polygon(10% 0, 100% 0, 100% 92%, 0 100%, 0 10%); }
-
-    @media (max-width: 1180px) {
-      .works-layout {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .project-card.thin-card {
-        min-height: 640px;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .works-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .project-card.thin-card {
-        min-height: 610px;
-      }
-
-      .thin-card .project-title {
-        font-size: clamp(34px, 11vw, 54px);
-      }
-    }
-
-
-    /* V4: each project card includes a 6-image preview strip */
-    .preview-strip {
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 178px;
-      z-index: 7;
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 4px;
-      padding: 5px;
-      background: rgba(247,245,240,.82);
-      border: 1px solid rgba(16,16,16,.10);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 10px 22px rgba(16,16,16,.10);
-      transition: transform 260ms ease, box-shadow 260ms ease;
-    }
-
-    .preview-strip span {
-      display: block;
-      aspect-ratio: 1 / 1.15;
-      background-image: var(--thumb);
-      background-size: cover;
-      background-position: center;
-      filter: saturate(.88) contrast(1.02);
-      border: 1px solid rgba(16,16,16,.08);
-    }
-
-    .thin-card:hover .preview-strip {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 28px rgba(16,16,16,.14);
-    }
-
-    .thin-card .project-content {
-      padding-top: 22px;
-    }
-
-    .modal-gallery {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .modal-shot {
-      min-height: 220px;
-    }
-
-    @media (max-width: 760px) {
-      .preview-strip {
-        bottom: 190px;
-      }
-
-      .modal-gallery {
-        grid-template-columns: 1fr;
-      }
-
-      .modal-shot {
-        min-height: 260px;
-      }
-    }
-
-
-    /* V5B: card previews back to compact; modal/project-page images enlarged */
-    .preview-strip {
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 178px;
-      z-index: 7;
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 4px;
-      padding: 5px;
-      max-height: none;
-      overflow: visible;
-      background: rgba(247,245,240,.82);
-      border: 1px solid rgba(16,16,16,.10);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 10px 22px rgba(16,16,16,.10);
-      transition: transform 260ms ease, box-shadow 260ms ease;
-    }
-
-    .preview-strip span {
-      display: block;
-      aspect-ratio: 1 / 1.15;
-      background-image: var(--thumb);
-      background-size: cover;
-      background-position: center;
-      filter: saturate(.88) contrast(1.02);
-      border: 1px solid rgba(16,16,16,.08);
-      cursor: default;
-    }
-
-    .thin-card:hover .preview-strip {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 28px rgba(16,16,16,.14);
-    }
-
-    .modal-window {
-      width: min(1180px, 100%);
-    }
-
-    .modal-body {
-      padding: 30px;
-    }
-
-    .modal-gallery {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      max-height: 760px;
-      overflow-y: auto;
-      padding-right: 8px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(16,16,16,.35) rgba(16,16,16,.08);
-    }
-
-    .modal-gallery::-webkit-scrollbar { width: 8px; }
-    .modal-gallery::-webkit-scrollbar-track { background: rgba(16,16,16,.08); }
-    .modal-gallery::-webkit-scrollbar-thumb { background: rgba(16,16,16,.34); }
-
-    .modal-shot {
-      min-height: 340px;
-      border: 1px solid var(--line);
-      background-size: cover;
-      background-position: center;
-      background-color: var(--paper);
-      cursor: zoom-in;
-      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
-    }
-
-    .modal-shot:hover,
-    .modal-shot:focus {
-      outline: 0;
-      transform: translateY(-4px);
-      filter: contrast(1.04) saturate(1.02);
-      box-shadow: 0 18px 34px rgba(16,16,16,.14);
-    }
-
-    .image-gallery {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      display: none;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: 16px;
-      padding: 24px;
-      background: rgba(16,16,16,.72);
-      backdrop-filter: blur(18px);
-    }
-
-    .image-gallery.is-open {
-      display: grid;
-    }
-
-    .gallery-topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      color: var(--paper-soft);
-      font-size: 12px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      font-weight: 900;
-    }
-
-    .gallery-close {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(247,245,240,.35);
-      background: rgba(247,245,240,.08);
-      color: var(--paper-soft);
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .gallery-stage {
-      min-height: 0;
-      display: grid;
-      place-items: center;
-      background: rgba(247,245,240,.06);
-      border: 1px solid rgba(247,245,240,.16);
-      overflow: hidden;
-    }
-
-    .gallery-stage img {
-      max-width: min(96vw, 1500px);
-      max-height: 74vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      box-shadow: 0 28px 70px rgba(0,0,0,.45);
-      background: var(--paper-soft);
-    }
-
-    .gallery-thumbs {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(90px, 1fr));
-      gap: 10px;
-      overflow-x: auto;
-      padding: 10px;
-      background: rgba(247,245,240,.10);
-      border: 1px solid rgba(247,245,240,.16);
-      scrollbar-width: thin;
-      scrollbar-color: rgba(247,245,240,.48) rgba(247,245,240,.12);
-    }
-
-    .gallery-thumbs button {
-      min-height: 78px;
-      border: 1px solid rgba(247,245,240,.22);
-      background-image: var(--thumb);
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-      opacity: .62;
-      transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
-    }
-
-    .gallery-thumbs button:hover,
-    .gallery-thumbs button.is-active {
-      opacity: 1;
-      transform: translateY(-2px);
-      border-color: var(--paper-soft);
-    }
-
-    @media (max-width: 760px) {
-      .modal-gallery {
-        grid-template-columns: 1fr;
-        max-height: 74vh;
-      }
-
-      .modal-shot {
-        min-height: 280px;
-      }
-
-      .image-gallery {
-        padding: 14px;
-      }
-
-      .gallery-stage img {
-        max-height: 68vh;
-      }
-
-      .gallery-thumbs {
-        grid-template-columns: repeat(6, minmax(72px, 1fr));
-      }
-
-      .gallery-thumbs button {
-        min-height: 64px;
-      }
-    }
-
-
-    /* V6: remove card thumbnail squares; modal images are real images and zoom with animation */
-    .preview-strip {
-      display: none !important;
-    }
-
-    .thin-card .project-content {
-      padding-top: 22px;
-      min-height: 0;
-    }
-
-    .modal-window {
-      width: min(1120px, 100%);
-    }
-
-    .modal-body {
-      padding: 30px;
-      gap: 26px;
-    }
-
-    .modal-gallery.image-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      max-height: 760px;
-      overflow-y: auto;
-      padding-right: 8px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(16,16,16,.35) rgba(16,16,16,.08);
-    }
-
-    .modal-gallery.image-list::-webkit-scrollbar { width: 8px; }
-    .modal-gallery.image-list::-webkit-scrollbar-track { background: rgba(16,16,16,.08); }
-    .modal-gallery.image-list::-webkit-scrollbar-thumb { background: rgba(16,16,16,.34); }
-
-    .modal-image-button {
-      display: block;
-      border: 0;
-      padding: 0;
-      background: transparent;
-      cursor: zoom-in;
-      overflow: hidden;
-      box-shadow: 0 16px 34px rgba(16,16,16,.10);
-      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
-    }
-
-    .modal-image-button img {
-      display: block;
-      width: 100%;
-      height: auto;
-      min-height: 250px;
-      max-height: 520px;
-      object-fit: cover;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      transition: transform 240ms ease, filter 240ms ease;
-    }
-
-    .modal-image-button:hover,
-    .modal-image-button:focus {
-      outline: 0;
-      transform: translateY(-4px);
-      box-shadow: 0 24px 42px rgba(16,16,16,.16);
-    }
-
-    .modal-image-button:hover img,
-    .modal-image-button:focus img {
-      transform: scale(1.025);
-      filter: contrast(1.04) saturate(1.02);
-    }
-
-    .image-gallery {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      display: none;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: 16px;
-      padding: 24px;
-      background: rgba(16,16,16,.72);
-      backdrop-filter: blur(18px);
-    }
-
-    .image-gallery.is-open {
-      display: grid;
-      animation: galleryFadeIn 180ms ease both;
-    }
-
-    .gallery-stage img {
-      animation: imageZoomIn 260ms cubic-bezier(.2,.9,.2,1) both;
-      transform-origin: center;
-    }
-
-    .image-gallery.is-changing .gallery-stage img {
-      animation: imageSwapIn 180ms ease both;
-    }
-
-    @keyframes galleryFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes imageZoomIn {
-      from {
-        opacity: 0;
-        transform: scale(.88) translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    @keyframes imageSwapIn {
-      from {
-        opacity: .35;
-        transform: scale(.96);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .gallery-topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      color: var(--paper-soft);
-      font-size: 12px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      font-weight: 900;
-    }
-
-    .gallery-close {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(247,245,240,.35);
-      background: rgba(247,245,240,.08);
-      color: var(--paper-soft);
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .gallery-stage {
-      min-height: 0;
-      display: grid;
-      place-items: center;
-      background: rgba(247,245,240,.06);
-      border: 1px solid rgba(247,245,240,.16);
-      overflow: hidden;
-    }
-
-    .gallery-stage img {
-      max-width: min(96vw, 1500px);
-      max-height: 74vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      box-shadow: 0 28px 70px rgba(0,0,0,.45);
-      background: var(--paper-soft);
-    }
-
-    .gallery-thumbs {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(90px, 1fr));
-      gap: 10px;
-      overflow-x: auto;
-      padding: 10px;
-      background: rgba(247,245,240,.10);
-      border: 1px solid rgba(247,245,240,.16);
-      scrollbar-width: thin;
-      scrollbar-color: rgba(247,245,240,.48) rgba(247,245,240,.12);
-    }
-
-    .gallery-thumbs button {
-      min-height: 78px;
-      border: 1px solid rgba(247,245,240,.22);
-      background-image: var(--thumb);
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-      opacity: .62;
-      transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
-    }
-
-    .gallery-thumbs button:hover,
-    .gallery-thumbs button.is-active {
-      opacity: 1;
-      transform: translateY(-2px);
-      border-color: var(--paper-soft);
-    }
-
-    @media (max-width: 760px) {
-      .modal-gallery.image-list {
-        grid-template-columns: 1fr;
-        max-height: 74vh;
-      }
-
-      .modal-image-button img {
-        min-height: 220px;
-        max-height: none;
-      }
-
-      .image-gallery {
-        padding: 14px;
-      }
-
-      .gallery-stage img {
-        max-height: 68vh;
-      }
-
-      .gallery-thumbs {
-        grid-template-columns: repeat(6, minmax(72px, 1fr));
-      }
-
-      .gallery-thumbs button {
-        min-height: 64px;
-      }
-    }
-
-
-    /* V7: modal uses one large image + mini thumbnails; fullscreen still available */
-    .modal-window {
-      width: min(1120px, 100%);
-    }
-
-    .modal-body {
-      padding: 30px;
-      gap: 26px;
-    }
-
-    .modal-viewer {
-      display: grid;
-      gap: 14px;
-    }
-
-    .modal-main-image {
-      display: block;
-      width: 100%;
-      border: 0;
-      padding: 0;
-      background: transparent;
-      cursor: zoom-in;
-      overflow: hidden;
-      box-shadow: 0 16px 34px rgba(16,16,16,.12);
-      transition: transform 180ms ease, box-shadow 180ms ease;
-    }
-
-    .modal-main-image:hover,
-    .modal-main-image:focus {
-      outline: 0;
-      transform: translateY(-3px);
-      box-shadow: 0 24px 44px rgba(16,16,16,.16);
-    }
-
-    .modal-main-image img {
-      display: block;
-      width: 100%;
-      height: clamp(300px, 52vh, 560px);
-      object-fit: contain;
-      background: var(--paper);
-      border: 1px solid var(--line);
-    }
-
-    .modal-main-image img.is-changing {
-      animation: modalImageSwap 220ms ease;
-    }
-
-    @keyframes modalImageSwap {
-      from {
-        opacity: .35;
-        transform: scale(.98);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .modal-thumb-row {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(90px, 1fr));
-      gap: 10px;
-      overflow-x: auto;
-      padding: 6px 2px 2px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(16,16,16,.38) rgba(16,16,16,.08);
-    }
-
-    .modal-thumb-row::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .modal-thumb-row::-webkit-scrollbar-track {
-      background: rgba(16,16,16,.08);
-    }
-
-    .modal-thumb-row::-webkit-scrollbar-thumb {
-      background: rgba(16,16,16,.34);
-    }
-
-    .modal-mini-thumb {
-      border: 1px solid rgba(16,16,16,.14);
-      background: var(--paper-soft);
-      padding: 0;
-      cursor: pointer;
-      opacity: .72;
-      transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-      overflow: hidden;
-      min-height: 74px;
-    }
-
-    .modal-mini-thumb img {
-      display: block;
-      width: 100%;
-      height: 74px;
-      object-fit: cover;
-    }
-
-    .modal-mini-thumb:hover,
-    .modal-mini-thumb:focus,
-    .modal-mini-thumb.is-active {
-      outline: 0;
-      opacity: 1;
-      transform: translateY(-2px);
-      border-color: var(--ink);
-      box-shadow: 0 10px 20px rgba(16,16,16,.12);
-    }
-
-    .image-gallery {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      display: none;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: 16px;
-      padding: 24px;
-      background: rgba(16,16,16,.72);
-      backdrop-filter: blur(18px);
-    }
-
-    .image-gallery.is-open {
-      display: grid;
-      animation: galleryFadeIn 180ms ease both;
-    }
-
-    @keyframes galleryFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .gallery-stage {
-      min-height: 0;
-      display: grid;
-      place-items: center;
-      background: rgba(247,245,240,.06);
-      border: 1px solid rgba(247,245,240,.16);
-      overflow: hidden;
-    }
-
-    .gallery-stage img {
-      max-width: min(96vw, 1500px);
-      max-height: 74vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      box-shadow: 0 28px 70px rgba(0,0,0,.45);
-      background: var(--paper-soft);
-      animation: imageZoomIn 260ms cubic-bezier(.2,.9,.2,1) both;
-      transform-origin: center;
-    }
-
-    .image-gallery.is-changing .gallery-stage img {
-      animation: imageSwapIn 180ms ease both;
-    }
-
-    @keyframes imageZoomIn {
-      from {
-        opacity: 0;
-        transform: scale(.88) translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    @keyframes imageSwapIn {
-      from {
-        opacity: .35;
-        transform: scale(.96);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .gallery-thumbs {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(90px, 1fr));
-      gap: 10px;
-      overflow-x: auto;
-      padding: 10px;
-      background: rgba(247,245,240,.10);
-      border: 1px solid rgba(247,245,240,.16);
-      scrollbar-width: thin;
-      scrollbar-color: rgba(247,245,240,.48) rgba(247,245,240,.12);
-    }
-
-    .gallery-thumbs button {
-      min-height: 78px;
-      border: 1px solid rgba(247,245,240,.22);
-      background-image: var(--thumb);
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-      opacity: .62;
-      transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
-    }
-
-    .gallery-thumbs button:hover,
-    .gallery-thumbs button.is-active {
-      opacity: 1;
-      transform: translateY(-2px);
-      border-color: var(--paper-soft);
-    }
-
-    @media (max-width: 760px) {
-      .modal-main-image img {
-        height: clamp(240px, 42vh, 360px);
-      }
-
-      .modal-thumb-row {
-        grid-template-columns: repeat(6, minmax(72px, 1fr));
-      }
-
-      .modal-mini-thumb,
-      .modal-mini-thumb img {
-        min-height: 62px;
-        height: 62px;
-      }
-
-      .image-gallery {
-        padding: 14px;
-      }
-
-      .gallery-stage img {
-        max-height: 68vh;
-      }
-
-      .gallery-thumbs {
-        grid-template-columns: repeat(6, minmax(72px, 1fr));
-      }
-
-      .gallery-thumbs button {
-        min-height: 64px;
-      }
-    }
-
-
-    /* V7B cleanup: remove leftover stacked gallery blocks from project modals */
-    .modal-shot,
-    .modal-image-button,
-    .modal-gallery.image-list {
-      display: none !important;
-    }
-
-
-    /* V8: smoother translucent project page, softer glass look, less obvious resolution mismatch */
-    .project-modal {
-      background: rgba(18, 18, 18, .18);
-      backdrop-filter: blur(22px) saturate(125%);
-    }
-
-    .modal-window {
-      width: min(1180px, 100%);
-      background:
-        linear-gradient(135deg, rgba(247,245,240,.72), rgba(247,245,240,.88)),
-        rgba(247,245,240,.76);
-      border: 1px solid rgba(255,255,255,.30);
-      box-shadow:
-        0 42px 90px rgba(16,16,16,.18),
-        inset 0 1px 0 rgba(255,255,255,.28);
-      overflow: hidden;
-    }
-
-    .modal-bar {
-      background: rgba(255,255,255,.18);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(16,16,16,.08);
-    }
-
-    .modal-close {
-      background: rgba(16,16,16,.92);
-      box-shadow: 0 10px 24px rgba(16,16,16,.14);
-    }
-
-    .modal-body {
-      padding: 30px;
-      gap: 18px;
-    }
-
-    .modal-body > h3,
-    .modal-body > p {
-      position: relative;
-      z-index: 3;
-      max-width: 920px;
-    }
-
-    .modal-body > p {
-      color: rgba(43,43,43,.68);
-    }
-
-    .modal-viewer {
-      position: relative;
-      display: grid;
-      gap: 14px;
-      padding: 18px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.26);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 22px 48px rgba(16,16,16,.10);
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .modal-viewer::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background-image:
-        linear-gradient(180deg, rgba(247,245,240,.22), rgba(247,245,240,.42)),
-        var(--active-image);
-      background-position: center;
-      background-size: cover;
-      filter: blur(34px) saturate(.92);
-      opacity: .34;
-      transform: scale(1.12);
-      pointer-events: none;
-    }
-
-    .modal-viewer::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,0) 38%),
-        radial-gradient(circle at top right, rgba(255,255,255,.14), transparent 32%);
-      pointer-events: none;
-    }
-
-    .modal-main-image,
-    .modal-thumb-row {
-      position: relative;
-      z-index: 2;
-    }
-
-    .modal-main-image {
-      display: block;
-      width: 100%;
-      border: 1px solid rgba(255,255,255,.24);
-      padding: 16px;
-      background: rgba(247,245,240,.22);
-      cursor: zoom-in;
-      overflow: hidden;
-      box-shadow:
-        0 16px 36px rgba(16,16,16,.12),
-        inset 0 1px 0 rgba(255,255,255,.18);
-      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
-    }
-
-    .modal-main-image:hover,
-    .modal-main-image:focus {
-      outline: 0;
-      transform: translateY(-2px);
-      box-shadow:
-        0 22px 42px rgba(16,16,16,.16),
-        inset 0 1px 0 rgba(255,255,255,.22);
-      background: rgba(247,245,240,.28);
-    }
-
-    .modal-main-image img {
-      display: block;
-      width: 100%;
-      height: clamp(320px, 54vh, 560px);
-      object-fit: contain;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,.18), rgba(255,255,255,0) 65%);
-      filter: drop-shadow(0 14px 24px rgba(16,16,16,.10));
-    }
-
-    .modal-thumb-row {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(84px, 1fr));
-      gap: 10px;
-      overflow-x: auto;
-      padding: 10px;
-      background: rgba(247,245,240,.18);
-      border: 1px solid rgba(255,255,255,.22);
-      scrollbar-width: thin;
-      scrollbar-color: rgba(16,16,16,.28) rgba(16,16,16,.06);
-    }
-
-    .modal-thumb-row::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .modal-thumb-row::-webkit-scrollbar-track {
-      background: rgba(16,16,16,.06);
-    }
-
-    .modal-thumb-row::-webkit-scrollbar-thumb {
-      background: rgba(16,16,16,.28);
-    }
-
-    .modal-mini-thumb {
-      border: 1px solid rgba(16,16,16,.10);
-      background: rgba(255,255,255,.14);
-      padding: 0;
-      cursor: pointer;
-      opacity: .74;
-      transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-      overflow: hidden;
-      min-height: 72px;
-      backdrop-filter: blur(8px);
-    }
-
-    .modal-mini-thumb img {
-      display: block;
-      width: 100%;
-      height: 72px;
-      object-fit: cover;
-      filter: saturate(.95);
-    }
-
-    .modal-mini-thumb:hover,
-    .modal-mini-thumb:focus,
-    .modal-mini-thumb.is-active {
-      outline: 0;
-      opacity: 1;
-      transform: translateY(-2px);
-      border-color: rgba(16,16,16,.42);
-      box-shadow: 0 10px 20px rgba(16,16,16,.10);
-    }
-
-    .gallery-stage {
-      background:
-        linear-gradient(135deg, rgba(247,245,240,.08), rgba(247,245,240,.02)),
-        rgba(247,245,240,.04);
-      border: 1px solid rgba(247,245,240,.16);
-    }
-
-    .gallery-stage img {
-      background: transparent;
-      filter: drop-shadow(0 28px 44px rgba(0,0,0,.24));
-    }
-
-    @media (max-width: 760px) {
-      .modal-body {
-        padding: 18px;
-      }
-
-      .modal-main-image {
-        padding: 10px;
-      }
-
-      .modal-main-image img {
-        height: clamp(240px, 42vh, 360px);
-      }
-
-      .modal-thumb-row {
-        grid-template-columns: repeat(6, minmax(72px, 1fr));
-      }
-
-      .modal-mini-thumb,
-      .modal-mini-thumb img {
-        min-height: 62px;
-        height: 62px;
-      }
-    }
-
-
-    /* V9 tweaks: more transparent opened project page + smaller softer fullscreen thumbs */
-
-    .project-modal {
-      background: rgba(12, 12, 12, .10);
-      backdrop-filter: blur(26px) saturate(120%);
-    }
-
-    .modal-window {
-      background:
-        linear-gradient(135deg, rgba(247,245,240,.44), rgba(247,245,240,.60)),
-        rgba(247,245,240,.46);
-      border: 1px solid rgba(255,255,255,.22);
-      box-shadow:
-        0 42px 90px rgba(16,16,16,.14),
-        inset 0 1px 0 rgba(255,255,255,.18);
-    }
-
-    .modal-bar {
-      background: rgba(255,255,255,.10);
-      border-bottom: 1px solid rgba(16,16,16,.06);
-    }
-
-    .modal-body > p {
-      color: rgba(43,43,43,.58);
-    }
-
-    .modal-viewer {
-      padding: 16px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow: 0 18px 40px rgba(16,16,16,.08);
-      backdrop-filter: blur(18px);
-    }
-
-    .modal-viewer::before {
-      opacity: .24;
-      filter: blur(40px) saturate(.88);
-    }
-
-    .modal-viewer::after {
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,0) 42%),
-        radial-gradient(circle at top right, rgba(255,255,255,.08), transparent 34%);
-    }
-
-    .modal-main-image {
-      padding: 14px;
-      background: rgba(247,245,240,.12);
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow:
-        0 14px 30px rgba(16,16,16,.08),
-        inset 0 1px 0 rgba(255,255,255,.12);
-    }
-
-    .modal-main-image:hover,
-    .modal-main-image:focus {
-      background: rgba(247,245,240,.16);
-      box-shadow:
-        0 18px 34px rgba(16,16,16,.11),
-        inset 0 1px 0 rgba(255,255,255,.15);
-    }
-
-    .modal-thumb-row {
-      padding: 8px;
-      background: rgba(247,245,240,.10);
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 12px;
-      gap: 8px;
-    }
-
-    .modal-mini-thumb {
-      min-height: 64px;
-      border: 1px solid rgba(16,16,16,.08);
-      background: rgba(255,255,255,.10);
-      border-radius: 10px;
-      opacity: .70;
-      box-shadow: none;
-    }
-
-    .modal-mini-thumb img {
-      height: 64px;
-      border-radius: 9px;
-    }
-
-    .modal-mini-thumb:hover,
-    .modal-mini-thumb:focus,
-    .modal-mini-thumb.is-active {
-      transform: translateY(-1px);
-      border-color: rgba(16,16,16,.24);
-      box-shadow: 0 8px 16px rgba(16,16,16,.08);
-    }
-
-    .image-gallery {
-      background: rgba(10,10,10,.48);
-      backdrop-filter: blur(24px) saturate(115%);
-    }
-
-    .gallery-stage {
-      background:
-        linear-gradient(135deg, rgba(247,245,240,.05), rgba(247,245,240,.015)),
-        rgba(247,245,240,.025);
-      border: 1px solid rgba(247,245,240,.12);
-      border-radius: 14px;
-    }
-
-    .gallery-thumbs {
-      grid-template-columns: repeat(6, minmax(72px, 100px));
-      justify-content: start;
-      gap: 8px;
-      padding: 8px;
-      background: rgba(247,245,240,.08);
-      border: 1px solid rgba(247,245,240,.12);
-      border-radius: 12px;
-    }
-
-    .gallery-thumbs button {
-      min-height: 58px;
-      border: 1px solid rgba(247,245,240,.14);
-      border-radius: 10px;
-      opacity: .58;
-      filter: saturate(.94);
-      box-shadow: none;
-    }
-
-    .gallery-thumbs button:hover,
-    .gallery-thumbs button.is-active {
-      opacity: .95;
-      transform: translateY(-1px);
-      border-color: rgba(247,245,240,.36);
-    }
-
-    @media (max-width: 760px) {
-      .modal-main-image {
-        padding: 10px;
-      }
-
-      .modal-thumb-row {
-        grid-template-columns: repeat(6, minmax(62px, 82px));
-      }
-
-      .modal-mini-thumb,
-      .modal-mini-thumb img {
-        min-height: 56px;
-        height: 56px;
-      }
-
-      .gallery-thumbs {
-        grid-template-columns: repeat(6, minmax(60px, 78px));
-        gap: 7px;
-      }
-
-      .gallery-thumbs button {
-        min-height: 50px;
-      }
-    }
-
-
-    /* V10: remove hard window frame from project page viewer, keep blurred background; center fullscreen thumbnails */
-    .modal-viewer {
-      padding: 0;
-      background: transparent;
-      border: 0;
-      box-shadow: none;
-      backdrop-filter: none;
-      gap: 14px;
-    }
-
-    .modal-viewer::before {
-      opacity: .30;
-      filter: blur(52px) saturate(.88);
-      transform: scale(1.16);
-    }
-
-    .modal-viewer::after {
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,0) 42%),
-        radial-gradient(circle at top right, rgba(255,255,255,.05), transparent 34%);
-    }
-
-    .modal-main-image {
-      padding: 0;
-      background: transparent;
-      border: 0;
-      box-shadow: none;
-    }
-
-    .modal-main-image:hover,
-    .modal-main-image:focus {
-      background: transparent;
-      box-shadow: none;
-      transform: translateY(-2px);
-    }
-
-    .modal-main-image img {
-      height: clamp(320px, 54vh, 560px);
-      background: transparent;
-      border: 0;
-      filter: drop-shadow(0 16px 26px rgba(16,16,16,.08));
-    }
-
-    .modal-thumb-row {
-      display: flex;
-      justify-content: flex-start;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 4px 0 2px;
-      background: transparent;
-      border: 0;
-      border-radius: 0;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(16,16,16,.26) rgba(16,16,16,.04);
-    }
-
-    .modal-thumb-row::-webkit-scrollbar {
-      height: 7px;
-    }
-
-    .modal-thumb-row::-webkit-scrollbar-track {
-      background: rgba(16,16,16,.04);
-    }
-
-    .modal-thumb-row::-webkit-scrollbar-thumb {
-      background: rgba(16,16,16,.24);
-    }
-
-    .modal-mini-thumb {
-      flex: 0 0 92px;
-      min-height: 58px;
-      border: 1px solid rgba(16,16,16,.07);
-      background: rgba(255,255,255,.08);
-      border-radius: 10px;
-      opacity: .72;
-      box-shadow: none;
-      backdrop-filter: blur(8px);
-    }
-
-    .modal-mini-thumb img {
-      height: 58px;
-      border-radius: 9px;
-    }
-
-    .modal-mini-thumb:hover,
-    .modal-mini-thumb:focus,
-    .modal-mini-thumb.is-active {
-      border-color: rgba(16,16,16,.18);
-      box-shadow: 0 6px 14px rgba(16,16,16,.06);
-    }
-
-    .image-gallery {
-      background: rgba(10,10,10,.44);
-      backdrop-filter: blur(26px) saturate(115%);
-    }
-
-    .gallery-thumbs {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 8px 10px;
-      background: rgba(247,245,240,.06);
-      border: 1px solid rgba(247,245,240,.10);
-      border-radius: 12px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(247,245,240,.40) rgba(247,245,240,.10);
-    }
-
-    .gallery-thumbs button {
-      flex: 0 0 88px;
-      min-height: 54px;
-      border: 1px solid rgba(247,245,240,.14);
-      border-radius: 10px;
-      opacity: .55;
-      box-shadow: none;
-      filter: saturate(.9);
-    }
-
-    .gallery-thumbs button:hover,
-    .gallery-thumbs button.is-active {
-      opacity: .95;
-      transform: translateY(-1px);
-      border-color: rgba(247,245,240,.30);
-    }
-
-    @media (max-width: 760px) {
-      .modal-main-image img {
-        height: clamp(240px, 42vh, 360px);
-      }
-
-      .modal-mini-thumb {
-        flex-basis: 76px;
-        min-height: 52px;
-      }
-
-      .modal-mini-thumb img {
-        height: 52px;
-      }
-
-      .gallery-thumbs button {
-        flex-basis: 70px;
-        min-height: 46px;
-      }
-    }
-
-
-    /* V11: remove the darker band/area behind the project image completely */
-    .modal-viewer::before,
-    .modal-viewer::after {
-      display: none !important;
-      content: none !important;
-      background: none !important;
-    }
-
-    .modal-viewer {
-      background: transparent !important;
-      box-shadow: none !important;
-      border: 0 !important;
-      backdrop-filter: none !important;
-    }
-
-    .modal-main-image {
-      background: transparent !important;
-      box-shadow: none !important;
-      border: 0 !important;
-    }
-
-    .modal-main-image:hover,
-    .modal-main-image:focus {
-      background: transparent !important;
-      box-shadow: none !important;
-    }
-
-    .modal-main-image img {
-      background: transparent !important;
-      filter: none !important;
-      box-shadow: none !important;
-    }
-
-
-    /* V12: center modal thumbs + fix double animation feel in fullscreen */
-    .modal-thumb-row {
-      display: flex;
-      justify-content: center !important;
-      align-items: center;
-      flex-wrap: nowrap;
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-
-    .modal-thumb-row::before,
-    .modal-thumb-row::after {
-      content: "";
-      flex: 0 0 2px;
-    }
-
-    .modal-mini-thumb {
-      flex: 0 0 92px;
-    }
-
-    .image-gallery.is-open {
-      animation: galleryFadeIn 160ms ease both;
-    }
-
-    /* remove always-on image animation to avoid double feeling */
-    .gallery-stage img {
-      animation: none !important;
-      transition: transform 180ms ease, opacity 180ms ease;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* animate only on first open */
-    .image-gallery.is-opening .gallery-stage img {
-      animation: imageZoomIn 220ms cubic-bezier(.2,.9,.2,1) both !important;
-    }
-
-    /* animate only when switching images inside already-open gallery */
-    .image-gallery.is-changing .gallery-stage img {
-      animation: imageSwapIn 160ms ease both !important;
-    }
-
-    @media (max-width: 760px) {
-      .modal-thumb-row {
-        justify-content: flex-start !important;
-      }
-
-      .modal-mini-thumb {
-        flex-basis: 76px;
-      }
-    }
-
-
-    /* V13: final typography review for EN/TR, especially Turkish dotted characters */
-    html {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-
-    body {
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-
-    h1, h2, h3, .poster-word, .project-title {
-      letter-spacing: -0.06em;
-      line-height: .90;
-    }
-
-    .brand,
-    .nav-links a,
-    .section-label,
-    .meta,
-    .contact-link span,
-    .modal-bar,
-    footer {
-      line-height: 1.25;
-    }
-
-    .hero-title h1 {
-      line-height: .88;
-      max-width: 100%;
-    }
-
-    .hero-title .line-2 {
-      margin-top: .16em;
-    }
-
-    .section-title {
-      line-height: .92;
-    }
-
-    .project-title {
-      line-height: .92;
-    }
-
-    .modal-body h3 {
-      line-height: .92;
-      letter-spacing: -0.055em;
-      max-width: 100%;
-      overflow-wrap: anywhere;
-    }
-
-    .hero-statement,
-    .about-text {
-      line-height: 1.02;
-    }
-
-    .hero-index-row span:last-child,
-    .project-desc,
-    .visual-frame p,
-    .info-row p,
-    .contact-box p {
-      line-height: 1.5;
-    }
-
-    /* Turkish mode: loosen spacing and increase line-height to prevent dotted-letter collisions */
-    #language-tr:checked ~ .site h1,
-    #language-tr:checked ~ .site h2,
-    #language-tr:checked ~ .site h3,
-    #language-tr:checked ~ .site .project-title,
-    #language-tr:checked ~ .site .section-title,
-    #language-tr:checked ~ .site .poster-word {
-      letter-spacing: -0.04em;
-      line-height: .96;
-      word-spacing: .01em;
-    }
-
-    #language-tr:checked ~ .site .hero-title h1 {
-      line-height: .94;
-    }
-
-    #language-tr:checked ~ .site .hero-title .line-2 {
-      margin-top: .18em;
-      -webkit-text-stroke: 1.6px var(--ink);
-      text-stroke: 1.6px var(--ink);
-    }
-
-    #language-tr:checked ~ .site .modal-body h3 {
-      letter-spacing: -0.035em;
-      line-height: .98;
-    }
-
-    #language-tr:checked ~ .site .hero-statement,
-    #language-tr:checked ~ .site .about-text {
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-    }
-
-    #language-tr:checked ~ .site .project-desc,
-    #language-tr:checked ~ .site .visual-frame p,
-    #language-tr:checked ~ .site .contact-box p,
-    #language-tr:checked ~ .site .hero-index-row span:last-child,
-    #language-tr:checked ~ .site .info-row p {
-      line-height: 1.58;
-    }
-
-    #language-tr:checked ~ .site .nav-links a,
-    #language-tr:checked ~ .site .section-label,
-    #language-tr:checked ~ .site .meta,
-    #language-tr:checked ~ .site .modal-bar,
-    #language-tr:checked ~ .site footer {
-      letter-spacing: .10em;
-      line-height: 1.35;
-    }
-
-    /* Make long Turkish words wrap more gracefully in narrow places */
-    .hero-title,
-    .section-title,
-    .project-title,
-    .modal-body h3,
-    .about-text {
-      overflow-wrap: anywhere;
-      hyphens: auto;
-    }
-
-    @media (max-width: 980px) {
-      h1, h2, h3, .poster-word, .project-title {
-        letter-spacing: -0.05em;
-      }
-
-      #language-tr:checked ~ .site h1,
-      #language-tr:checked ~ .site h2,
-      #language-tr:checked ~ .site h3,
-      #language-tr:checked ~ .site .project-title,
-      #language-tr:checked ~ .site .section-title,
-      #language-tr:checked ~ .site .poster-word {
-        letter-spacing: -0.03em;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .hero-title h1,
-      .section-title,
-      .modal-body h3 {
-        line-height: .94;
-      }
-
-      #language-tr:checked ~ .site .hero-title h1,
-      #language-tr:checked ~ .site .section-title,
-      #language-tr:checked ~ .site .modal-body h3 {
-        line-height: 1.00;
-      }
-    }
-
-  </style>
-</head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yavuzhan Önder — Editorial Archive Portfolio</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<style>
+:root {
+  --paper: #eceae4;
+  --paper-soft: #f7f5f0;
+  --ink: #101010;
+  --ink-soft: #2b2b2b;
+  --muted: #77736c;
+  --line: #c9c5bc;
+  --line-dark: #a9a49a;
+  --blue: #8eb6cf;
+  --blue-dark: #527c96;
+  --shadow: rgba(20, 20, 20, .16);
+  --hero-img: url('images/hero-entry.jpg');
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; font-kerning: normal; }
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(142,182,207,.16), transparent 32%),
+    linear-gradient(135deg, rgba(255,255,255,.28), rgba(255,255,255,0)),
+    var(--paper);
+  color: var(--ink);
+  font-family: "Inter", Arial, sans-serif;
+  overflow-x: hidden;
+}
+body::before {
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: .12;
+  background-image: radial-gradient(rgba(16,16,16,.22) .55px, transparent .65px), linear-gradient(90deg, rgba(16,16,16,.022) 1px, transparent 1px), linear-gradient(rgba(16,16,16,.018) 1px, transparent 1px);
+  background-size: 3px 3px, 64px 64px, 64px 64px;
+  mix-blend-mode: multiply;
+}
+a { color: inherit; text-decoration: none; }
+input[type="radio"] { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.page { width: min(1220px, calc(100% - 42px)); margin: 0 auto; }
+
+.lang-tr { display: none; }
+#language-tr:checked ~ .site .lang-en { display: none !important; }
+#language-tr:checked ~ .site .lang-tr { display: inline; }
+#language-tr:checked ~ .site p.lang-tr,
+#language-tr:checked ~ .site div.lang-tr,
+#language-tr:checked ~ .site h2.lang-tr,
+#language-tr:checked ~ .site h3.lang-tr,
+#language-tr:checked ~ .site span.lang-tr { display: block; }
+#language-tr:checked ~ .site .nav-links .lang-tr,
+#language-tr:checked ~ .site .open-project.lang-tr { display: inline-flex; }
+#language-en:checked ~ .site .lang-switch label[for="language-en"],
+#language-tr:checked ~ .site .lang-switch label[for="language-tr"] { background: var(--ink); color: var(--paper-soft); }
+
+h1, h2, h3, .poster-word, .project-title {
+  font-family: "Archivo Black", Arial, sans-serif;
+  letter-spacing: -0.055em;
+  line-height: .94;
+  font-kerning: normal;
+}
+#language-tr:checked ~ .site h1,
+#language-tr:checked ~ .site h2,
+#language-tr:checked ~ .site h3,
+#language-tr:checked ~ .site .project-title,
+#language-tr:checked ~ .site .section-title,
+#language-tr:checked ~ .site .poster-word {
+  letter-spacing: -0.032em;
+  line-height: 1.02;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(236,234,228,.84);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(16,16,16,.09);
+}
+.nav {
+  min-height: 68px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+  font-size: 12px;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+.brand { font-weight: 800; white-space: nowrap; }
+.nav-right { display: flex; align-items: center; gap: 30px; }
+.nav-links { display: flex; flex-wrap: wrap; gap: 24px; color: var(--muted); font-weight: 700; }
+.nav-links a { position: relative; transition: color .2s ease; }
+.nav-links a::after { content:""; position:absolute; left:0; bottom:-8px; width:0; height:1px; background:var(--ink); transition:width .2s ease; }
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { width: 100%; }
+.lang-switch { display:flex; border:1px solid var(--line); background:rgba(255,255,255,.28); font-size:11px; overflow:hidden; }
+.lang-switch label { display:inline-flex; align-items:center; padding:9px 11px; cursor:pointer; font:inherit; letter-spacing:.12em; }
+
+.hero {
+  min-height: calc(100vh - 68px);
+  display: grid;
+  grid-template-columns: minmax(0,.98fr) minmax(340px,.78fr);
+  gap: clamp(34px, 5vw, 78px);
+  align-items: stretch;
+  padding: 54px 0 70px;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.hero-left { position:relative; z-index:5; display:flex; flex-direction:column; justify-content:space-between; min-height:670px; padding:12px 0; }
+.kicker-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:560px; font-size:12px; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); font-weight:800; line-height:1.35; }
+.kicker-grid strong { display:block; color:var(--ink); font-size:13px; margin-bottom:7px; }
+.hero-title { position:relative; margin:66px 0 42px; max-width:100%; }
+.hero-title h1 { font-size: clamp(64px, 9.2vw, 132px); max-width:100%; overflow-wrap: normal; }
+.hero-title .line-2 { display:block; margin-top:.18em; color:transparent; -webkit-text-stroke:1.8px var(--ink); text-stroke:1.8px var(--ink); }
+.hero-title::before { content:"PORTFOLIO / 2026"; position:absolute; left:4px; top:-28px; font-size:12px; letter-spacing:.17em; font-weight:900; color:var(--blue-dark); }
+.hero-statement { max-width:620px; font-size:clamp(20px,2.2vw,34px); line-height:1.12; letter-spacing:-.035em; font-weight:700; color:var(--ink-soft); }
+#language-tr:checked ~ .site .hero-statement { line-height:1.18; letter-spacing:-.025em; }
+.hero-index { display:grid; gap:13px; max-width:620px; margin-top:42px; border-top:1px solid var(--line-dark); padding-top:18px; }
+.hero-index-row { display:grid; grid-template-columns:44px 1fr; gap:14px; align-items:start; font-size:13px; line-height:1.5; }
+.hero-index-row span:first-child { width:30px; height:30px; display:inline-grid; place-items:center; border:1px solid var(--ink); border-radius:50%; font-size:12px; font-weight:800; }
+.hero-index-row span:last-child { color:var(--muted); font-weight:650; }
+.barcode { display:flex; align-items:end; gap:3px; height:46px; margin-top:34px; }
+.barcode i { display:block; width:3px; background:var(--ink); }
+.barcode i:nth-child(2n){height:33px;} .barcode i:nth-child(2n+1){height:46px;} .barcode i:nth-child(3n){width:6px;} .barcode i:nth-child(5n){height:24px;}
+.hero-visual { position:relative; z-index:1; min-height:670px; background:var(--paper-soft); overflow:hidden; box-shadow:0 30px 70px var(--shadow); }
+.hero-visual::before { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(90deg, rgba(236,234,228,.95) 0%, rgba(236,234,228,.50) 30%, rgba(236,234,228,.05) 48%), var(--hero-img); background-size:cover; background-position:center; filter:saturate(.9) contrast(1.02); }
+.hero-visual.missing-image::before { background: linear-gradient(135deg, rgba(142,182,207,.35), rgba(247,245,240,.8)); }
+.hero-visual::after { content:"ARCHIVE"; position:absolute; z-index:2; right:-10px; top:42px; writing-mode:vertical-rl; font-family:"Archivo Black",Arial,sans-serif; font-size:clamp(64px,7vw,112px); line-height:.82; color:rgba(82,124,150,.50); letter-spacing:-.065em; mix-blend-mode:multiply; pointer-events:none; }
+.visual-frame { position:absolute; z-index:3; left:46px; bottom:46px; width:min(58%, 360px); min-height:170px; padding:20px; background:rgba(247,245,240,.86); border:1px solid rgba(16,16,16,.10); backdrop-filter:blur(7px); }
+.visual-frame p { color:var(--muted); font-size:13px; line-height:1.55; font-weight:650; }
+.visual-frame strong { display:block; color:var(--ink); font-size:13px; letter-spacing:.12em; text-transform:uppercase; margin-bottom:12px; line-height:1.35; }
+
+.section { padding:100px 0; border-bottom:1px solid var(--line); }
+.section-head { display:grid; grid-template-columns:180px minmax(0,1fr); gap:42px; margin-bottom:54px; align-items:end; }
+.section-label { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:900; line-height:1.35; }
+.section-title { font-size:clamp(50px,8vw,112px); line-height:.96; overflow-wrap:anywhere; }
+
+.works-layout { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:16px; align-items:stretch; }
+.project-card { position:relative; min-height:clamp(620px,74vh,760px); padding:62px 14px 22px; display:flex; flex-direction:column; justify-content:flex-end; background:linear-gradient(180deg, rgba(247,245,240,.62), rgba(247,245,240,.98)), var(--paper-soft); border:1px solid rgba(16,16,16,.11); overflow:hidden; color:var(--ink); box-shadow:0 18px 46px rgba(16,16,16,.10); transition:transform .26s ease, box-shadow .26s ease; }
+.project-card:hover { transform:translateY(-10px); box-shadow:0 34px 70px rgba(16,16,16,.16); }
+.project-card .num { position:absolute; left:14px; top:18px; z-index:6; width:34px; height:34px; border:1px solid var(--ink); border-radius:50%; display:grid; place-items:center; font-size:13px; font-weight:800; background:rgba(247,245,240,.88); }
+.project-card .year { position:absolute; right:14px; top:23px; z-index:6; font-size:11px; font-weight:900; letter-spacing:.12em; color:var(--muted); }
+.thin-image { position:absolute; inset:72px 12px 245px; z-index:1; background-image:linear-gradient(180deg, rgba(247,245,240,.08), rgba(247,245,240,.18)), var(--img); background-size:cover; background-position:center; filter:saturate(.88) contrast(1.02); transition:transform .26s ease, filter .26s ease; }
+.thin-image.missing-image { background-image: linear-gradient(135deg, rgba(142,182,207,.18), rgba(247,245,240,.8)) !important; }
+.project-card:hover .thin-image { transform:scale(1.045); filter:saturate(.98) contrast(1.06); }
+.thin-card::before { content:""; position:absolute; inset:72px 12px 245px; z-index:2; border:1px solid rgba(16,16,16,.13); pointer-events:none; }
+.thin-card::after { content:""; position:absolute; left:14px; top:54px; z-index:5; width:46px; height:2px; background:var(--blue-dark); transition:width .26s ease; }
+.thin-card:hover::after { width:74px; }
+.thin-card .poster-word { position:absolute; left:4px; top:82px; z-index:3; writing-mode:vertical-rl; transform:rotate(180deg); font-size:clamp(42px,4.6vw,76px); color:rgba(82,124,150,.50); mix-blend-mode:multiply; pointer-events:none; white-space:nowrap; }
+.thin-card .project-content { position:relative; z-index:8; margin:0; padding:22px 0 0; background:transparent; display:flex; flex-direction:column; gap:12px; }
+.thin-card .project-title { font-size:clamp(22px,2.0vw,32px); line-height:1.00; letter-spacing:-.045em; overflow-wrap:normal; }
+#language-tr:checked ~ .site .thin-card .project-title { letter-spacing:-.025em; line-height:1.08; }
+.thin-card .project-desc { font-size:12px; line-height:1.5; color:var(--muted); font-weight:650; }
+.thin-card .meta { font-size:9px; line-height:1.45; letter-spacing:.12em; text-transform:uppercase; font-weight:900; color:var(--blue-dark); }
+.open-project { display:inline-flex; align-items:center; gap:8px; font-size:10px; letter-spacing:.12em; text-transform:uppercase; font-weight:900; }
+.open-project::after { content:"↗"; width:24px; height:24px; display:grid; place-items:center; color:var(--paper-soft); background:var(--ink); transition:transform .26s ease; }
+.project-card:hover .open-project::after { transform:translate(4px,-4px); }
+.prop-card .thin-image{clip-path:polygon(0 0,100% 0,78% 100%,0 100%);} .material-card .thin-image{clip-path:polygon(14% 0,100% 0,100% 86%,0 100%,0 18%);} .character-card .thin-image{clip-path:polygon(0 0,86% 0,100% 100%,12% 100%);} .scene-card .thin-image{clip-path:polygon(0 0,100% 0,100% 100%,20% 100%,0 72%);} .twod-card .thin-image{clip-path:polygon(0 8%,100% 0,90% 100%,0 100%);} .drawing-card .thin-image{clip-path:polygon(10% 0,100% 0,100% 92%,0 100%,0 10%);}
+.preview-strip { display:none !important; }
+
+.about-layout { display:grid; grid-template-columns:minmax(0,1fr) 420px; gap:56px; align-items:start; }
+.about-text { font-size:clamp(30px,3.8vw,56px); line-height:1.06; letter-spacing:-.035em; font-weight:800; }
+#language-tr:checked ~ .site .about-text { line-height:1.12; letter-spacing:-.02em; }
+.info-list { border-top:1px solid var(--ink); }
+.info-row { display:grid; grid-template-columns:48px 120px 1fr; gap:16px; padding:18px 0; border-bottom:1px solid var(--line-dark); font-size:13px; line-height:1.5; }
+.info-row span:first-child { width:28px; height:28px; display:grid; place-items:center; border:1px solid var(--ink); border-radius:50%; font-size:11px; font-weight:800; }
+.info-row strong { text-transform:uppercase; letter-spacing:.10em; font-size:11px; line-height:1.35; }
+.info-row p { color:var(--muted); font-weight:650; }
+.skills-index { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:54px; border-top:1px solid var(--ink); }
+.skill-row { display:grid; grid-template-columns:60px 1fr; gap:22px; padding:20px 0; border-bottom:1px solid var(--line-dark); font-size:clamp(20px,2.2vw,34px); font-weight:900; letter-spacing:-.03em; line-height:1.12; }
+.skill-row span:first-child { font-size:13px; letter-spacing:.12em; color:var(--muted); padding-top:6px; }
+.contact-section { position:relative; min-height:520px; display:grid; align-items:center; overflow:hidden; }
+.contact-section::before { content:"CONTACT"; position:absolute; left:-14px; top:52px; font-family:"Archivo Black",Arial,sans-serif; font-size:clamp(88px,16vw,230px); letter-spacing:-.06em; color:rgba(82,124,150,.18); pointer-events:none; }
+.contact-box { position:relative; z-index:2; max-width:720px; margin-left:auto; border-top:1px solid var(--ink); padding-top:28px; }
+.contact-box p { color:var(--muted); font-size:18px; line-height:1.55; margin-bottom:28px; font-weight:650; }
+.contact-link { display:grid; grid-template-columns:130px 1fr; gap:20px; padding:18px 0; border-bottom:1px solid var(--line-dark); font-weight:800; line-height:1.35; }
+.contact-link span { color:var(--muted); font-size:12px; letter-spacing:.12em; text-transform:uppercase; }
+footer { padding:28px 0; color:var(--muted); font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:800; line-height:1.35; }
+
+.project-modal { position:fixed; inset:0; z-index:900; display:none; padding:28px; overflow:auto; background:rgba(12,12,12,.10); backdrop-filter:blur(26px) saturate(120%); }
+.project-modal:target { display:block; }
+.modal-window { width:min(1180px,100%); margin:48px auto; background:linear-gradient(135deg, rgba(247,245,240,.44), rgba(247,245,240,.60)), rgba(247,245,240,.46); border:1px solid rgba(255,255,255,.22); box-shadow:0 42px 90px rgba(16,16,16,.14), inset 0 1px 0 rgba(255,255,255,.18); overflow:hidden; }
+.modal-bar { min-height:58px; display:flex; justify-content:space-between; align-items:center; padding:0 20px; border-bottom:1px solid rgba(16,16,16,.06); background:rgba(255,255,255,.10); font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:900; color:var(--muted); line-height:1.35; }
+.modal-close { width:36px; height:36px; display:grid; place-items:center; background:rgba(16,16,16,.92); color:var(--paper-soft); box-shadow:0 10px 24px rgba(16,16,16,.14); }
+.modal-body { padding:30px; display:grid; gap:22px; }
+.modal-body h3 { font-size:clamp(44px,6.4vw,86px); line-height:1.00; letter-spacing:-.04em; max-width:100%; overflow-wrap:normal; }
+#language-tr:checked ~ .site .modal-body h3 { letter-spacing:-.022em; line-height:1.08; }
+.modal-body p { max-width:780px; color:rgba(43,43,43,.62); line-height:1.58; font-weight:650; }
+.modal-viewer { position:relative; display:grid; gap:14px; background:transparent !important; border:0 !important; box-shadow:none !important; backdrop-filter:none !important; isolation:isolate; }
+.modal-viewer::before, .modal-viewer::after { display:none !important; content:none !important; }
+.modal-main-image { display:block; width:100%; border:0; padding:0; background:transparent !important; cursor:zoom-in; overflow:hidden; box-shadow:none !important; transition:transform .18s ease; }
+.modal-main-image:hover, .modal-main-image:focus { outline:0; transform:translateY(-2px); }
+.modal-main-image img { display:block; width:100%; height:clamp(320px,54vh,560px); object-fit:contain; background:transparent !important; border:0; filter:none !important; box-shadow:none !important; }
+.modal-main-image img.is-changing { animation: modalImageSwap .22s ease; }
+@keyframes modalImageSwap { from{opacity:.35; transform:scale(.985);} to{opacity:1; transform:scale(1);} }
+.modal-thumb-row { display:flex; justify-content:center !important; align-items:center; flex-wrap:nowrap; gap:8px; overflow-x:auto; padding:4px 0 2px; background:transparent; border:0; width:100%; max-width:100%; margin:0 auto; scrollbar-width:thin; scrollbar-color:rgba(16,16,16,.26) rgba(16,16,16,.04); }
+.modal-thumb-row::-webkit-scrollbar { height:7px; }
+.modal-thumb-row::-webkit-scrollbar-track { background:rgba(16,16,16,.04); }
+.modal-thumb-row::-webkit-scrollbar-thumb { background:rgba(16,16,16,.24); }
+.modal-mini-thumb { flex:0 0 92px; min-height:58px; border:1px solid rgba(16,16,16,.07); background:rgba(255,255,255,.08); border-radius:10px; opacity:.72; box-shadow:none; padding:0; overflow:hidden; cursor:pointer; transition:transform .18s ease, opacity .18s ease, border-color .18s ease; }
+.modal-mini-thumb img { display:block; width:100%; height:58px; object-fit:cover; border-radius:9px; }
+.modal-mini-thumb:hover, .modal-mini-thumb:focus, .modal-mini-thumb.is-active { outline:0; opacity:1; transform:translateY(-1px); border-color:rgba(16,16,16,.22); }
+.modal-shot, .modal-image-button, .modal-gallery, .modal-gallery.image-list { display:none !important; }
+
+.image-gallery { position:fixed; inset:0; z-index:2000; display:none; grid-template-rows:auto minmax(0,1fr) auto; gap:16px; padding:24px; background:rgba(10,10,10,.44); backdrop-filter:blur(26px) saturate(115%); }
+.image-gallery.is-open { display:grid; animation:galleryFadeIn .16s ease both; }
+@keyframes galleryFadeIn { from{opacity:0;} to{opacity:1;} }
+.gallery-topbar { display:flex; justify-content:space-between; align-items:center; gap:18px; color:var(--paper-soft); font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:900; line-height:1.35; }
+.gallery-close { width:40px; height:40px; display:grid; place-items:center; border:1px solid rgba(247,245,240,.35); background:rgba(247,245,240,.08); color:var(--paper-soft); font-size:24px; cursor:pointer; }
+.gallery-stage { min-height:0; display:grid; place-items:center; background:linear-gradient(135deg, rgba(247,245,240,.05), rgba(247,245,240,.015)), rgba(247,245,240,.025); border:1px solid rgba(247,245,240,.12); border-radius:14px; overflow:hidden; }
+.gallery-stage img { max-width:min(96vw,1500px); max-height:74vh; width:auto; height:auto; object-fit:contain; background:transparent; filter:drop-shadow(0 28px 44px rgba(0,0,0,.24)); transition:transform .18s ease, opacity .18s ease; }
+.image-gallery.is-opening .gallery-stage img { animation:imageZoomIn .22s cubic-bezier(.2,.9,.2,1) both; }
+.image-gallery.is-changing .gallery-stage img { animation:imageSwapIn .16s ease both; }
+@keyframes imageZoomIn { from{opacity:0; transform:scale(.9) translateY(12px);} to{opacity:1; transform:scale(1) translateY(0);} }
+@keyframes imageSwapIn { from{opacity:.35; transform:scale(.965);} to{opacity:1; transform:scale(1);} }
+.gallery-thumbs { display:flex; justify-content:center; align-items:center; gap:8px; overflow-x:auto; padding:8px 10px; background:rgba(247,245,240,.06); border:1px solid rgba(247,245,240,.10); border-radius:12px; scrollbar-width:thin; scrollbar-color:rgba(247,245,240,.40) rgba(247,245,240,.10); }
+.gallery-thumbs button { flex:0 0 88px; min-height:54px; border:1px solid rgba(247,245,240,.14); border-radius:10px; background-image:var(--thumb); background-size:cover; background-position:center; cursor:pointer; opacity:.55; box-shadow:none; filter:saturate(.9); transition:opacity .18s ease, transform .18s ease, border-color .18s ease; }
+.gallery-thumbs button:hover, .gallery-thumbs button.is-active { opacity:.95; transform:translateY(-1px); border-color:rgba(247,245,240,.30); }
+
+@media (max-width:1180px) {
+  .works-layout { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .project-card { min-height:640px; }
+  .thin-card .project-title { font-size:clamp(28px,3.2vw,44px); }
+}
+@media (max-width:980px) {
+  .hero, .about-layout { grid-template-columns:1fr; }
+  .hero-left, .hero-visual { min-height:auto; }
+  .hero-visual { min-height:520px; }
+  .hero-title h1 { font-size:clamp(66px,17vw,132px); }
+  .section-head { grid-template-columns:1fr; gap:18px; }
+}
+@media (max-width:760px) {
+  .page { width:min(100% - 24px, 1220px); }
+  .nav { height:auto; min-height:72px; flex-direction:column; align-items:flex-start; justify-content:center; padding:16px 0; }
+  .nav-right { width:100%; align-items:flex-start; flex-direction:column; gap:16px; }
+  .nav-links { gap:14px; }
+  .hero { padding:38px 0 54px; gap:34px; }
+  .kicker-grid { grid-template-columns:1fr; }
+  .hero-title h1 { font-size:clamp(54px,18vw,104px); line-height:1.0; }
+  .hero-title .line-2 { -webkit-text-stroke:1px var(--ink); text-stroke:1px var(--ink); }
+  .visual-frame { left:22px; bottom:22px; width:calc(100% - 44px); }
+  .section { padding:70px 0; }
+  .works-layout { grid-template-columns:1fr; }
+  .project-card { min-height:610px; }
+  .thin-card .project-title { font-size:clamp(34px,11vw,54px); }
+  .skills-index { grid-template-columns:1fr; }
+  .info-row, .contact-link { grid-template-columns:1fr; gap:8px; }
+  .modal-window { margin:20px auto; }
+  .modal-body { padding:18px; }
+  .modal-body h3 { font-size:clamp(42px,12vw,74px); }
+  .modal-main-image img { height:clamp(240px,42vh,360px); }
+  .modal-thumb-row { justify-content:flex-start !important; }
+  .modal-mini-thumb { flex-basis:76px; min-height:52px; }
+  .modal-mini-thumb img { height:52px; }
+  .image-gallery { padding:14px; }
+  .gallery-stage img { max-height:68vh; }
+  .gallery-thumbs { justify-content:flex-start; }
+  .gallery-thumbs button { flex-basis:70px; min-height:46px; }
+}
+</style></head>
 <body>
-  <input id="language-en" name="language" type="radio" checked />
-  <input id="language-tr" name="language" type="radio" />
+<input checked="" id="language-en" name="language" type="radio"/>
+<input id="language-tr" name="language" type="radio"/>
+<div class="site">
+<header>
+<nav class="page nav">
+<a class="brand" href="#top">Yavuzhan Önder</a>
+<div class="nav-right">
+<div class="nav-links">
+<a href="#work"><span class="lang-en">Work</span><span class="lang-tr">Projeler</span></a>
+<a href="#about"><span class="lang-en">About</span><span class="lang-tr">Hakkımda</span></a>
+<a href="#skills"><span class="lang-en">Skills</span><span class="lang-tr">Yetenekler</span></a>
+<a href="#contact"><span class="lang-en">Contact</span><span class="lang-tr">İletişim</span></a>
+</div>
+<div aria-label="language switch" class="lang-switch">
+<label for="language-en">EN</label>
+<label for="language-tr">TR</label>
+</div>
+</div>
+</nav>
+</header>
+<main id="top">
+<section class="page hero">
+<div class="hero-left">
+<div>
+<div class="kicker-grid">
+<p><strong>Yavuzhan Önder</strong><span class="lang-en">Animation Student</span><span class="lang-tr">Animasyon Öğrencisi</span></p>
+<p><strong><span class="lang-en">Archive Index</span><span class="lang-tr">Arşiv İndeksi</span></strong><span class="lang-en">3D / 2D / Visual Studies</span><span class="lang-tr">3D / 2D / Görsel Çalışmalar</span></p>
+</div>
+<div class="hero-title">
+<h1>YAVUZHAN <span class="line-2">ÖNDER</span></h1>
+</div>
+<p class="hero-statement lang-en">Stylized 3D environments, props and visual studies focused on form, atmosphere and readable composition.</p>
+<p class="hero-statement lang-tr">Form, atmosfer ve okunabilir kompozisyon odağıyla stilize 3D çevreler, proplar ve görsel çalışmalar üretiyorum.</p>
+</div>
+<div>
+<div class="hero-index">
+<div class="hero-index-row"><span>1</span><span class="lang-en">3D Modeling / Environment / Prop Design</span><span class="lang-tr">3D Modelleme / Çevre / Prop Tasarımı</span></div>
+<div class="hero-index-row"><span>2</span><span class="lang-en">Blender, Photoshop and visual storytelling studies</span><span class="lang-tr">Blender, Photoshop ve görsel anlatım çalışmaları</span></div>
+<div class="hero-index-row"><span>3</span><span class="lang-en">Based in Türkiye — Portfolio archive, 2026</span><span class="lang-tr">Türkiye — Portfolyo arşivi, 2026</span></div>
+</div>
+<div aria-hidden="true" class="barcode"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+</div>
+<aside class="hero-visual">
+<div class="visual-frame">
+<strong><span class="lang-en">Visual Archive / Entry 01</span><span class="lang-tr">Görsel Arşiv / Kayıt 01</span></strong>
+<p class="lang-en">A portfolio prototype built like an editorial archive: large type, cropped visuals, calm colors and print-inspired structure.</p>
+<p class="lang-tr">Büyük tipografi, kırpılmış görseller, sakin renkler ve basılı yayın hissi üzerine kurulu editoryal portfolyo prototipi.</p>
+</div>
+</aside>
+</section>
+<section class="page section" id="work">
+<div class="section-head">
+<p class="section-label"><span class="lang-en">Selected Works</span><span class="lang-tr">Seçili Projeler</span></p>
+<h2 class="section-title"><span class="lang-en">POSTER ARCHIVE</span><span class="lang-tr">POSTER ARŞİVİ</span></h2>
+</div>
+<div class="works-layout">
+<a class="project-card thin-card prop-card" href="#prop-project">
+<span class="num">1</span><span class="year">2026</span>
+<div class="thin-image" style="--img:url('images/props-cover.jpg')"></div>
+<div class="poster-word">PROP</div>
+<div class="project-content">
+<h3 class="project-title"><span class="lang-en">Prop Collection</span><span class="lang-tr">Prop Koleksiyonu</span></h3>
+<p class="project-desc lang-en">Clean silhouettes and game-oriented object design.</p>
+<p class="project-desc lang-tr">Temiz silüetler ve oyun odaklı obje tasarımı.</p>
+<p class="meta">Prop / Modeling</p>
+<span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
+</div>
+</a>
+<a class="project-card thin-card material-card" href="#materials-project">
+<span class="num">2</span><span class="year">2026</span>
+<div class="thin-image" style="--img:url('images/materials-cover.jpg')"></div>
+<div class="poster-word">MAT</div>
+<div class="project-content">
+<h3 class="project-title"><span class="lang-en">Material Studies</span><span class="lang-tr">Materyal Çalışmaları</span></h3>
+<p class="project-desc lang-en">Shader, surface and texture experiments.</p>
+<p class="project-desc lang-tr">Shader, yüzey ve texture denemeleri.</p>
+<p class="meta">Materials / Texture</p>
+<span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
+</div>
+</a>
+<a class="project-card thin-card character-card" href="#character-project">
+<span class="num">3</span><span class="year">2026</span>
+<div class="thin-image" style="--img:url('images/character-cover.jpg')"></div>
+<div class="poster-word">CHAR</div>
+<div class="project-content">
+<h3 class="project-title"><span class="lang-en">Character Design</span><span class="lang-tr">Karakter Tasarımı</span></h3>
+<p class="project-desc lang-en">Low poly and stylized character form studies.</p>
+<p class="project-desc lang-tr">Low poly ve stilize karakter form çalışmaları.</p>
+<p class="meta">Character / Low Poly</p>
+<span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
+</div>
+</a>
+<a class="project-card thin-card scene-card" href="#scene-project">
+<span class="num">4</span><span class="year">2026</span>
+<div class="thin-image" style="--img:url('images/environment-scene.jpg')"></div>
+<div class="poster-word">SCENE</div>
+<div class="project-content">
+<h3 class="project-title"><span class="lang-en">Environment Scene</span><span class="lang-tr">Çevre Sahnesi</span></h3>
+<p class="project-desc lang-en">Atmosphere, lighting and composition studies.</p>
+<p class="project-desc lang-tr">Atmosfer, ışık ve kompozisyon çalışmaları.</p>
+<p class="meta">Scene / Lighting</p>
+<span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
+</div>
+</a>
+<a class="project-card thin-card twod-card" href="#twod-project">
+<span class="num">5</span><span class="year">2026</span>
+<div class="thin-image" style="--img:url('images/2d-cover.jpg')"></div>
+<div class="poster-word">2D</div>
+<div class="project-content">
+<h3 class="project-title"><span class="lang-en">2D Works</span><span class="lang-tr">2D Çalışmalar</span></h3>
+<p class="project-desc lang-en">Poster, edit and graphic composition studies.</p>
+<p class="project-desc lang-tr">Poster, düzenleme ve grafik kompozisyon çalışmaları.</p>
+<p class="meta">Photoshop / Visual</p>
+<span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
+</div>
+</a>
+<a class="project-card thin-card drawing-card" href="#drawing-project">
+<span class="num">6</span><span class="year">2026</span>
+<div class="thin-image" style="--img:url('images/drawing-cover.jpg')"></div>
+<div class="poster-word">DRAW</div>
+<div class="project-content">
+<h3 class="project-title"><span class="lang-en">Pencil Drawing</span><span class="lang-tr">Kara Kalem</span></h3>
+<p class="project-desc lang-en">Observation, form and shading studies.</p>
+<p class="project-desc lang-tr">Gözlem, form ve gölgelendirme çalışmaları.</p>
+<p class="meta">Pencil / Traditional</p>
+<span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
+</div>
+</a>
+</div>
+</section>
+<section class="page section" id="about">
+<div class="section-head"><p class="section-label"><span class="lang-en">About</span><span class="lang-tr">Hakkımda</span></p><h2 class="section-title"><span class="lang-en">VISUAL SYSTEM</span><span class="lang-tr">GÖRSEL SİSTEM</span></h2></div>
+<div class="about-layout"><p class="about-text lang-en">I create stylized 3D props, environments and visual studies with a focus on atmosphere, readable silhouettes and game-oriented design.</p><p class="about-text lang-tr">Atmosfer, okunabilir silüetler ve oyun odaklı tasarım anlayışıyla stilize 3D proplar, çevreler ve görsel çalışmalar üretiyorum.</p><div class="info-list"><div class="info-row"><span>1</span><strong>Focus</strong><p>3D Modeling / Environment / Prop</p></div><div class="info-row"><span>2</span><strong>Tools</strong><p>Blender / Photoshop</p></div><div class="info-row"><span>3</span><strong>Style</strong><p>Stylized / Atmospheric / Readable</p></div><div class="info-row"><span>4</span><strong>Location</strong><p>Türkiye</p></div></div></div>
+</section>
+<section class="page section" id="skills">
+<div class="section-head"><p class="section-label">Index</p><h2 class="section-title"><span class="lang-en">SKILLS</span><span class="lang-tr">YETENEKLER</span></h2></div>
+<div class="skills-index"><div class="skill-row"><span>01</span><span>3D Modeling</span></div><div class="skill-row"><span>02</span><span>Environment Design</span></div><div class="skill-row"><span>03</span><span>Prop Design</span></div><div class="skill-row"><span>04</span><span>Texturing</span></div><div class="skill-row"><span>05</span><span>Lighting</span></div><div class="skill-row"><span>06</span><span>Composition</span></div><div class="skill-row"><span>07</span><span>Graphic Design</span></div><div class="skill-row"><span>08</span><span>Pencil Drawing</span></div></div>
+</section>
+<section class="page section contact-section" id="contact">
+<div class="contact-box"><p class="lang-en">You can contact me by email or through Instagram.</p><p class="lang-tr">Bana mail atabilir veya Instagram üzerinden ulaşabilirsiniz.</p><a class="contact-link" href="mailto:2006cto@gmail.com"><span>Mail</span><strong>2006cto@gmail.com</strong></a><a class="contact-link" href="https://www.instagram.com/yavuzhanonder" rel="noopener noreferrer" target="_blank"><span>Instagram</span><strong>@yavuzhanonder</strong></a></div>
+</section>
+</main>
+<div class="project-modal" id="scene-project"><div class="modal-window"><div class="modal-bar"><span>Project / 04</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Environment Scene Study</span><span class="lang-tr">Çevre Sahnesi Çalışması</span></h3><p class="lang-en">A project page placeholder for final renders, lighting tests, scene breakdowns and composition notes.</p><p class="lang-tr">Final renderlar, ışık testleri, sahne parçalamaları ve kompozisyon notları için proje alanı.</p><div class="modal-viewer" data-gallery="environment"><button aria-label="Open Environment Scene image gallery" class="modal-main-image" data-gallery="environment" data-index="0" type="button"><img alt="Environment Scene image 1" loading="lazy" src="images/environment-01.jpg"/></button><div class="modal-thumb-row"><button aria-label="Environment Scene image 1" class="modal-mini-thumb is-active" data-gallery="environment" data-index="0" type="button"><img alt="Environment Scene thumbnail 1" loading="lazy" src="images/environment-01.jpg"/></button><button aria-label="Environment Scene image 2" class="modal-mini-thumb" data-gallery="environment" data-index="1" type="button"><img alt="Environment Scene thumbnail 2" loading="lazy" src="images/environment-02.jpg"/></button><button aria-label="Environment Scene image 3" class="modal-mini-thumb" data-gallery="environment" data-index="2" type="button"><img alt="Environment Scene thumbnail 3" loading="lazy" src="images/environment-03.jpg"/></button><button aria-label="Environment Scene image 4" class="modal-mini-thumb" data-gallery="environment" data-index="3" type="button"><img alt="Environment Scene thumbnail 4" loading="lazy" src="images/environment-04.jpg"/></button><button aria-label="Environment Scene image 5" class="modal-mini-thumb" data-gallery="environment" data-index="4" type="button"><img alt="Environment Scene thumbnail 5" loading="lazy" src="images/environment-05.jpg"/></button><button aria-label="Environment Scene image 6" class="modal-mini-thumb" data-gallery="environment" data-index="5" type="button"><img alt="Environment Scene thumbnail 6" loading="lazy" src="images/environment-06.jpg"/></button></div></div></div></div></div></div>
+<div class="project-modal" id="prop-project"><div class="modal-window"><div class="modal-bar"><span>Project / 01</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Prop Collection</span><span class="lang-tr">Prop Koleksiyonu</span></h3><p class="lang-en">A project page placeholder for prop renders, close-up details, wireframes and material notes.</p><p class="lang-tr">Prop renderları, yakın plan detaylar, wireframe ve materyal notları için proje alanı.</p><div class="modal-viewer" data-gallery="prop"><button aria-label="Open Prop Collection image gallery" class="modal-main-image" data-gallery="prop" data-index="0" type="button"><img alt="Prop Collection image 1" loading="lazy" src="images/props-01.jpg"/></button><div class="modal-thumb-row"><button aria-label="Prop Collection image 1" class="modal-mini-thumb is-active" data-gallery="prop" data-index="0" type="button"><img alt="Prop Collection thumbnail 1" loading="lazy" src="images/props-01.jpg"/></button><button aria-label="Prop Collection image 2" class="modal-mini-thumb" data-gallery="prop" data-index="1" type="button"><img alt="Prop Collection thumbnail 2" loading="lazy" src="images/props-02.jpg"/></button><button aria-label="Prop Collection image 3" class="modal-mini-thumb" data-gallery="prop" data-index="2" type="button"><img alt="Prop Collection thumbnail 3" loading="lazy" src="images/props-03.jpg"/></button><button aria-label="Prop Collection image 4" class="modal-mini-thumb" data-gallery="prop" data-index="3" type="button"><img alt="Prop Collection thumbnail 4" loading="lazy" src="images/props-04.jpg"/></button><button aria-label="Prop Collection image 5" class="modal-mini-thumb" data-gallery="prop" data-index="4" type="button"><img alt="Prop Collection thumbnail 5" loading="lazy" src="images/props-05.jpg"/></button><button aria-label="Prop Collection image 6" class="modal-mini-thumb" data-gallery="prop" data-index="5" type="button"><img alt="Prop Collection thumbnail 6" loading="lazy" src="images/props-06.jpg"/></button></div></div></div></div></div>
+<div class="project-modal" id="materials-project"><div class="modal-window"><div class="modal-bar"><span>Project / 02</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Material Studies</span><span class="lang-tr">Materyal Çalışmaları</span></h3><p class="lang-en">A project page placeholder for shader experiments, texture studies and surface close-ups.</p><p class="lang-tr">Shader denemeleri, texture çalışmaları ve yüzey yakın planları için proje alanı.</p><div class="modal-viewer" data-gallery="materials"><button aria-label="Open Material Studies image gallery" class="modal-main-image" data-gallery="materials" data-index="0" type="button"><img alt="Material Studies image 1" loading="lazy" src="images/materials-01.jpg"/></button><div class="modal-thumb-row"><button aria-label="Material Studies image 1" class="modal-mini-thumb is-active" data-gallery="materials" data-index="0" type="button"><img alt="Material Studies thumbnail 1" loading="lazy" src="images/materials-01.jpg"/></button><button aria-label="Material Studies image 2" class="modal-mini-thumb" data-gallery="materials" data-index="1" type="button"><img alt="Material Studies thumbnail 2" loading="lazy" src="images/materials-02.jpg"/></button><button aria-label="Material Studies image 3" class="modal-mini-thumb" data-gallery="materials" data-index="2" type="button"><img alt="Material Studies thumbnail 3" loading="lazy" src="images/materials-03.jpg"/></button><button aria-label="Material Studies image 4" class="modal-mini-thumb" data-gallery="materials" data-index="3" type="button"><img alt="Material Studies thumbnail 4" loading="lazy" src="images/materials-04.jpg"/></button><button aria-label="Material Studies image 5" class="modal-mini-thumb" data-gallery="materials" data-index="4" type="button"><img alt="Material Studies thumbnail 5" loading="lazy" src="images/materials-05.jpg"/></button><button aria-label="Material Studies image 6" class="modal-mini-thumb" data-gallery="materials" data-index="5" type="button"><img alt="Material Studies thumbnail 6" loading="lazy" src="images/materials-06.jpg"/></button></div></div></div></div></div>
+<div class="project-modal" id="character-project"><div class="modal-window"><div class="modal-bar"><span>Project / 03</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Character Design</span><span class="lang-tr">Karakter Tasarımı</span></h3><p class="lang-en">A project page placeholder for character sheets, front and side views, silhouette studies and low poly forms.</p><p class="lang-tr">Karakter sheetleri, ön ve yan görünüşler, silüet denemeleri ve low poly formlar için proje alanı.</p><div class="modal-viewer" data-gallery="character"><button aria-label="Open Character Design image gallery" class="modal-main-image" data-gallery="character" data-index="0" type="button"><img alt="Character Design image 1" loading="lazy" src="images/character-01.jpg"/></button><div class="modal-thumb-row"><button aria-label="Character Design image 1" class="modal-mini-thumb is-active" data-gallery="character" data-index="0" type="button"><img alt="Character Design thumbnail 1" loading="lazy" src="images/character-01.jpg"/></button><button aria-label="Character Design image 2" class="modal-mini-thumb" data-gallery="character" data-index="1" type="button"><img alt="Character Design thumbnail 2" loading="lazy" src="images/character-02.jpg"/></button><button aria-label="Character Design image 3" class="modal-mini-thumb" data-gallery="character" data-index="2" type="button"><img alt="Character Design thumbnail 3" loading="lazy" src="images/character-03.jpg"/></button><button aria-label="Character Design image 4" class="modal-mini-thumb" data-gallery="character" data-index="3" type="button"><img alt="Character Design thumbnail 4" loading="lazy" src="images/character-04.jpg"/></button><button aria-label="Character Design image 5" class="modal-mini-thumb" data-gallery="character" data-index="4" type="button"><img alt="Character Design thumbnail 5" loading="lazy" src="images/character-05.jpg"/></button><button aria-label="Character Design image 6" class="modal-mini-thumb" data-gallery="character" data-index="5" type="button"><img alt="Character Design thumbnail 6" loading="lazy" src="images/character-06.jpg"/></button></div></div></div></div></div>
+<div class="project-modal" id="twod-project"><div class="modal-window"><div class="modal-bar"><span>Project / 05</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">2D Works</span><span class="lang-tr">2D Çalışmalar</span></h3><p class="lang-en">A project page placeholder for posters, edits, digital compositions and graphic visual studies.</p><p class="lang-tr">Posterler, düzenlemeler, dijital kompozisyonlar ve grafik görsel çalışmalar için proje alanı.</p><div class="modal-viewer" data-gallery="twod"><button aria-label="Open 2D Works image gallery" class="modal-main-image" data-gallery="twod" data-index="0" type="button"><img alt="2D Works image 1" loading="lazy" src="images/2d-01.jpg"/></button><div class="modal-thumb-row"><button aria-label="2D Works image 1" class="modal-mini-thumb is-active" data-gallery="twod" data-index="0" type="button"><img alt="2D Works thumbnail 1" loading="lazy" src="images/2d-01.jpg"/></button><button aria-label="2D Works image 2" class="modal-mini-thumb" data-gallery="twod" data-index="1" type="button"><img alt="2D Works thumbnail 2" loading="lazy" src="images/2d-02.jpg"/></button><button aria-label="2D Works image 3" class="modal-mini-thumb" data-gallery="twod" data-index="2" type="button"><img alt="2D Works thumbnail 3" loading="lazy" src="images/2d-03.jpg"/></button><button aria-label="2D Works image 4" class="modal-mini-thumb" data-gallery="twod" data-index="3" type="button"><img alt="2D Works thumbnail 4" loading="lazy" src="images/2d-04.jpg"/></button><button aria-label="2D Works image 5" class="modal-mini-thumb" data-gallery="twod" data-index="4" type="button"><img alt="2D Works thumbnail 5" loading="lazy" src="images/2d-05.jpg"/></button><button aria-label="2D Works image 6" class="modal-mini-thumb" data-gallery="twod" data-index="5" type="button"><img alt="2D Works thumbnail 6" loading="lazy" src="images/2d-06.jpg"/></button></div></div></div></div></div>
+<div class="project-modal" id="drawing-project"><div class="modal-window"><div class="modal-bar"><span>Project / 06</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Pencil Drawing</span><span class="lang-tr">Kara Kalem</span></h3><p class="lang-en">A project page placeholder for sketches, observation studies, shading practice and traditional drawing work.</p><p class="lang-tr">Eskizler, gözlem çalışmaları, gölgelendirme pratikleri ve geleneksel çizim işleri için proje alanı.</p><div class="modal-viewer" data-gallery="drawing"><button aria-label="Open Pencil Drawing image gallery" class="modal-main-image" data-gallery="drawing" data-index="0" type="button"><img alt="Pencil Drawing image 1" loading="lazy" src="images/drawing-01.jpg"/></button><div class="modal-thumb-row"><button aria-label="Pencil Drawing image 1" class="modal-mini-thumb is-active" data-gallery="drawing" data-index="0" type="button"><img alt="Pencil Drawing thumbnail 1" loading="lazy" src="images/drawing-01.jpg"/></button><button aria-label="Pencil Drawing image 2" class="modal-mini-thumb" data-gallery="drawing" data-index="1" type="button"><img alt="Pencil Drawing thumbnail 2" loading="lazy" src="images/drawing-02.jpg"/></button><button aria-label="Pencil Drawing image 3" class="modal-mini-thumb" data-gallery="drawing" data-index="2" type="button"><img alt="Pencil Drawing thumbnail 3" loading="lazy" src="images/drawing-03.jpg"/></button><button aria-label="Pencil Drawing image 4" class="modal-mini-thumb" data-gallery="drawing" data-index="3" type="button"><img alt="Pencil Drawing thumbnail 4" loading="lazy" src="images/drawing-04.jpg"/></button><button aria-label="Pencil Drawing image 5" class="modal-mini-thumb" data-gallery="drawing" data-index="4" type="button"><img alt="Pencil Drawing thumbnail 5" loading="lazy" src="images/drawing-05.jpg"/></button><button aria-label="Pencil Drawing image 6" class="modal-mini-thumb" data-gallery="drawing" data-index="5" type="button"><img alt="Pencil Drawing thumbnail 6" loading="lazy" src="images/drawing-06.jpg"/></button></div></div></div></div></div>
+<footer class="page">© 2026 Yavuzhan Önder — Editorial Archive Portfolio Prototype</footer>
 
-  <div class="site">
-    <header>
-      <nav class="page nav">
-        <a class="brand" href="#top">Yavuzhan Önder</a>
-        <div class="nav-right">
-          <div class="nav-links">
-            <a href="#work"><span class="lang-en">Work</span><span class="lang-tr">Projeler</span></a>
-            <a href="#about"><span class="lang-en">About</span><span class="lang-tr">Hakkımda</span></a>
-            <a href="#skills"><span class="lang-en">Skills</span><span class="lang-tr">Yetenekler</span></a>
-            <a href="#contact"><span class="lang-en">Contact</span><span class="lang-tr">İletişim</span></a>
-          </div>
-          <div class="lang-switch" aria-label="language switch">
-            <label for="language-en">EN</label>
-            <label for="language-tr">TR</label>
-          </div>
-        </div>
-      </nav>
-    </header>
+<div aria-hidden="true" class="image-gallery" id="imageGallery">
+<div class="gallery-topbar">
+<span id="galleryTitle">Gallery</span>
+<button aria-label="Close gallery" class="gallery-close" id="galleryClose" type="button">×</button>
+</div>
+<div class="gallery-stage">
+<img alt="Selected project image" id="galleryImage" src=""/>
+</div>
+<div aria-label="Gallery thumbnails" class="gallery-thumbs" id="galleryThumbs"></div>
+</div>
 
-    <main id="top">
-      <section class="page hero">
-        <div class="hero-left">
-          <div>
-            <div class="kicker-grid">
-              <p><strong>Yavuzhan Önder</strong><span class="lang-en">Animation Student</span><span class="lang-tr">Animasyon Öğrencisi</span></p>
-              <p><strong><span class="lang-en">Archive Index</span><span class="lang-tr">Arşiv İndeksi</span></strong><span class="lang-en">3D / 2D / Visual Studies</span><span class="lang-tr">3D / 2D / Görsel Çalışmalar</span></p>
-            </div>
+<script>
+const rawGalleries = {
+  prop: { title: "Prop Collection", images: ["props-01.jpg","props-02.jpg","props-03.jpg","props-04.jpg","props-05.jpg","props-06.jpg"] },
+  materials: { title: "Material Studies", images: ["materials-01.jpg","materials-02.jpg","materials-03.jpg","materials-04.jpg","materials-05.jpg","materials-06.jpg"] },
+  character: { title: "Character Design", images: ["character-01.jpg","character-02.jpg","character-03.jpg","character-04.jpg","character-05.jpg","character-06.jpg"] },
+  environment: { title: "Environment Scene", images: ["environment-01.jpg","environment-02.jpg","environment-03.jpg","environment-04.jpg","environment-05.jpg","environment-06.jpg"] },
+  twod: { title: "2D Works", images: ["2d-01.jpg","2d-02.jpg","2d-03.jpg","2d-04.jpg","2d-05.jpg","2d-06.jpg"] },
+  drawing: { title: "Pencil Drawing", images: ["drawing-01.jpg","drawing-02.jpg","drawing-03.jpg","drawing-04.jpg","drawing-05.jpg","drawing-06.jpg"] }
+};
+const covers = {
+  prop: "props-cover.jpg",
+  materials: "materials-cover.jpg",
+  character: "character-cover.jpg",
+  environment: "environment-scene.jpg",
+  twod: "2d-cover.jpg",
+  drawing: "drawing-cover.jpg"
+};
+const galleryCache = {};
+const gallery = document.getElementById("imageGallery");
+const galleryTitle = document.getElementById("galleryTitle");
+const galleryImage = document.getElementById("galleryImage");
+const galleryThumbs = document.getElementById("galleryThumbs");
+const galleryClose = document.getElementById("galleryClose");
+let activeGroup = null;
+let activeIndex = 0;
 
-            <div class="hero-title">
-              <h1>YAVUZHAN <span class="line-2">ÖNDER</span></h1>
-            </div>
-
-            <p class="hero-statement lang-en">Stylized 3D environments, props and visual studies focused on form, atmosphere and readable composition.</p>
-            <p class="hero-statement lang-tr">Form, atmosfer ve okunabilir kompozisyon odağıyla stilize 3D çevreler, proplar ve görsel çalışmalar üretiyorum.</p>
-          </div>
-
-          <div>
-            <div class="hero-index">
-              <div class="hero-index-row"><span>1</span><span class="lang-en">3D Modeling / Environment / Prop Design</span><span class="lang-tr">3D Modelleme / Çevre / Prop Tasarımı</span></div>
-              <div class="hero-index-row"><span>2</span><span class="lang-en">Blender, Photoshop and visual storytelling studies</span><span class="lang-tr">Blender, Photoshop ve görsel anlatım çalışmaları</span></div>
-              <div class="hero-index-row"><span>3</span><span class="lang-en">Based in Türkiye — Portfolio archive, 2026</span><span class="lang-tr">Türkiye — Portfolyo arşivi, 2026</span></div>
-            </div>
-            <div class="barcode" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-        </div>
-
-        <aside class="hero-visual">
-          <div class="visual-frame">
-            <strong><span class="lang-en">Visual Archive / Entry 01</span><span class="lang-tr">Görsel Arşiv / Kayıt 01</span></strong>
-            <p class="lang-en">A portfolio prototype built like an editorial archive: large type, cropped visuals, calm colors and print-inspired structure.</p>
-            <p class="lang-tr">Büyük tipografi, kırpılmış görseller, sakin renkler ve basılı yayın hissi üzerine kurulu editoryal portfolyo prototipi.</p>
-          </div>
-        </aside>
-      </section>
-
-      <section id="work" class="page section">
-        <div class="section-head">
-          <p class="section-label"><span class="lang-en">Selected Works</span><span class="lang-tr">Seçili Projeler</span></p>
-          <h2 class="section-title"><span class="lang-en">POSTER ARCHIVE</span><span class="lang-tr">POSTER ARŞİVİ</span></h2>
-        </div>
-
-        <div class="works-layout">
-          <a href="#prop-project" class="project-card thin-card prop-card">
-            <span class="num">1</span><span class="year">2026</span>
-            <div class="thin-image" style="--img:url('images/props-cover.jpg')"></div>
-            <div class="poster-word">PROP</div>
-            <div class="project-content">
-              <h3 class="project-title"><span class="lang-en">Prop Collection</span><span class="lang-tr">Prop Koleksiyonu</span></h3>
-              <p class="project-desc lang-en">Clean silhouettes and game-oriented object design.</p>
-              <p class="project-desc lang-tr">Temiz silüetler ve oyun odaklı obje tasarımı.</p>
-              <p class="meta">Prop / Modeling</p>
-              <span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
-            </div>
-          </a>
-
-          <a href="#materials-project" class="project-card thin-card material-card">
-            <span class="num">2</span><span class="year">2026</span>
-            <div class="thin-image" style="--img:url('images/materials-cover.jpg')"></div>
-            <div class="poster-word">MAT</div>
-            <div class="project-content">
-              <h3 class="project-title"><span class="lang-en">Material Studies</span><span class="lang-tr">Materyal Çalışmaları</span></h3>
-              <p class="project-desc lang-en">Shader, surface and texture experiments.</p>
-              <p class="project-desc lang-tr">Shader, yüzey ve texture denemeleri.</p>
-              <p class="meta">Materials / Texture</p>
-              <span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
-            </div>
-          </a>
-
-          <a href="#character-project" class="project-card thin-card character-card">
-            <span class="num">3</span><span class="year">2026</span>
-            <div class="thin-image" style="--img:url('images/character-cover.jpg')"></div>
-            <div class="poster-word">CHAR</div>
-            <div class="project-content">
-              <h3 class="project-title"><span class="lang-en">Character Design</span><span class="lang-tr">Karakter Tasarımı</span></h3>
-              <p class="project-desc lang-en">Low poly and stylized character form studies.</p>
-              <p class="project-desc lang-tr">Low poly ve stilize karakter form çalışmaları.</p>
-              <p class="meta">Character / Low Poly</p>
-              <span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
-            </div>
-          </a>
-
-          <a href="#scene-project" class="project-card thin-card scene-card">
-            <span class="num">4</span><span class="year">2026</span>
-            <div class="thin-image" style="--img:url('images/environment-scene.jpg')"></div>
-            <div class="poster-word">SCENE</div>
-            <div class="project-content">
-              <h3 class="project-title"><span class="lang-en">Environment Scene</span><span class="lang-tr">Çevre Sahnesi</span></h3>
-              <p class="project-desc lang-en">Atmosphere, lighting and composition studies.</p>
-              <p class="project-desc lang-tr">Atmosfer, ışık ve kompozisyon çalışmaları.</p>
-              <p class="meta">Scene / Lighting</p>
-              <span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
-            </div>
-          </a>
-
-          <a href="#twod-project" class="project-card thin-card twod-card">
-            <span class="num">5</span><span class="year">2026</span>
-            <div class="thin-image" style="--img:url('images/2d-cover.jpg')"></div>
-            <div class="poster-word">2D</div>
-            <div class="project-content">
-              <h3 class="project-title"><span class="lang-en">2D Works</span><span class="lang-tr">2D Çalışmalar</span></h3>
-              <p class="project-desc lang-en">Poster, edit and graphic composition studies.</p>
-              <p class="project-desc lang-tr">Poster, düzenleme ve grafik kompozisyon çalışmaları.</p>
-              <p class="meta">Photoshop / Visual</p>
-              <span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
-            </div>
-          </a>
-
-          <a href="#drawing-project" class="project-card thin-card drawing-card">
-            <span class="num">6</span><span class="year">2026</span>
-            <div class="thin-image" style="--img:url('images/drawing-cover.jpg')"></div>
-            <div class="poster-word">DRAW</div>
-            <div class="project-content">
-              <h3 class="project-title"><span class="lang-en">Pencil Drawing</span><span class="lang-tr">Kara Kalem</span></h3>
-              <p class="project-desc lang-en">Observation, form and shading studies.</p>
-              <p class="project-desc lang-tr">Gözlem, form ve gölgelendirme çalışmaları.</p>
-              <p class="meta">Pencil / Traditional</p>
-              <span class="open-project lang-en">Open</span><span class="open-project lang-tr">Aç</span>
-            </div>
-          </a>
-        </div>
-      </section>
-
-      <section id="about" class="page section">
-        <div class="section-head"><p class="section-label"><span class="lang-en">About</span><span class="lang-tr">Hakkımda</span></p><h2 class="section-title"><span class="lang-en">VISUAL SYSTEM</span><span class="lang-tr">GÖRSEL SİSTEM</span></h2></div>
-        <div class="about-layout"><p class="about-text lang-en">I create stylized 3D props, environments and visual studies with a focus on atmosphere, readable silhouettes and game-oriented design.</p><p class="about-text lang-tr">Atmosfer, okunabilir silüetler ve oyun odaklı tasarım anlayışıyla stilize 3D proplar, çevreler ve görsel çalışmalar üretiyorum.</p><div class="info-list"><div class="info-row"><span>1</span><strong>Focus</strong><p>3D Modeling / Environment / Prop</p></div><div class="info-row"><span>2</span><strong>Tools</strong><p>Blender / Photoshop</p></div><div class="info-row"><span>3</span><strong>Style</strong><p>Stylized / Atmospheric / Readable</p></div><div class="info-row"><span>4</span><strong>Location</strong><p>Türkiye</p></div></div></div>
-      </section>
-
-      <section id="skills" class="page section">
-        <div class="section-head"><p class="section-label">Index</p><h2 class="section-title"><span class="lang-en">SKILLS</span><span class="lang-tr">YETENEKLER</span></h2></div>
-        <div class="skills-index"><div class="skill-row"><span>01</span><span>3D Modeling</span></div><div class="skill-row"><span>02</span><span>Environment Design</span></div><div class="skill-row"><span>03</span><span>Prop Design</span></div><div class="skill-row"><span>04</span><span>Texturing</span></div><div class="skill-row"><span>05</span><span>Lighting</span></div><div class="skill-row"><span>06</span><span>Composition</span></div><div class="skill-row"><span>07</span><span>Graphic Design</span></div><div class="skill-row"><span>08</span><span>Pencil Drawing</span></div></div>
-      </section>
-
-      <section id="contact" class="page section contact-section">
-        <div class="contact-box"><p class="lang-en">You can contact me by email or through Instagram.</p><p class="lang-tr">Bana mail atabilir veya Instagram üzerinden ulaşabilirsiniz.</p><a class="contact-link" href="mailto:2006cto@gmail.com"><span>Mail</span><strong>2006cto@gmail.com</strong></a><a class="contact-link" href="https://www.instagram.com/yavuzhanonder" target="_blank" rel="noopener noreferrer"><span>Instagram</span><strong>@yavuzhanonder</strong></a></div>
-      </section>
-    </main>
-
-    <div id="scene-project" class="project-modal"><div class="modal-window"><div class="modal-bar"><span>Project / 04</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Environment Scene Study</span><span class="lang-tr">Çevre Sahnesi Çalışması</span></h3><p class="lang-en">A project page placeholder for final renders, lighting tests, scene breakdowns and composition notes.</p><p class="lang-tr">Final renderlar, ışık testleri, sahne parçalamaları ve kompozisyon notları için proje alanı.</p><div class="modal-viewer" data-gallery="environment">  <button class="modal-main-image" type="button" data-gallery="environment" data-index="0" aria-label="Open Environment Scene image gallery">    <img src="images/environment-01.jpg" alt="Environment Scene image 1" loading="lazy" />  </button>  <div class="modal-thumb-row"><button class="modal-mini-thumb is-active" type="button" data-gallery="environment" data-index="0" aria-label="Environment Scene image 1"><img src="images/environment-01.jpg" alt="Environment Scene thumbnail 1" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="environment" data-index="1" aria-label="Environment Scene image 2"><img src="images/environment-02.jpg" alt="Environment Scene thumbnail 2" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="environment" data-index="2" aria-label="Environment Scene image 3"><img src="images/environment-03.jpg" alt="Environment Scene thumbnail 3" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="environment" data-index="3" aria-label="Environment Scene image 4"><img src="images/environment-04.jpg" alt="Environment Scene thumbnail 4" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="environment" data-index="4" aria-label="Environment Scene image 5"><img src="images/environment-05.jpg" alt="Environment Scene thumbnail 5" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="environment" data-index="5" aria-label="Environment Scene image 6"><img src="images/environment-06.jpg" alt="Environment Scene thumbnail 6" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button></div></div></div></div></div></div></div>
-    <div id="prop-project" class="project-modal"><div class="modal-window"><div class="modal-bar"><span>Project / 02</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Prop Collection</span><span class="lang-tr">Prop Koleksiyonu</span></h3><p class="lang-en">A project page placeholder for prop renders, close-up details, wireframes and material notes.</p><p class="lang-tr">Prop renderları, yakın plan detaylar, wireframe ve materyal notları için proje alanı.</p><div class="modal-viewer" data-gallery="prop">  <button class="modal-main-image" type="button" data-gallery="prop" data-index="0" aria-label="Open Prop Collection image gallery">    <img src="images/props-01.jpg" alt="Prop Collection image 1" loading="lazy" />  </button>  <div class="modal-thumb-row"><button class="modal-mini-thumb is-active" type="button" data-gallery="prop" data-index="0" aria-label="Prop Collection image 1"><img src="images/props-01.jpg" alt="Prop Collection thumbnail 1" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="prop" data-index="1" aria-label="Prop Collection image 2"><img src="images/props-02.jpg" alt="Prop Collection thumbnail 2" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="prop" data-index="2" aria-label="Prop Collection image 3"><img src="images/props-03.jpg" alt="Prop Collection thumbnail 3" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="prop" data-index="3" aria-label="Prop Collection image 4"><img src="images/props-04.jpg" alt="Prop Collection thumbnail 4" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="prop" data-index="4" aria-label="Prop Collection image 5"><img src="images/props-05.jpg" alt="Prop Collection thumbnail 5" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="prop" data-index="5" aria-label="Prop Collection image 6"><img src="images/props-06.jpg" alt="Prop Collection thumbnail 6" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button></div></div></div></div></div></div></div>
-    <div id="materials-project" class="project-modal"><div class="modal-window"><div class="modal-bar"><span>Project / 02</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Material Studies</span><span class="lang-tr">Materyal Çalışmaları</span></h3><p class="lang-en">A project page placeholder for shader experiments, texture studies and surface close-ups.</p><p class="lang-tr">Shader denemeleri, texture çalışmaları ve yüzey yakın planları için proje alanı.</p><div class="modal-viewer" data-gallery="materials">  <button class="modal-main-image" type="button" data-gallery="materials" data-index="0" aria-label="Open Material Studies image gallery">    <img src="images/materials-01.jpg" alt="Material Studies image 1" loading="lazy" />  </button>  <div class="modal-thumb-row"><button class="modal-mini-thumb is-active" type="button" data-gallery="materials" data-index="0" aria-label="Material Studies image 1"><img src="images/materials-01.jpg" alt="Material Studies thumbnail 1" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="materials" data-index="1" aria-label="Material Studies image 2"><img src="images/materials-02.jpg" alt="Material Studies thumbnail 2" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="materials" data-index="2" aria-label="Material Studies image 3"><img src="images/materials-03.jpg" alt="Material Studies thumbnail 3" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="materials" data-index="3" aria-label="Material Studies image 4"><img src="images/materials-04.jpg" alt="Material Studies thumbnail 4" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="materials" data-index="4" aria-label="Material Studies image 5"><img src="images/materials-05.jpg" alt="Material Studies thumbnail 5" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="materials" data-index="5" aria-label="Material Studies image 6"><img src="images/materials-06.jpg" alt="Material Studies thumbnail 6" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button></div></div></div></div></div></div></div>
-
-
-    <div id="character-project" class="project-modal"><div class="modal-window"><div class="modal-bar"><span>Project / 03</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Character Design</span><span class="lang-tr">Karakter Tasarımı</span></h3><p class="lang-en">A project page placeholder for character sheets, front and side views, silhouette studies and low poly forms.</p><p class="lang-tr">Karakter sheetleri, ön ve yan görünüşler, silüet denemeleri ve low poly formlar için proje alanı.</p><div class="modal-viewer" data-gallery="character">  <button class="modal-main-image" type="button" data-gallery="character" data-index="0" aria-label="Open Character Design image gallery">    <img src="images/character-01.jpg" alt="Character Design image 1" loading="lazy" />  </button>  <div class="modal-thumb-row"><button class="modal-mini-thumb is-active" type="button" data-gallery="character" data-index="0" aria-label="Character Design image 1"><img src="images/character-01.jpg" alt="Character Design thumbnail 1" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="character" data-index="1" aria-label="Character Design image 2"><img src="images/character-02.jpg" alt="Character Design thumbnail 2" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="character" data-index="2" aria-label="Character Design image 3"><img src="images/character-03.jpg" alt="Character Design thumbnail 3" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="character" data-index="3" aria-label="Character Design image 4"><img src="images/character-04.jpg" alt="Character Design thumbnail 4" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="character" data-index="4" aria-label="Character Design image 5"><img src="images/character-05.jpg" alt="Character Design thumbnail 5" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="character" data-index="5" aria-label="Character Design image 6"><img src="images/character-06.jpg" alt="Character Design thumbnail 6" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button></div></div></div></div></div></div></div>
-
-    <div id="twod-project" class="project-modal"><div class="modal-window"><div class="modal-bar"><span>Project / 05</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">2D Works</span><span class="lang-tr">2D Çalışmalar</span></h3><p class="lang-en">A project page placeholder for posters, edits, digital compositions and graphic visual studies.</p><p class="lang-tr">Posterler, düzenlemeler, dijital kompozisyonlar ve grafik görsel çalışmalar için proje alanı.</p><div class="modal-viewer" data-gallery="twod">  <button class="modal-main-image" type="button" data-gallery="twod" data-index="0" aria-label="Open 2D Works image gallery">    <img src="images/2d-01.jpg" alt="2D Works image 1" loading="lazy" />  </button>  <div class="modal-thumb-row"><button class="modal-mini-thumb is-active" type="button" data-gallery="twod" data-index="0" aria-label="2D Works image 1"><img src="images/2d-01.jpg" alt="2D Works thumbnail 1" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="twod" data-index="1" aria-label="2D Works image 2"><img src="images/2d-02.jpg" alt="2D Works thumbnail 2" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="twod" data-index="2" aria-label="2D Works image 3"><img src="images/2d-03.jpg" alt="2D Works thumbnail 3" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="twod" data-index="3" aria-label="2D Works image 4"><img src="images/2d-04.jpg" alt="2D Works thumbnail 4" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="twod" data-index="4" aria-label="2D Works image 5"><img src="images/2d-05.jpg" alt="2D Works thumbnail 5" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="twod" data-index="5" aria-label="2D Works image 6"><img src="images/2d-06.jpg" alt="2D Works thumbnail 6" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button></div></div></div></div></div></div></div>
-
-    <div id="drawing-project" class="project-modal"><div class="modal-window"><div class="modal-bar"><span>Project / 06</span><a class="modal-close" href="#work">×</a></div><div class="modal-body"><h3><span class="lang-en">Pencil Drawing</span><span class="lang-tr">Kara Kalem</span></h3><p class="lang-en">A project page placeholder for sketches, observation studies, shading practice and traditional drawing work.</p><p class="lang-tr">Eskizler, gözlem çalışmaları, gölgelendirme pratikleri ve geleneksel çizim işleri için proje alanı.</p><div class="modal-viewer" data-gallery="drawing">  <button class="modal-main-image" type="button" data-gallery="drawing" data-index="0" aria-label="Open Pencil Drawing image gallery">    <img src="images/drawing-01.jpg" alt="Pencil Drawing image 1" loading="lazy" />  </button>  <div class="modal-thumb-row"><button class="modal-mini-thumb is-active" type="button" data-gallery="drawing" data-index="0" aria-label="Pencil Drawing image 1"><img src="images/drawing-01.jpg" alt="Pencil Drawing thumbnail 1" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="drawing" data-index="1" aria-label="Pencil Drawing image 2"><img src="images/drawing-02.jpg" alt="Pencil Drawing thumbnail 2" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="drawing" data-index="2" aria-label="Pencil Drawing image 3"><img src="images/drawing-03.jpg" alt="Pencil Drawing thumbnail 3" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="drawing" data-index="3" aria-label="Pencil Drawing image 4"><img src="images/drawing-04.jpg" alt="Pencil Drawing thumbnail 4" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="drawing" data-index="4" aria-label="Pencil Drawing image 5"><img src="images/drawing-05.jpg" alt="Pencil Drawing thumbnail 5" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button><button class="modal-mini-thumb" type="button" data-gallery="drawing" data-index="5" aria-label="Pencil Drawing image 6"><img src="images/drawing-06.jpg" alt="Pencil Drawing thumbnail 6" loading="lazy" onerror="this.closest('.modal-mini-thumb').remove()" /></button></div></div></div></div></div></div></div>
-
-    <footer class="page">© 2026 Yavuzhan Önder — Editorial Archive Portfolio Prototype</footer>
-  </div>
-
-    <div class="image-gallery" id="imageGallery" aria-hidden="true">
-      <div class="gallery-topbar">
-        <span id="galleryTitle">Gallery</span>
-        <button class="gallery-close" id="galleryClose" type="button" aria-label="Close gallery">×</button>
-      </div>
-      <div class="gallery-stage">
-        <img id="galleryImage" src="" alt="Selected project image" />
-      </div>
-      <div class="gallery-thumbs" id="galleryThumbs" aria-label="Gallery thumbnails"></div>
-    </div>
-
-    
-    
-    
-    
-    <script>
-      const rawGalleries = {
-        prop: {
-          title: "Prop Collection",
-          images: ["images/props-01.jpg","images/props-02.jpg","images/props-03.jpg","images/props-04.jpg","images/props-05.jpg","images/props-06.jpg"]
-        },
-        materials: {
-          title: "Material Studies",
-          images: ["images/materials-01.jpg","images/materials-02.jpg","images/materials-03.jpg","images/materials-04.jpg","images/materials-05.jpg","images/materials-06.jpg"]
-        },
-        character: {
-          title: "Character Design",
-          images: ["images/character-01.jpg","images/character-02.jpg","images/character-03.jpg","images/character-04.jpg","images/character-05.jpg","images/character-06.jpg"]
-        },
-        environment: {
-          title: "Environment Scene",
-          images: ["images/environment-01.jpg","images/environment-02.jpg","images/environment-03.jpg","images/environment-04.jpg","images/environment-05.jpg","images/environment-06.jpg"]
-        },
-        twod: {
-          title: "2D Works",
-          images: ["images/2d-01.jpg","images/2d-02.jpg","images/2d-03.jpg","images/2d-04.jpg","images/2d-05.jpg","images/2d-06.jpg"]
-        },
-        drawing: {
-          title: "Pencil Drawing",
-          images: ["images/drawing-01.jpg","images/drawing-02.jpg","images/drawing-03.jpg","images/drawing-04.jpg","images/drawing-05.jpg","images/drawing-06.jpg"]
-        }
-      };
-
-      const galleryCache = {};
-      const gallery = document.getElementById("imageGallery");
-      const galleryTitle = document.getElementById("galleryTitle");
-      const galleryImage = document.getElementById("galleryImage");
-      const galleryThumbs = document.getElementById("galleryThumbs");
-      const galleryClose = document.getElementById("galleryClose");
-      let activeGroup = null;
-      let activeIndex = 0;
-
-      function probeImage(src) {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.onload = () => resolve(src);
-          img.onerror = () => resolve(null);
-          img.src = src;
-        });
-      }
-
-      async function getGallery(group) {
-        if (galleryCache[group]) return galleryCache[group];
-        const raw = rawGalleries[group];
-        const checked = await Promise.all(raw.images.map(probeImage));
-        const validImages = checked.filter(Boolean);
-        galleryCache[group] = {
-          title: raw.title,
-          images: validImages
-        };
-        return galleryCache[group];
-      }
-
-      async function renderGallery(group, index) {
-        activeGroup = group;
-        const data = await getGallery(group);
-        if (!data.images.length) return;
-
-        const isAlreadyOpen = gallery.classList.contains("is-open");
-        activeIndex = Math.max(0, Math.min(index, data.images.length - 1));
-
-        galleryTitle.textContent = data.title + " / " + String(activeIndex + 1).padStart(2, "0");
-        galleryImage.src = data.images[activeIndex];
-        galleryImage.alt = data.title + " image " + (activeIndex + 1);
-
-        galleryThumbs.innerHTML = "";
-        data.images.forEach((src, i) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.style.setProperty("--thumb", "url('" + src + "')");
-          btn.setAttribute("aria-label", data.title + " image " + (i + 1));
-          if (i === activeIndex) btn.classList.add("is-active");
-          btn.addEventListener("click", () => renderGallery(group, i));
-          galleryThumbs.appendChild(btn);
-        });
-
-        if (!isAlreadyOpen) {
-          gallery.classList.add("is-open", "is-opening");
-          gallery.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-          window.setTimeout(() => gallery.classList.remove("is-opening"), 230);
-        } else {
-          gallery.classList.remove("is-opening");
-          gallery.classList.add("is-changing");
-          window.setTimeout(() => gallery.classList.remove("is-changing"), 170);
-        }
-      }
-
-      function closeGallery() {
-        gallery.classList.remove("is-open", "is-opening", "is-changing");
-        gallery.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-      }
-
-      document.querySelectorAll(".modal-viewer").forEach(async (viewer) => {
-        const group = viewer.dataset.gallery;
-        const mainButton = viewer.querySelector(".modal-main-image");
-        const mainImage = mainButton.querySelector("img");
-        const thumbRow = viewer.querySelector(".modal-thumb-row");
-        const data = await getGallery(group);
-
-        if (!data.images.length) {
-          viewer.style.display = "none";
-          return;
-        }
-
-        let viewerIndex = 0;
-
-        function setModalImage(index) {
-          viewerIndex = Math.max(0, Math.min(index, data.images.length - 1));
-          const src = data.images[viewerIndex];
-          mainButton.dataset.index = viewerIndex;
-          viewer.style.setProperty("--active-image", "url('" + src + "')");
-          mainImage.classList.remove("is-changing");
-          void mainImage.offsetWidth;
-          mainImage.src = src;
-          mainImage.alt = data.title + " image " + (viewerIndex + 1);
-          mainImage.classList.add("is-changing");
-
-          thumbRow.querySelectorAll(".modal-mini-thumb").forEach((thumb, i) => {
-            thumb.classList.toggle("is-active", i === viewerIndex);
-          });
-        }
-
-        thumbRow.innerHTML = "";
-        data.images.forEach((src, i) => {
-          const btn = document.createElement("button");
-          btn.className = "modal-mini-thumb" + (i === 0 ? " is-active" : "");
-          btn.type = "button";
-          btn.dataset.gallery = group;
-          btn.dataset.index = i;
-          btn.setAttribute("aria-label", data.title + " image " + (i + 1));
-          btn.innerHTML = '<img src="' + src + '" alt="' + data.title + ' thumbnail ' + (i + 1) + '" loading="lazy" />';
-          btn.addEventListener("click", (event) => {
-            event.preventDefault();
-            setModalImage(i);
-          });
-          thumbRow.appendChild(btn);
-        });
-
-        mainButton.addEventListener("click", () => {
-          renderGallery(group, viewerIndex);
-        });
-
-        setModalImage(0);
-      });
-
-      galleryClose.addEventListener("click", closeGallery);
-      gallery.addEventListener("click", (event) => {
-        if (event.target === gallery) closeGallery();
-      });
-
-      document.addEventListener("keydown", async (event) => {
-        if (!gallery.classList.contains("is-open") || !activeGroup) return;
-        const data = await getGallery(activeGroup);
-        if (!data.images.length) return;
-
-        if (event.key === "Escape") closeGallery();
-        if (event.key === "ArrowRight") {
-          const next = (activeIndex + 1) % data.images.length;
-          renderGallery(activeGroup, next);
-        }
-        if (event.key === "ArrowLeft") {
-          const prev = (activeIndex - 1 + data.images.length) % data.images.length;
-          renderGallery(activeGroup, prev);
-        }
-      });
-    </script>
-</body>
-
-
+function probeImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(src);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+async function resolveAsset(fileName) {
+  return (await probeImage("images/" + fileName)) || (await probeImage(fileName));
+}
+async function getGallery(group) {
+  if (galleryCache[group]) return galleryCache[group];
+  const raw = rawGalleries[group];
+  const checked = await Promise.all(raw.images.map(resolveAsset));
+  const validImages = checked.filter(Boolean);
+  galleryCache[group] = { title: raw.title, images: validImages };
+  return galleryCache[group];
+}
+async function setupHero() {
+  const hero = document.querySelector(".hero-visual");
+  const heroSrc = await resolveAsset("hero-entry.jpg");
+  if (heroSrc) document.documentElement.style.setProperty("--hero-img", `url('${heroSrc}')`);
+  else if (hero) hero.classList.add("missing-image");
+}
+async function setupCards() {
+  const cardMap = [
+    ["prop", ".prop-card .thin-image"],
+    ["materials", ".material-card .thin-image"],
+    ["character", ".character-card .thin-image"],
+    ["environment", ".scene-card .thin-image"],
+    ["twod", ".twod-card .thin-image"],
+    ["drawing", ".drawing-card .thin-image"]
+  ];
+  for (const [group, selector] of cardMap) {
+    const el = document.querySelector(selector);
+    if (!el) continue;
+    const src = await resolveAsset(covers[group]);
+    if (src) el.style.setProperty("--img", `url('${src}')`);
+    else el.classList.add("missing-image");
+  }
+}
+async function renderGallery(group, index) {
+  activeGroup = group;
+  const data = await getGallery(group);
+  if (!data.images.length) return;
+  const isAlreadyOpen = gallery.classList.contains("is-open");
+  activeIndex = Math.max(0, Math.min(index, data.images.length - 1));
+  galleryTitle.textContent = data.title + " / " + String(activeIndex + 1).padStart(2, "0");
+  galleryImage.src = data.images[activeIndex];
+  galleryImage.alt = data.title + " image " + (activeIndex + 1);
+  galleryThumbs.innerHTML = "";
+  data.images.forEach((src, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.style.setProperty("--thumb", `url('${src}')`);
+    btn.setAttribute("aria-label", data.title + " image " + (i + 1));
+    if (i === activeIndex) btn.classList.add("is-active");
+    btn.addEventListener("click", () => renderGallery(group, i));
+    galleryThumbs.appendChild(btn);
+  });
+  if (!isAlreadyOpen) {
+    gallery.classList.add("is-open", "is-opening");
+    gallery.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    window.setTimeout(() => gallery.classList.remove("is-opening"), 230);
+  } else {
+    gallery.classList.remove("is-opening");
+    gallery.classList.add("is-changing");
+    window.setTimeout(() => gallery.classList.remove("is-changing"), 170);
+  }
+}
+function closeGallery() {
+  gallery.classList.remove("is-open", "is-opening", "is-changing");
+  gallery.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+async function setupModalViewers() {
+  document.querySelectorAll(".modal-viewer").forEach(async (viewer) => {
+    const group = viewer.dataset.gallery;
+    const mainButton = viewer.querySelector(".modal-main-image");
+    const mainImage = mainButton?.querySelector("img");
+    const thumbRow = viewer.querySelector(".modal-thumb-row");
+    if (!mainButton || !mainImage || !thumbRow) return;
+    const data = await getGallery(group);
+    if (!data.images.length) { viewer.style.display = "none"; return; }
+    let viewerIndex = 0;
+    function setModalImage(index) {
+      viewerIndex = Math.max(0, Math.min(index, data.images.length - 1));
+      const src = data.images[viewerIndex];
+      mainButton.dataset.index = viewerIndex;
+      mainImage.classList.remove("is-changing");
+      void mainImage.offsetWidth;
+      mainImage.src = src;
+      mainImage.alt = data.title + " image " + (viewerIndex + 1);
+      mainImage.classList.add("is-changing");
+      thumbRow.querySelectorAll(".modal-mini-thumb").forEach((thumb, i) => thumb.classList.toggle("is-active", i === viewerIndex));
+    }
+    thumbRow.innerHTML = "";
+    data.images.forEach((src, i) => {
+      const btn = document.createElement("button");
+      btn.className = "modal-mini-thumb" + (i === 0 ? " is-active" : "");
+      btn.type = "button";
+      btn.dataset.gallery = group;
+      btn.dataset.index = i;
+      btn.setAttribute("aria-label", data.title + " image " + (i + 1));
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = data.title + " thumbnail " + (i + 1);
+      img.loading = "lazy";
+      btn.appendChild(img);
+      btn.addEventListener("click", (event) => { event.preventDefault(); setModalImage(i); });
+      thumbRow.appendChild(btn);
+    });
+    mainButton.addEventListener("click", () => renderGallery(group, viewerIndex));
+    setModalImage(0);
+  });
+}
+if (galleryClose) galleryClose.addEventListener("click", closeGallery);
+if (gallery) gallery.addEventListener("click", (event) => { if (event.target === gallery) closeGallery(); });
+document.addEventListener("keydown", async (event) => {
+  if (!gallery || !gallery.classList.contains("is-open") || !activeGroup) return;
+  const data = await getGallery(activeGroup);
+  if (!data.images.length) return;
+  if (event.key === "Escape") closeGallery();
+  if (event.key === "ArrowRight") renderGallery(activeGroup, (activeIndex + 1) % data.images.length);
+  if (event.key === "ArrowLeft") renderGallery(activeGroup, (activeIndex - 1 + data.images.length) % data.images.length);
+});
+setupHero();
+setupCards();
+setupModalViewers();
+</script></body>
 </html>
