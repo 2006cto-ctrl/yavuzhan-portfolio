@@ -382,6 +382,69 @@ footer { padding:28px 0; color:var(--muted); font-size:11px; letter-spacing:.12e
   }
 }
 
+
+/* V3 title overflow fix: Environment gibi uzun başlıklar artık kırpılmaz */
+.works-layout {
+  grid-template-columns: repeat(6, minmax(165px, 1fr)) !important;
+}
+
+.thin-card .project-content {
+  overflow: visible !important;
+}
+
+.thin-card .project-title {
+  font-size: clamp(19px, 1.08vw, 25px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.032em !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  text-wrap: balance !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+/* Environment ve benzeri uzun iki kelimeli başlıklar için ekstra güvenlik */
+.scene-card .project-title,
+.character-card .project-title,
+.material-card .project-title,
+.drawing-card .project-title {
+  font-size: clamp(18px, 1.02vw, 24px) !important;
+  letter-spacing: -0.025em !important;
+}
+
+/* Eğer ekran 6 kartı rahat taşıyamıyorsa 3'lü düzene geçsin; kırpmak yerine düzen değişsin */
+@media (max-width: 1180px) {
+  .works-layout {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .thin-card .project-title,
+  .scene-card .project-title,
+  .character-card .project-title,
+  .material-card .project-title,
+  .drawing-card .project-title {
+    font-size: clamp(30px, 3vw, 44px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.04em !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .works-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .thin-card .project-title,
+  .scene-card .project-title,
+  .character-card .project-title,
+  .material-card .project-title,
+  .drawing-card .project-title {
+    font-size: clamp(38px, 10vw, 56px) !important;
+    line-height: .98 !important;
+  }
+}
+
 </style></head>
 <body>
 <input checked="" id="language-en" name="language" type="radio"/>
