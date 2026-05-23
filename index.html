@@ -270,6 +270,118 @@ footer { padding:28px 0; color:var(--muted); font-size:11px; letter-spacing:.12e
   .gallery-thumbs { justify-content:flex-start; }
   .gallery-thumbs button { flex-basis:70px; min-height:46px; }
 }
+
+/* FINAL POLISH: project card title/layout fixes */
+.works-layout {
+  grid-template-columns: repeat(6, minmax(155px, 1fr)) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+}
+
+.project-card.thin-card {
+  min-height: 620px !important;
+  padding: 60px 14px 24px !important;
+  overflow: hidden !important;
+}
+
+.thin-card .thin-image {
+  inset: 70px 12px 255px !important;
+}
+
+.thin-card::before {
+  inset: 70px 12px 255px !important;
+}
+
+.thin-card .project-content {
+  position: relative !important;
+  z-index: 10 !important;
+  margin: 0 !important;
+  padding: 18px 0 0 !important;
+  min-height: 220px !important;
+  justify-content: flex-start !important;
+  background: linear-gradient(
+    180deg,
+    rgba(247,245,240,0) 0%,
+    rgba(247,245,240,.88) 16%,
+    rgba(247,245,240,.98) 38%,
+    rgba(247,245,240,1) 100%
+  ) !important;
+}
+
+.thin-card .project-title {
+  font-size: clamp(23px, 1.45vw, 30px) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.045em !important;
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
+  hyphens: auto !important;
+  max-width: 100% !important;
+}
+
+.thin-card .project-desc {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  margin-top: 2px !important;
+}
+
+.thin-card .meta {
+  font-size: 9px !important;
+  line-height: 1.45 !important;
+  letter-spacing: .12em !important;
+}
+
+.thin-card .open-project {
+  margin-top: auto !important;
+  font-size: 10px !important;
+}
+
+.thin-card .poster-word {
+  font-size: clamp(38px, 3.8vw, 64px) !important;
+  opacity: .72 !important;
+}
+
+/* Turkish titles need a little more air */
+#language-tr:checked ~ .site .thin-card .project-title {
+  font-size: clamp(22px, 1.35vw, 28px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.025em !important;
+}
+
+#language-tr:checked ~ .site .thin-card .project-desc {
+  line-height: 1.58 !important;
+}
+
+/* Safer breakpoints */
+@media (max-width: 1280px) {
+  .works-layout {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .thin-card .project-title {
+    font-size: clamp(31px, 3.2vw, 46px) !important;
+    line-height: .98 !important;
+  }
+
+  .project-card.thin-card {
+    min-height: 650px !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .works-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .project-card.thin-card {
+    min-height: 620px !important;
+  }
+
+  .thin-card .project-title {
+    font-size: clamp(38px, 11vw, 58px) !important;
+    line-height: .96 !important;
+  }
+}
+
 </style></head>
 <body>
 <input checked="" id="language-en" name="language" type="radio"/>
