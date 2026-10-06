@@ -1,0 +1,21 @@
+# Yavuzhan Önder — Portfolyo
+
+3D ve 2D çalışmalarımı içeren kişisel portfolyom. Blender ve Photoshop çalışmalarını büyük görseller, çalışmaya göre değişen renkler ve animasyonlu geçişlerle sunar.
+
+- Türkçe ve İngilizce arayüz
+- 15 adet 3D çalışma görseli ve 4 adet 2D çalışma
+- Uygun çalışmalarda isteğe bağlı 3D görüntüleme
+- İmlecin bulunduğu bölgeye scroll ile yakınlaştırma
+- Masaüstü ve mobil uyumlu tasarım
+
+Neon sokak görsel olarak yer alır; bu çalışma için 3D görüntüleme yoktur. Katana ve kın modeli orijinal doku haritalarıyla hazırlanmıştır.
+
+## Yerel önizleme
+
+Bu klasörde `python -m http.server 8765` komutunu çalıştırıp tarayıcıda `http://localhost:8765/` adresini açın. Kurulum veya derleme gerekmez. 3D modeller yalnızca “3D görüntüle” düğmesine basıldığında yüklenir.
+
+## Dosyalar
+
+`index.html` ana sayfadır. `assets/` web görselleri, betikler, stiller ve hafif GLB modellerini içerir. `images/` çalışma görsellerini içerir. Blender kaynakları bu depoya dahil değildir.
+
+Kullanılan Motion ve model-viewer kütüphanelerinin lisansları `assets/vendor/` klasöründedir.
