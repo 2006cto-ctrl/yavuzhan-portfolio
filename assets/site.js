@@ -1,4 +1,4 @@
-const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag": ["3D", "3D"], "cover": "environment-02", "subtitle": ["Scenes, objects and experiments in form.", "Mekânlar, objeler ve form denemeleri."], "description": ["Selected 3D work. Explore the artwork, then rotate available models.", "Seçili 3D çalışmalar. Görselleri incele; modeli olan çalışmaları 3D görüntüle."], "images": ["environment-01", "environment-02", "environment-03", "environment-04", "environment-05", "environment-06", "props-01", "props-02", "props-03", "props-04", "materials-01", "materials-02", "materials-03", "character-01", "character-02"], "captions": [["Cabin in the trees", "Ağaçların arasındaki ev"], ["House by the water", "Su kenarındaki ev"], ["Neon alley", "Neon sokak"], ["Rock and terrain study", "Kaya ve arazi çalışması"], ["Coffee and light", "Kahve ve ışık"], ["Light and contrast study", "Işık ve kontrast çalışması"], ["Textured weapon study", "Dokulu silah çalışması"], ["Building kit", "Yapı koleksiyonu"], ["Motorcycle form study", "Motosiklet form çalışması"], ["Weapon modeling study", "Silah modelleme çalışması"], ["Blade material study", "Kılıç materyal çalışması"], ["Wood and metal study", "Ahşap ve metal çalışması"], ["Sword presentation", "Kılıç sunumu"], ["Stylized character study", "Stilize karakter çalışması"], ["Character sculpt study", "Karakter heykel çalışması"]], "themes": ["woodland", "forest", "neon", "terrain", "ember", "mono", "plum", "ember", "mono", "plum", "mono", "ember", "red", "sage", "sage"], "models": {"environment-06": {"src": "assets/models/contrast-katana.glb", "theta": 90, "phi": 75, "bytes": 1238752}, "environment-05": {"src": "assets/models/coffee-lamp.glb", "theta": 0, "phi": 75, "bytes": 247828}, "props-01": {"src": "assets/models/textured-revolver.glb", "theta": 180, "phi": 75, "bytes": 2556112}, "materials-01": {"src": "assets/models/katana-original.glb", "theta": 90, "phi": 75, "bytes": 9072184}}}, {"id": "twod", "category": "2d", "title": ["2D", "2D"], "subtitle": ["Posters, collages and visual compositions.", "Afişler, kolajlar ve görsel kompozisyonlar."], "tag": ["2D", "2D"], "cover": "2d-01", "images": ["2d-01", "2d-02", "2d-03", "2d-04"], "captions": [["Spider-Man poster study", "Spider-Man afiş çalışması"], ["Character collage", "Karakter kolajı"], ["Zero Two poster study", "Zero Two afiş çalışması"], ["Monster visual study", "Monster görsel çalışması"]], "description": ["Personal poster, collage and graphic composition studies. Typography, texture and image-making through a different lens.", "Kişisel afiş, kolaj ve grafik kompozisyon çalışmaları. Tipografi, doku ve görsel üretimine farklı bir bakış."], "themes": ["red", "red", "rose", "sage"]}];
+const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag": ["3D", "3D"], "cover": "environment-02", "subtitle": ["Scenes, objects and experiments in form.", "Mekânlar, objeler ve form denemeleri."], "description": ["Studies in atmosphere, light and form.", "Atmosfer, ışık ve form üzerine çalışmalar."], "images": ["environment-01", "environment-02", "environment-03", "environment-04", "environment-05", "environment-06", "props-01", "props-02", "props-03", "props-04", "materials-01", "materials-02", "materials-03", "character-01", "character-02"], "captions": [["Cabin in the trees", "Ağaçların arasındaki ev"], ["House by the water", "Su kenarındaki ev"], ["Neon alley", "Neon sokak"], ["Rock and terrain study", "Kaya ve arazi çalışması"], ["Coffee and light", "Kahve ve ışık"], ["Light and contrast study", "Işık ve kontrast çalışması"], ["Textured weapon study", "Dokulu silah çalışması"], ["Building kit", "Yapı koleksiyonu"], ["Motorcycle form study", "Motosiklet form çalışması"], ["Weapon modeling study", "Silah modelleme çalışması"], ["Blade material study", "Kılıç materyal çalışması"], ["Wood and metal study", "Ahşap ve metal çalışması"], ["Sword presentation", "Kılıç sunumu"], ["Stylized character study", "Stilize karakter çalışması"], ["Character sculpt study", "Karakter heykel çalışması"]], "themes": ["woodland", "forest", "neon", "terrain", "ember", "mono", "plum", "ember", "mono", "plum", "mono", "ember", "red", "sage", "sage"], "models": {"environment-06": {"src": "assets/models/contrast-katana.glb", "theta": 90, "phi": 75, "bytes": 1238752}, "environment-05": {"src": "assets/models/coffee-lamp.glb", "theta": 0, "phi": 75, "bytes": 247828}, "props-01": {"src": "assets/models/textured-revolver.glb", "theta": 180, "phi": 75, "bytes": 2556112}, "materials-01": {"src": "assets/models/katana-original.glb", "theta": 90, "phi": 75, "bytes": 9072184}}}, {"id": "twod", "category": "2d", "title": ["2D", "2D"], "subtitle": ["Posters, collages and visual compositions.", "Afişler, kolajlar ve görsel kompozisyonlar."], "tag": ["2D", "2D"], "cover": "2d-01", "images": ["2d-01", "2d-02", "2d-03", "2d-04"], "captions": [["Spider-Man poster study", "Spider-Man afiş çalışması"], ["Character collage", "Karakter kolajı"], ["Zero Two poster study", "Zero Two afiş çalışması"], ["Monster visual study", "Monster görsel çalışması"]], "description": ["Posters, collages and visual compositions.", "Afişler, kolajlar ve görsel kompozisyonlar."], "themes": ["red", "red", "rose", "sage"]}];
 (() => {
   'use strict';
   const root = document.documentElement;
@@ -15,11 +15,11 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   let modelLoaded = false;
   let modelHome = null;
   let wheelFocus = null;
+  let cameraReset = 0;
   const languageButtons = [...document.querySelectorAll('.languages button')];
   const filterButtons = [...document.querySelectorAll('.filters [data-filter]')];
   const projects = [...document.querySelectorAll('.project')];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const animation = window.Motion;
   const hero = document.querySelector('.hero-canvas');
   const heroFrame = document.querySelector('.hero-image-frame');
   const heroImage = document.querySelector('.hero-image');
@@ -31,20 +31,21 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     {project:'three',index:featuredIndex('props-01'),title:['A study in detail','Bir detay çalışması'],kind:'object'}
   ];
   const palettes = {
-    forest:{bg:'#162b30',surface:'#213b40',raised:'#35545a',text:'#eef3ed',muted:'#aebfbe',line:'#3e575b',accent:'#ccd2aa'},
-    woodland:{bg:'#172b2c',surface:'#263d39',raised:'#416253',text:'#f0f1e7',muted:'#bcc9bc',line:'#5e7569',accent:'#d9bb83'},
-    neon:{bg:'#211d35',surface:'#302841',raised:'#493a61',text:'#f5eef8',muted:'#beb0cd',line:'#5b4869',accent:'#edb0ef'},
-    terrain:{bg:'#292e21',surface:'#3c422e',raised:'#505940',text:'#f0f0dc',muted:'#c1c5aa',line:'#5e654b',accent:'#d4d69e'},
-    ember:{bg:'#352624',surface:'#4a3330',raised:'#70483d',text:'#f6eee5',muted:'#d2b8a5',line:'#76534a',accent:'#edbb8d'},
-    mono:{bg:'#22292e',surface:'#354048',raised:'#4a5860',text:'#f1f4f5',muted:'#bbcbd0',line:'#607178',accent:'#cfdee4'},
-    plum:{bg:'#2e232d',surface:'#45303f',raised:'#604259',text:'#f5eef2',muted:'#cbb7c4',line:'#755367',accent:'#e4b3cf'},
-    red:{bg:'#341d24',surface:'#4d2b34',raised:'#74434a',text:'#faf0e8',muted:'#d9b5b6',line:'#88535f',accent:'#f0c0b0'},
-    rose:{bg:'#d3bdc6',surface:'#e4ced7',raised:'#f2e0e7',text:'#3d2430',muted:'#694b5c',line:'#b08b9d',accent:'#87314f',scheme:'light'},
-    sage:{bg:'#adbfba',surface:'#c4d3cb',raised:'#d8e4dc',text:'#1c332c',muted:'#425e53',line:'#8aa699',accent:'#25473c',scheme:'light'}
+    forest:{bg:'#162b30',surface:'#213b40',raised:'#35545a',text:'#eef3ed',muted:'#aebfbe',line:'#3e575b',accent:'#c6aa86'},
+    woodland:{bg:'#172b2c',surface:'#263d39',raised:'#416253',text:'#eef3ed',muted:'#bcc9bc',line:'#5e7569',accent:'#c6b18f'},
+    neon:{bg:'#211d35',surface:'#302841',raised:'#493a61',text:'#eef3ed',muted:'#beb0cd',line:'#5b4869',accent:'#c6abc6'},
+    terrain:{bg:'#292e21',surface:'#3c422e',raised:'#505940',text:'#eef3ed',muted:'#c1c5aa',line:'#5e654b',accent:'#c2c6a5'},
+    ember:{bg:'#352624',surface:'#4a3330',raised:'#70483d',text:'#eef3ed',muted:'#d2b8a5',line:'#76534a',accent:'#c6ad95'},
+    mono:{bg:'#22292e',surface:'#354048',raised:'#4a5860',text:'#eef3ed',muted:'#bbcbd0',line:'#607178',accent:'#bac7cd'},
+    plum:{bg:'#2e232d',surface:'#45303f',raised:'#604259',text:'#eef3ed',muted:'#cbb7c4',line:'#755367',accent:'#c6a8bd'},
+    red:{bg:'#341d24',surface:'#4d2b34',raised:'#74434a',text:'#eef3ed',muted:'#d9b5b6',line:'#88535f',accent:'#c6a49c'},
+    rose:{bg:'#30232b',surface:'#45303f',raised:'#624456',text:'#eef3ed',muted:'#cbb7c4',line:'#755367',accent:'#c6a6b3'},
+    sage:{bg:'#1e302b',surface:'#2c4239',raised:'#456353',text:'#eef3ed',muted:'#bdcdc5',line:'#59756a',accent:'#aac3b5'}
   };
   let homeScene = 0;
   let heroRevision = 0;
   let heroEntrance;
+  const visitedHeroScenes = new Set();
   let language = 'en';
   let currentProject = null;
   let currentIndex = 0;
@@ -57,11 +58,13 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   let requestedFilter = 'all';
   const effects = new WeakMap();
   const ease = 'cubic-bezier(.22,1,.36,1)';
+  const blendEase = 'cubic-bezier(.4,0,.2,1)';
+  const fontsReady = document.fonts?.ready || Promise.resolve();
   root.classList.add('has-js');
   const text = pair => pair[language === 'tr' ? 1 : 0];
 
   function sceneProject() { return PROJECTS.find(project => project.id === heroScenes[homeScene].project); }
-  function homeTheme() { return sceneProject().themes[heroScenes[homeScene].index]; }
+  function homeTheme() { return 'forest'; }
   function applyTheme(name) {
     const palette = palettes[name] || palettes.forest;
     root.dataset.theme = name;
@@ -81,53 +84,44 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     link.dataset.project = project.id;
     link.dataset.index = String(scene.index);
   }
-  function setHeroScene(index) {
-    if (homeScene === index) return;
-    const direction = index >= homeScene ? 1 : -1;
+  async function loadArtwork(src) {
+    const candidate = new Image();
+    candidate.src = src;
+    try { await candidate.decode(); return candidate; } catch (_) { return null; }
+  }
+  async function setHeroScene(index) {
+    if (!heroScenes[index]) return;
     const revision = ++heroRevision;
-    heroEntrance?.stop();
-    effects.get(heroImage)?.cancel();
+    const scene = heroScenes[index];
+    const project = PROJECTS.find(entry => entry.id === scene.project);
+    const candidate = await loadArtwork(`assets/images/${project.images[scene.index]}.webp`);
+    if (!candidate || revision !== heroRevision || index === homeScene) return;
+    const outgoing = freezeFrame(heroImage);
+    heroEntrance?.cancel();
     heroImage.style.transform = '';
-    heroFrame.querySelectorAll('.hero-outgoing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
-    let outgoing;
-    if (!reducedMotion.matches) {
-      outgoing = heroImage.cloneNode();
-      outgoing.className = 'hero-image hero-outgoing';
-      outgoing.alt = '';
-      outgoing.setAttribute('aria-hidden','true');
-      const presentation = getComputedStyle(heroImage);
-      outgoing.style.width = presentation.width;
-      outgoing.style.height = presentation.height;
-      outgoing.style.marginLeft = presentation.marginLeft;
-      outgoing.style.objectFit = presentation.objectFit;
-      outgoing.style.objectPosition = presentation.objectPosition;
-      heroFrame.append(outgoing);
-    }
     homeScene = index;
-    root.dataset.heroKind = heroScenes[index].kind;
+    root.dataset.heroKind = scene.kind;
     sceneButtons.forEach(button => button.setAttribute('aria-pressed',String(Number(button.dataset.scene) === index)));
+    heroImage.src = candidate.src;
     updateHeroText();
-    const project = sceneProject();
-    heroImage.src = `assets/images/${project.images[heroScenes[index].index]}.webp`;
-    applyTheme(homeTheme());
-    heroImage.style.opacity = reducedMotion.matches ? '' : '0';
-    heroImage.decode().catch(() => {}).then(() => {
-      if (revision !== heroRevision) { outgoing?.remove(); return; }
-      heroImage.style.opacity = '';
-      transitionScene(heroImage,outgoing);
-      play(document.querySelector('.hero-selection'),[{opacity:0,transform:'translateY(15px)'},{opacity:1,transform:'translateY(0)'}],{duration:650});
-    });
+    transitionScene(heroImage,outgoing);
+    fontsReady.then(() => { if (revision === heroRevision) reveal(document.querySelector('.hero-selection')); });
   }
 
-  // Native FLIP and image layers complement the Motion entrance choreography.
+  // Native animations share the durations and curves from the personal brand kit.
   function play(element, frames, options = {}) {
     effects.get(element)?.cancel();
-    if (reducedMotion.matches) return Promise.resolve();
-    const effect = element.animate(frames, {duration:600, easing:ease, fill:'both', ...options});
+    if (reducedMotion.matches) frames = frames.map(frame => ({opacity:frame.opacity ?? 1}));
+    const settings = {duration:360, easing:ease, fill:'both', ...options};
+    if (reducedMotion.matches) { settings.duration = Math.min(settings.duration,100); settings.delay = 0; }
+    const effect = element.animate(frames, settings);
     effects.set(element, effect);
     return effect.finished.catch(() => {}).then(() => {
       if (effects.get(element) === effect) { effects.delete(element); effect.cancel(); }
     });
+  }
+  function reveal(element, delay = 0) {
+    return play(element,[{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}],{duration:360,delay});
   }
 
   function positionFilter() {
@@ -166,7 +160,7 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   }
 
   function updateProjectText() {
-    document.getElementById('dialog-title').textContent = text(currentProject.title);
+    document.getElementById('dialog-title').textContent = text(currentProject.captions[currentIndex]);
     document.getElementById('dialog-description').textContent = text(currentProject.description);
     document.getElementById('dialog-category').textContent = text(currentProject.tag);
     document.getElementById('dialog-tools').textContent = currentProject.category === '2d' ? 'Photoshop' : 'Blender';
@@ -175,20 +169,51 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     [...thumbs.children].forEach((button, index) => button.setAttribute('aria-label', text(currentProject.captions[index])));
   }
 
-  // A short dissolve keeps both scenes readable, without masks or fog.
+  // Capture the currently visible blend before interrupting a transition.
+  function freezeFrame(element) {
+    const stage = element.parentElement;
+    const layer = document.createElement('div');
+    layer.className = 'scene-layer';
+    layer.setAttribute('aria-hidden','true');
+    [...stage.children].filter(node => node === element || node.classList.contains('scene-layer') || node.classList.contains('scene-backing')).forEach(node => {
+      const copy = node.cloneNode(true);
+      const presentation = getComputedStyle(node);
+      copy.removeAttribute('id');
+      copy.style.opacity = presentation.opacity;
+      copy.style.transform = presentation.transform;
+      if (node === element) {
+        copy.alt = '';
+        copy.style.objectFit = presentation.objectFit;
+        copy.style.objectPosition = presentation.objectPosition;
+        copy.style.zIndex = '1';
+      }
+      layer.append(copy);
+      effects.get(node)?.cancel();
+      if (node !== element) node.remove();
+    });
+    stage.append(layer);
+    return layer;
+  }
   function transitionScene(incoming, outgoing) {
-    play(incoming, [
-      {opacity:.7,transform:'scale(1.018)'},
-      {opacity:1,transform:'scale(1)'}
-    ], {duration:480});
-    if (outgoing) play(outgoing, [
-      {opacity:1,transform:'scale(1)'},
-      {opacity:0,transform:'scale(1.008)'}
-    ], {duration:420}).then(() => outgoing.remove());
+    const backing = incoming.cloneNode();
+    backing.removeAttribute('id');
+    backing.className = 'scene-backing';
+    backing.alt = '';
+    backing.setAttribute('aria-hidden','true');
+    backing.style.opacity = '1';
+    backing.style.transform = '';
+    backing.style.objectPosition = getComputedStyle(incoming).objectPosition;
+    incoming.parentElement.prepend(backing);
+    // An opaque backing prevents the midpoint from darkening or exposing the stage.
+    play(incoming,[{opacity:0},{opacity:1}],{duration:550,easing:blendEase});
+    if (outgoing) play(outgoing,[{opacity:1},{opacity:0}],{duration:550,easing:blendEase}).then(() => { outgoing.remove(); backing.remove(); });
+    else backing.remove();
   }
 
-  function currentModel() { return currentProject?.models?.[currentProject.images[currentIndex]]; }
+  function currentModel() { return currentProject?.models?.[renderedStem]; }
   function leaveModel() {
+    cancelAnimationFrame(cameraReset);
+    cameraReset = 0;
     modelRevision++;
     modelMode = false;
     modelLoaded = false;
@@ -211,13 +236,31 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   }
   function resetModel() {
     if (!modelLoaded || !activeModel) return;
+    cancelAnimationFrame(cameraReset);
     const theta = activeModel.theta || 0;
     const phi = activeModel.phi || 75;
-    // Return the angle after a drag while retaining the user's zoom distance.
-    const radius = modelViewer.getCameraOrbit().radius;
+    const orbit = modelViewer.getCameraOrbit();
+    const radius = orbit.radius;
     const normal = `${theta}deg ${phi}deg ${radius}m`;
-    modelViewer.cameraOrbit = modelViewer.cameraOrbit === normal ? `${theta+.001}deg ${phi}deg ${radius}m` : normal;
-    if (reducedMotion.matches) modelViewer.jumpCameraToGoal?.();
+    if (reducedMotion.matches) { modelViewer.cameraOrbit = normal; modelViewer.jumpCameraToGoal?.(); return; }
+    const start = performance.now();
+    const startTheta = orbit.theta*180/Math.PI, startPhi = orbit.phi*180/Math.PI;
+    function frame(now) {
+      if (!modelLoaded || !modelMode) return;
+      const progress = Math.min(1,(now-start)/420);
+      // Solve the brand's cubic-bezier(.22,1,.36,1) without another library.
+      let low=0, high=1, t=progress;
+      for (let i=0;i<12;i++) {
+        t=(low+high)/2;
+        const x=3*(1-t)*(1-t)*t*.22+3*(1-t)*t*t*.36+t*t*t;
+        if (x<progress) low=t; else high=t;
+      }
+      const eased=progress===1 ? 1 : 1-Math.pow(1-t,3);
+      modelViewer.cameraOrbit = `${startTheta+(theta-startTheta)*eased}deg ${startPhi+(phi-startPhi)*eased}deg ${radius}m`;
+      modelViewer.jumpCameraToGoal?.();
+      cameraReset = progress<1 ? requestAnimationFrame(frame) : 0;
+    }
+    cameraReset = requestAnimationFrame(frame);
   }
   function cursorPlanePoint(orbit, target, fov, bounds, clientX, clientY) {
     const {theta,phi,radius} = orbit;
@@ -230,6 +273,8 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   }
   function zoomAtCursor(event) {
     if (!modelLoaded || !modelMode || !modelHome || !event.deltaY) return;
+    cancelAnimationFrame(cameraReset);
+    cameraReset = 0;
     event.preventDefault();
     event.stopPropagation();
     const now = performance.now();
@@ -278,12 +323,13 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     return modelModule;
   }
   async function prepareModel() {
+    if (renderedStem) currentIndex = currentProject.images.indexOf(renderedStem);
     const asset = currentModel();
     if (!asset) return;
     imageRevision++;
     effects.get(image)?.cancel();
     image.style.opacity = '';
-    image.parentElement.querySelectorAll('.viewer-outgoing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
+    image.parentElement.querySelectorAll(':scope > .scene-layer,:scope > .scene-backing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
     const revision = ++modelRevision;
     activeModel = asset;
     modelMode = true;
@@ -337,7 +383,7 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     image.hidden = false;
   });
   modelViewer.addEventListener('pointerup',resetModel);
-  modelViewer.addEventListener('pointerdown',() => { wheelFocus = null; });
+  modelViewer.addEventListener('pointerdown',() => { wheelFocus = null; cancelAnimationFrame(cameraReset); cameraReset = 0; });
   modelViewer.addEventListener('wheel',zoomAtCursor,{capture:true,passive:false});
   modelViewer.addEventListener('pointercancel',resetModel);
   modelViewer.addEventListener('keyup', event => { if (event.key.startsWith('Arrow')) resetModel(); });
@@ -358,33 +404,31 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     prepareModel();
   });
 
-  function renderImage(animateChange = true, direction = 1) {
+  async function renderImage(animateChange = true) {
     if (!currentProject) return;
-    const stem = currentProject.images[currentIndex];
-    const caption = text(currentProject.captions[currentIndex]);
+    const project = currentProject;
+    const index = currentIndex;
+    const stem = project.images[index];
+    const revision = ++imageRevision;
+    const candidate = await loadArtwork(`assets/images/${stem}.webp`);
+    if (revision !== imageRevision || currentProject !== project || !dialog.open || closing) return;
+    if (!candidate) {
+      modelStatus.hidden = false;
+      showModelStatus(['Image unavailable. Try another image.','Görsel yüklenemedi. Başka bir görsel seçebilirsin.']);
+      return;
+    }
+    const caption = text(project.captions[index]);
+    const changing = animateChange && stem !== renderedStem && image.complete && image.naturalWidth && !image.hidden;
+    const outgoing = changing ? freezeFrame(image) : null;
     if (stem !== renderedStem) leaveModel();
-    const isModel = modelMode;
+    renderedStem = stem;
+    root.dataset.artwork = stem;
     updateModelControls();
+    updateProjectText();
     if (modelMode && modelLoaded) modelReadyMessage();
     document.getElementById('original-label').textContent = text(['View full artwork','Görselin tamamını gör']);
-    applyTheme(currentProject.themes[currentIndex]);
-    const revision = ++imageRevision;
-    const stage = image.parentElement;
-    effects.get(image)?.cancel();
-    stage.querySelectorAll('.viewer-outgoing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
-    let outgoing;
-    const changing = animateChange && stem !== renderedStem && !reducedMotion.matches && !isModel;
-    if (changing && image.complete && image.naturalWidth) {
-      outgoing = image.cloneNode();
-      outgoing.removeAttribute('id');
-      outgoing.alt = '';
-      outgoing.setAttribute('aria-hidden','true');
-      outgoing.className = 'viewer-outgoing';
-      outgoing.style.opacity = '1';
-      stage.append(outgoing);
-    }
-    renderedStem = stem;
-    image.src = `assets/images/${stem}.webp`;
+    applyTheme(project.themes[index]);
+    image.src = candidate.src;
     const focalPoints = {'environment-01':'50% 43%','2d-01':'50% 42%','2d-03':'50% 34%','materials-01':'50% 45%','character-02':'50% 38%'};
     image.style.objectPosition = focalPoints[stem] || '50% 50%';
     image.alt = caption;
@@ -402,17 +446,9 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
         behavior:reducedMotion.matches ? 'instant' : 'smooth'
       });
     }
-    if (changing) {
-      image.style.opacity = '0';
-      image.decode().catch(() => {}).then(() => {
-        if (revision !== imageRevision || !dialog.open || closing) { outgoing?.remove(); return; }
-        image.style.opacity = '';
-        transitionScene(image, outgoing);
-        play(document.querySelector('.viewer-caption'), [{opacity:.25,transform:'translateY(7px)'},{opacity:1,transform:'translateY(0)'}], {duration:420});
-      });
-    } else {
-      image.style.opacity = '';
-    }
+    image.hidden = modelMode && modelLoaded;
+    image.style.opacity = '';
+    if (changing) transitionScene(image,outgoing);
     // Load only the next image instead of eagerly loading every gallery.
     if (currentProject.images.length > 1) {
       const preload = new Image();
@@ -430,6 +466,9 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     dialog.classList.remove('is-closing');
     currentIndex = Math.max(0, Math.min(Number(index) || 0, project.images.length - 1));
     opener = trigger;
+    renderedStem = '';
+    image.hidden = true;
+    image.parentElement.querySelectorAll(':scope > .scene-layer,:scope > .scene-backing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
     thumbs.replaceChildren();
     project.images.forEach((stem, index) => {
       const button = document.createElement('button');
@@ -446,14 +485,13 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
       thumbs.append(button);
     });
     updateProjectText();
-    renderImage(false);
     dialog.showModal();
     renderImage(false);
     document.body.classList.add('dialog-open');
     document.getElementById('dialog-close').focus({ preventScroll: true });
-    play(dialog, [{opacity:0,transform:'scale(.985)'},{opacity:1,transform:'scale(1)'}], {duration:420});
-    play(image, [{opacity:0,transform:'scale(1.018)'},{opacity:1,transform:'scale(1)'}], {duration:480,delay:50});
-    play(document.querySelector('.dialog-heading'), [{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'translateY(0)'}], {duration:600,delay:100});
+    // A full-screen modal has a different crop from its collection card; use the kit's opacity fallback.
+    play(dialog,[{opacity:0},{opacity:1}],{duration:480});
+    fontsReady.then(() => { if (dialog.open && !closing) reveal(document.querySelector('.dialog-heading')); });
     return true;
   }
 
@@ -463,7 +501,8 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     modelRevision++;
     imageRevision++;
     dialog.classList.add('is-closing');
-    await play(dialog, [{opacity:1,transform:'translateY(0) scale(1)'},{opacity:0,transform:'translateY(20px) scale(.975)'}], {duration:250,easing:'cubic-bezier(.4,0,1,1)'});
+    applyTheme(homeTheme());
+    await play(dialog,[{opacity:Number(getComputedStyle(dialog).opacity)},{opacity:0}],{duration:320,easing:'cubic-bezier(.4,0,1,1)'});
     dialog.close();
   }
 
@@ -506,10 +545,11 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     imageRevision++;
     effects.get(image)?.cancel();
     image.style.opacity = '';
-    image.parentElement.querySelectorAll('.viewer-outgoing').forEach(node => node.remove());
+    image.parentElement.querySelectorAll(':scope > .scene-layer,:scope > .scene-backing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
     leaveModel();
     currentProject = null;
     delete root.dataset.project;
+    delete root.dataset.artwork;
     applyTheme(homeTheme());
     renderedStem = '';
     closing = false;
@@ -530,31 +570,36 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     filterRunning = true;
     try {
       while (activeFilter !== requestedFilter) {
-        const next = requestedFilter;
+        let next = requestedFilter;
         const visible = projects.filter(project => !project.hidden);
         visible.forEach(project => effects.get(project)?.cancel());
-        const before = new Map(visible.map(project => [project, project.getBoundingClientRect()]));
+        const before = new Set(visible);
         const leaving = visible.filter(project => next !== 'all' && project.dataset.category !== next);
         filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === next)));
         positionFilter();
-        await Promise.all(leaving.map(project => play(project, [{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.955) translateY(-15px)'}], {duration:200,easing:'cubic-bezier(.4,0,1,1)'})));
+        await Promise.all(leaving.map(project => play(project, [{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-6px)'}], {duration:180,easing:'cubic-bezier(.4,0,1,1)'})));
+        next = requestedFilter;
+        filterButtons.forEach(button => button.setAttribute('aria-pressed',String(button.dataset.filter === next)));
+        positionFilter();
         activeFilter = next;
         document.querySelector('.project-grid').dataset.filter = next;
         projects.forEach(project => { project.hidden = next !== 'all' && project.dataset.category !== next; });
         updateCount();
         const arriving = projects.filter(project => !project.hidden);
         await Promise.all(arriving.map((project,index) => {
-          const old = before.get(project);
-          const end = project.getBoundingClientRect();
-          if (old) {
-            return play(project, [{opacity:1,transform:`translate(${old.left-end.left}px,${old.top-end.top}px) scale(${old.width/end.width},${old.height/end.height})`,transformOrigin:'0 0'},{opacity:1,transform:'translate(0,0) scale(1)',transformOrigin:'0 0'}], {duration:650});
+          if (before.has(project)) {
+            return play(project,[{opacity:0},{opacity:1}],{duration:360});
           }
-          return play(project, [{opacity:0,transform:'translateY(35px) scale(.98)'},{opacity:1,transform:'translateY(0) scale(1)'}], {duration:600,delay:index*45});
+          return reveal(project,Math.min(index,2)*60);
         }));
       }
     } finally { filterRunning = false; }
   }
-  filterButtons.forEach(button => button.addEventListener('click', () => { requestedFilter = button.dataset.filter; filterProjects(); }));
+  filterButtons.forEach(button => button.addEventListener('click', () => {
+    requestedFilter = button.dataset.filter;
+    projects.forEach(project => effects.get(project)?.cancel());
+    filterProjects();
+  }));
   applyTheme(homeTheme());
   root.dataset.heroKind = 'environment';
   sceneButtons.forEach(button => button.addEventListener('click', () => setHeroScene(Number(button.dataset.scene))));
@@ -566,12 +611,6 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   let headerQueued = false;
   function updateScroll() {
     header.classList.toggle('is-scrolled', window.scrollY > 20);
-    if (!reducedMotion.matches) {
-      const bounds = hero.getBoundingClientRect();
-      if (bounds.bottom > 0 && bounds.top < innerHeight) heroFrame.style.transform = `translateY(${Math.max(-30,Math.min(65,-bounds.top*.12))}px)`;
-      const aboutBounds = portrait.getBoundingClientRect();
-      if (aboutBounds.bottom > 0 && aboutBounds.top < innerHeight) portraitImage.style.transform = `translateY(${Math.max(-22,Math.min(22,(innerHeight/2-aboutBounds.top-aboutBounds.height/2)*.06))}px) scale(1.065)`;
-    }
     headerQueued = false;
   }
   window.addEventListener('scroll', () => {
@@ -590,29 +629,22 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   }, { rootMargin: '-15% 0px -60% 0px' });
   ['top','work','about','contact'].forEach(id => sectionObserver.observe(document.getElementById(id)));
 
-  // Artwork is visible by default; no hidden content depends on a library load.
-  if (animation && !reducedMotion.matches) {
-    animation.animate('.hero-curtain', {scaleX:[1,0]}, {duration:1.2,ease:[.76,0,.24,1]});
-    animation.animate('.hero .name-word', {y:['115%','0%'],rotate:[3,0]}, {duration:1.1,ease:[.22,1,.36,1],delay:animation.stagger(.14,{startDelay:.28})});
-    animation.animate('.hero-content > p, .hero-feature', {opacity:[0,1],y:[18,0]}, {duration:.8,delay:.75,ease:[.16,1,.3,1]});
-    animation.animate('.hero-top', {opacity:[0,1]}, {duration:.8,delay:.3});
-    heroEntrance = animation.animate('.hero-image', {scale:[1.13,1]}, {duration:2.2,ease:[.16,1,.3,1]});
-    animation.animate('.coffee-logo', {opacity:[0,1],y:[-8,0]}, {duration:.8,ease:[.16,1,.3,1]});
-    animation.animate('.coffee-steam', {pathLength:[0,1]}, {duration:1.2,delay:.25,ease:[.16,1,.3,1]});
-  }
+  // Wait for real font metrics, then reveal at most three text groups.
+  fontsReady.then(() => {
+    if (heroRevision || dialog.open) return;
+    [document.querySelector('.hero-content h1'),document.querySelector('.hero-content>p'),document.querySelector('.hero-selection')].forEach((element,index) => reveal(element,index*60));
+  });
+  heroImage.decode().catch(() => {}).then(() => {
+    if (reducedMotion.matches || heroRevision || visitedHeroScenes.has(homeScene)) return;
+    visitedHeroScenes.add(homeScene);
+    heroEntrance = heroImage.animate([{transform:'scale(1)'},{transform:'scale(1.03)'}],{duration:8000,easing:'cubic-bezier(.45,0,.55,1)',fill:'forwards'});
+  });
 
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       revealObserver.unobserve(entry.target);
-      if (entry.target.classList.contains('project-art')) {
-        play(entry.target, [{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)'}], {duration:1000});
-        play(entry.target.querySelector('img'), [{transform:'scale(1.1)'},{transform:'scale(1)'}], {duration:1300});
-      } else if (entry.target.tagName === 'H2') {
-        play(entry.target, [{clipPath:'inset(0 0 100% 0)',transform:'translateY(24px)'},{clipPath:'inset(-10% 0 -10% 0)',transform:'translateY(0)'}], {duration:900});
-      } else {
-        play(entry.target, [{opacity:.25,transform:'translateY(20px)'},{opacity:1,transform:'translateY(0)'}], {duration:850});
-      }
+      fontsReady.then(() => reveal(entry.target));
     });
   }, {threshold:.12});
   document.querySelectorAll('.project-art,.section-intro h2,.about-content h2,.contact-section h2,.about-details,.contact-bottom').forEach(element => revealObserver.observe(element));

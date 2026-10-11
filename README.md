@@ -7,6 +7,9 @@
 - Uygun çalışmalarda isteğe bağlı 3D görüntüleme
 - İmlecin bulunduğu bölgeye scroll ile yakınlaştırma
 - Masaüstü ve mobil uyumlu tasarım
+- Koyu petrol ve kahve tonlarıyla sinematik motion marka kiti
+- Yumuşak görsel geçişleri, kısa metinler ve tamamen sessiz etkileşim
+- Azaltılmış hareket tercihine uyum ve 3D sürükleme sonrası yumuşak kamera dönüşü
 
 Neon sokak görsel olarak yer alır; bu çalışma için 3D görüntüleme yoktur. Katana ve kın modeli orijinal doku haritalarıyla hazırlanmıştır.
 
@@ -18,4 +21,4 @@ Bu klasörde `python -m http.server 8765` komutunu çalıştırıp tarayıcıda 
 
 `index.html` ana sayfadır. `assets/` web görselleri, betikler, stiller ve hafif GLB modellerini içerir. `images/` çalışma görsellerini içerir. Blender kaynakları bu depoya dahil değildir.
 
-Kullanılan Motion ve model-viewer kütüphanelerinin lisansları `assets/vendor/` klasöründedir.
+Arayüz animasyonları tarayıcının Web Animations API özelliğini kullanır. 3D görüntüleyici model-viewer kütüphanesinin lisansı `assets/vendor/` klasöründedir. Önceki sürümün Motion dosyaları ve lisansı da bu klasörde korunur.
