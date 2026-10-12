@@ -7,6 +7,9 @@
 - Uygun çalışmalarda isteğe bağlı 3D görüntüleme
 - İmlecin bulunduğu bölgeye scroll ile yakınlaştırma
 - Masaüstü ve mobil uyumlu tasarım
+- 3D/2D koleksiyonlar için yansımalı yatay galeri
+- Scroll ve sürükleme hızına göre 180–550 ms arasında değişen kart geçişleri
+- Ekran yüksekliğine göre kesilmeden sönen yansımalar ve daha uzak galeri görünümü
 - Koyu petrol ve kahve tonlarıyla sinematik motion marka kiti
 - Yumuşak görsel geçişleri, kısa metinler ve tamamen sessiz etkileşim
 - Azaltılmış hareket tercihine uyum ve 3D sürükleme sonrası yumuşak kamera dönüşü

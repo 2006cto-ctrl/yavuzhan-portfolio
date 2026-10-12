@@ -4,7 +4,15 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   const root = document.documentElement;
   const dialog = document.getElementById('project-dialog');
   const image = document.getElementById('viewer-image');
-  const thumbs = document.getElementById('viewer-thumbnails');
+  const collectionPanel = document.getElementById('collection-panel');
+  const collectionStage = document.getElementById('collection-stage');
+  const collectionBack = document.getElementById('collection-back');
+  let collectionMode = false;
+  let collectionEntry = false;
+  let collectionDrag = null;
+  let suppressCollectionClick = false;
+  let collectionWheel = null;
+  let collectionWheelTimer = 0;
   const modelViewer = document.getElementById('artwork-model');
   const modelStatus = document.getElementById('model-status');
   let modelModule;
@@ -148,12 +156,12 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
       const coverImage = document.querySelector(`.${project.id}-card .project-art img`);
       if (coverImage) coverImage.alt = text(project.captions[project.images.indexOf(project.cover)]);
     });
-    const labels = { 'dialog-close': ['Close project','Projeyi kapat'], 'image-prev': ['Previous image','Önceki görsel'], 'image-next': ['Next image','Sonraki görsel'] };
+    const labels = { 'dialog-close': ['Close project','Projeyi kapat'], 'image-prev': ['Previous image','Önceki görsel'], 'image-next': ['Next image','Sonraki görsel'], 'collection-prev':['Previous artwork','Önceki çalışma'], 'collection-next':['Next artwork','Sonraki çalışma'] };
     Object.entries(labels).forEach(([id, pair]) => document.getElementById(id).setAttribute('aria-label', text(pair)));
     document.querySelector('.filters').setAttribute('aria-label', language === 'tr' ? 'Projeleri filtrele' : 'Filter projects');
     document.querySelector('nav').setAttribute('aria-label', language === 'tr' ? 'Ana gezinme' : 'Main navigation');
     document.querySelector('.brand').setAttribute('aria-label', language === 'tr' ? 'Yavuzhan Önder — ana sayfa' : 'Yavuzhan Önder — home');
-    if (currentProject) { updateProjectText(); renderImage(false); }
+    if (currentProject) { updateProjectText(); if (collectionMode) updateCollection(); else renderImage(false); }
     updateCount();
     positionFilter();
     try { localStorage.setItem('portfolio-language', language); } catch (_) { /* Local storage may be unavailable when opened from disk. */ }
@@ -163,11 +171,231 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     document.getElementById('dialog-title').textContent = text(currentProject.captions[currentIndex]);
     document.getElementById('dialog-description').textContent = text(currentProject.description);
     document.getElementById('dialog-category').textContent = text(currentProject.tag);
-    document.getElementById('dialog-tools').textContent = currentProject.category === '2d' ? 'Photoshop' : 'Blender';
-    document.getElementById('dialog-size').textContent = language === 'tr' ? `${currentProject.images.length} çalışma` : `${currentProject.images.length} works`;
-    thumbs.setAttribute('aria-label', language === 'tr' ? 'Proje görselleri' : 'Project images');
-    [...thumbs.children].forEach((button, index) => button.setAttribute('aria-label', text(currentProject.captions[index])));
   }
+
+  function collectionStep() {
+    const selected = collectionStage.children[currentIndex];
+    return (selected?.offsetWidth || 240) * .94 + 24;
+  }
+  function collectionOffset() {
+    const selected = collectionStage.children[currentIndex];
+    if (!selected || reducedMotion.matches) return 0;
+    const transform = getComputedStyle(selected).transform;
+    return transform === 'none' ? 0 : new DOMMatrixReadOnly(transform).m41 + selected.offsetWidth / 2;
+  }
+  function positionCollection(drag = 0) {
+    const step = collectionStep();
+    const cardHeight = collectionStage.children[currentIndex]?.offsetHeight || 0;
+    // Finish the reflection's fade before the stage clips, including on short screens.
+    const reflectionFade = Math.max(0, Math.min(cardHeight * .62, (collectionStage.clientHeight - cardHeight) / 2 - 8));
+    collectionStage.style.setProperty('--reflection-fade', `${reflectionFade}px`);
+    const shift = reducedMotion.matches ? 0 : drag / step;
+    [...collectionStage.children].forEach((card, index) => {
+      const distance = index - currentIndex + shift;
+      const side = Math.max(-1, Math.min(1, distance));
+      const scale = 1 - Math.min(1, Math.abs(distance)) * .14;
+      const angle = reducedMotion.matches ? 0 : -side * 14;
+      card.style.transform = `translate3d(calc(-50% + ${distance * step}px), -50%, 0) rotateY(${angle}deg) scale(${reducedMotion.matches ? 1 : scale})`;
+      card.style.zIndex = String(10 - Math.min(9, Math.round(Math.abs(distance))));
+      card.style.opacity = String(1 - Math.min(1, Math.abs(distance)) * .25);
+      card.style.visibility = Math.abs(distance) <= 3 ? 'visible' : 'hidden';
+      card.style.pointerEvents = Math.abs(distance) <= 2 ? '' : 'none';
+      card.setAttribute('aria-hidden', String(Math.abs(distance) > 2));
+      card.tabIndex = index === currentIndex ? 0 : -1;
+      card.setAttribute('aria-pressed', String(index === currentIndex));
+    });
+  }
+  function updateCollection() {
+    if (!currentProject) return;
+    document.getElementById('collection-title').textContent = text(currentProject.title);
+    document.getElementById('collection-description').textContent = text(currentProject.description);
+    document.getElementById('collection-name').textContent = text(currentProject.captions[currentIndex]);
+    document.getElementById('collection-counter').textContent = `${String(currentIndex + 1).padStart(2,'0')} / ${String(currentProject.images.length).padStart(2,'0')}`;
+    collectionStage.setAttribute('aria-label', text(['Artwork collection','Çalışma koleksiyonu']));
+    document.getElementById('collection-prev').disabled = currentIndex === 0;
+    document.getElementById('collection-next').disabled = currentIndex === currentProject.images.length - 1;
+    [...collectionStage.children].forEach((card, index) => {
+      card.setAttribute('aria-label', `${text(currentProject.captions[index])} — ${index === currentIndex ? text(['Explore artwork','Çalışmayı incele']) : text(['Select artwork','Çalışmayı seç'])}`);
+      card.querySelector('.collection-card-name').textContent = text(currentProject.captions[index]);
+      // Only the selected artwork and its immediate neighbours need the larger images.
+      if (Math.abs(index - currentIndex) <= 3) card.querySelectorAll('img').forEach(artwork => { artwork.src = `assets/images/${currentProject.images[index]}.webp`; });
+    });
+    applyTheme(currentProject.themes[currentIndex]);
+    positionCollection();
+  }
+  function buildCollection() {
+    collectionStage.replaceChildren();
+    currentProject.images.forEach((stem, index) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'collection-card';
+      const label = document.createElement('span');
+      label.className = 'collection-card-name';
+      label.setAttribute('aria-hidden','true');
+      card.append(label);
+      const artworkFrame = document.createElement('span');
+      artworkFrame.className = 'collection-artwork';
+      const artwork = document.createElement('img');
+      artwork.src = `assets/images/${stem}-thumb.webp`;
+      artwork.alt = '';
+      artwork.draggable = false;
+      artwork.width = 600;
+      artwork.height = 400;
+      artwork.decoding = 'async';
+      artworkFrame.append(artwork);
+      card.append(artworkFrame);
+      const reflection = artwork.cloneNode();
+      reflection.className = 'collection-reflection';
+      reflection.setAttribute('aria-hidden','true');
+      card.append(reflection);
+      if (currentProject.models?.[stem]) {
+        const badge = document.createElement('span');
+        badge.className = 'model-badge';
+        badge.textContent = '3D';
+        artworkFrame.append(badge);
+      }
+      card.addEventListener('click', () => {
+        if (closing || !collectionMode) return;
+        if (index === currentIndex) inspectCollection();
+        else selectCollection(index);
+      });
+      collectionStage.append(card);
+    });
+  }
+  function selectCollection(index, velocity = 0) {
+    if (!collectionMode || closing) return;
+    cancelCollectionWheel();
+    const duration = Math.round(550 - 370 * Math.min(1, Math.abs(velocity) / 2.5));
+    [...collectionStage.children].forEach(card => { card.style.transitionDuration = `${duration}ms`; });
+    collectionStage.dataset.duration = String(duration);
+    const focused = document.activeElement;
+    const focusInCollection = collectionStage.contains(focused);
+    currentIndex = Math.max(0, Math.min(index, currentProject.images.length - 1));
+    updateCollection();
+    // Keep keyboard focus on the selected artwork when it moves out of the centre.
+    if (focusInCollection || focused.disabled) collectionStage.children[currentIndex]?.focus({preventScroll:true});
+  }
+  function showCollection(animate = true) {
+    cancelCollectionWheel();
+    imageRevision++;
+    leaveModel();
+    collectionMode = true;
+    collectionPanel.hidden = false;
+    collectionBack.hidden = true;
+    dialog.classList.add('is-collection');
+    dialog.setAttribute('aria-labelledby','collection-title');
+    dialog.setAttribute('aria-describedby','collection-description');
+    delete root.dataset.artwork;
+    effects.get(image)?.cancel();
+    image.parentElement.querySelectorAll(':scope > .scene-layer,:scope > .scene-backing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
+    collectionDrag = null;
+    collectionStage.classList.remove('is-dragging');
+    updateCollection();
+    collectionStage.children[currentIndex]?.focus({preventScroll:true});
+    if (animate) play(collectionPanel,[{opacity:0},{opacity:1}],{duration:480});
+  }
+  function inspectCollection() {
+    if (!collectionMode || closing) return;
+    finishCollectionWheel();
+    collectionMode = false;
+    collectionPanel.hidden = true;
+    dialog.classList.remove('is-collection');
+    collectionBack.hidden = false;
+    dialog.setAttribute('aria-labelledby','dialog-title');
+    dialog.setAttribute('aria-describedby','dialog-description');
+    updateProjectText();
+    renderImage(false);
+    collectionBack.focus({preventScroll:true});
+    play(image.parentElement,[{opacity:0},{opacity:1}],{duration:480});
+    fontsReady.then(() => { if (!collectionMode && dialog.open && !closing) reveal(document.querySelector('.dialog-heading')); });
+  }
+
+  document.getElementById('collection-prev').addEventListener('click', () => selectCollection(currentIndex - 1));
+  document.getElementById('collection-next').addEventListener('click', () => selectCollection(currentIndex + 1));
+  document.getElementById('collection-inspect').addEventListener('click', inspectCollection);
+  collectionBack.addEventListener('click', () => showCollection());
+  collectionStage.addEventListener('pointerdown', event => {
+    if (!collectionMode || closing || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    finishCollectionWheel();
+    suppressCollectionClick = false;
+    const offset = collectionOffset();
+    collectionDrag = {id:event.pointerId,x:event.clientX,y:event.clientY,lastX:event.clientX,time:event.timeStamp,velocity:0,offset,dx:offset,active:false};
+  });
+  collectionStage.addEventListener('pointermove', event => {
+    if (!collectionDrag || collectionDrag.id !== event.pointerId) return;
+    const dx = event.clientX - collectionDrag.x;
+    const dy = event.clientY - collectionDrag.y;
+    const elapsed = Math.max(1,event.timeStamp - collectionDrag.time);
+    collectionDrag.velocity = collectionDrag.velocity * .4 + Math.abs(event.clientX - collectionDrag.lastX) / elapsed * .6;
+    collectionDrag.lastX = event.clientX;
+    collectionDrag.time = event.timeStamp;
+    if (!collectionDrag.active && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+      collectionDrag.active = true;
+      collectionStage.setPointerCapture(event.pointerId);
+      collectionStage.classList.add('is-dragging');
+    }
+    if (!collectionDrag.active) return;
+    event.preventDefault();
+    const minimum = -(currentProject.images.length - 1 - currentIndex) * collectionStep();
+    const maximum = currentIndex * collectionStep();
+    collectionDrag.dx = Math.max(minimum, Math.min(dx + collectionDrag.offset, maximum));
+    positionCollection(collectionDrag.dx);
+  });
+  function endCollectionDrag(event) {
+    if (!collectionDrag || collectionDrag.id !== event.pointerId) return;
+    const drag = collectionDrag;
+    collectionDrag = null;
+    collectionStage.classList.remove('is-dragging');
+    if (collectionStage.hasPointerCapture(event.pointerId)) collectionStage.releasePointerCapture(event.pointerId);
+    if (!drag.active) return;
+    suppressCollectionClick = true;
+    const velocity = event.type === 'pointercancel' ? 0 : drag.velocity * Math.exp(-Math.max(0,event.timeStamp - drag.time) / 100);
+    const projected = drag.dx + Math.sign(drag.dx) * Math.min(collectionStep() * .9,velocity * 90);
+    let delta = event.type === 'pointercancel' ? 0 : Math.round(-projected / collectionStep());
+    if (!delta && Math.abs(drag.dx) > 45 && event.type !== 'pointercancel') delta = drag.dx < 0 ? 1 : -1;
+    selectCollection(currentIndex + delta,velocity);
+  }
+  collectionStage.addEventListener('pointerup', endCollectionDrag);
+  collectionStage.addEventListener('pointercancel', endCollectionDrag);
+  collectionStage.addEventListener('click', event => {
+    if (suppressCollectionClick && event.detail !== 0) { event.preventDefault(); event.stopPropagation(); suppressCollectionClick = false; }
+  }, true);
+  function cancelCollectionWheel() {
+    clearTimeout(collectionWheelTimer);
+    collectionWheelTimer = 0;
+    collectionWheel = null;
+    collectionStage.classList.remove('is-scrolling');
+  }
+  function finishCollectionWheel() {
+    if (!collectionWheel) return;
+    const gesture = collectionWheel;
+    cancelCollectionWheel();
+    if (!collectionMode || closing) return;
+    let delta = Math.round(-gesture.dx / collectionStep());
+    if (!delta && Math.abs(gesture.dx) > 44) delta = gesture.dx < 0 ? 1 : -1;
+    selectCollection(currentIndex + delta,gesture.velocity);
+  }
+  dialog.addEventListener('wheel', event => {
+    if (!collectionMode || closing || event.ctrlKey || collectionDrag?.active) return;
+    const raw = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+    if (!raw) return;
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? collectionStage.clientHeight : 1;
+    const delta = raw * unit;
+    const now = event.timeStamp;
+    if (!collectionWheel) collectionWheel = {dx:collectionOffset(),velocity:0,time:now - 32};
+    const elapsed = Math.max(8,Math.min(80,now - collectionWheel.time));
+    collectionWheel.velocity = collectionWheel.velocity * .4 + Math.abs(delta) / elapsed * .6;
+    collectionWheel.time = now;
+    const step = collectionStep();
+    collectionWheel.dx = Math.max(-(currentProject.images.length - 1 - currentIndex) * step,Math.min(currentIndex * step,collectionWheel.dx - delta * .9));
+    collectionStage.classList.add('is-scrolling');
+    positionCollection(collectionWheel.dx);
+    clearTimeout(collectionWheelTimer);
+    collectionWheelTimer = setTimeout(finishCollectionWheel,100);
+  },{passive:false});
+  window.addEventListener('resize', () => { if (collectionMode) positionCollection(); });
+  reducedMotion.addEventListener('change', () => { if (collectionMode) positionCollection(); });
 
   // Capture the currently visible blend before interrupting a transition.
   function freezeFrame(element) {
@@ -405,7 +633,7 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   });
 
   async function renderImage(animateChange = true) {
-    if (!currentProject) return;
+    if (!currentProject || collectionMode) return;
     const project = currentProject;
     const index = currentIndex;
     const stem = project.images[index];
@@ -435,17 +663,6 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     document.getElementById('image-caption').textContent = caption;
     document.getElementById('image-counter').textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(currentProject.images.length).padStart(2, '0')}`;
     document.getElementById('original-image').href = `images/${stem}.jpg`;
-    [...thumbs.children].forEach((button, index) => button.setAttribute('aria-pressed', String(index === currentIndex)));
-    const selectedThumb = thumbs.children[currentIndex];
-    if (selectedThumb) {
-      // Keep the selected thumbnail in view without scrolling the page or dialog.
-      const vertical = window.matchMedia('(min-width:761px)').matches;
-      thumbs.scrollTo({
-        left:vertical ? 0 : Math.max(0,selectedThumb.offsetLeft-thumbs.offsetLeft-thumbs.clientWidth/2+selectedThumb.clientWidth/2),
-        top:vertical ? Math.max(0,selectedThumb.offsetTop-thumbs.offsetTop-thumbs.clientHeight/2+selectedThumb.clientHeight/2) : 0,
-        behavior:reducedMotion.matches ? 'instant' : 'smooth'
-      });
-    }
     image.hidden = modelMode && modelLoaded;
     image.style.opacity = '';
     if (changing) transitionScene(image,outgoing);
@@ -466,38 +683,32 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     dialog.classList.remove('is-closing');
     currentIndex = Math.max(0, Math.min(Number(index) || 0, project.images.length - 1));
     opener = trigger;
+    collectionEntry = trigger?.classList.contains('project-open') || false;
+    collectionMode = false;
+    collectionPanel.hidden = true;
+    collectionBack.hidden = true;
+    dialog.classList.remove('is-collection');
+    dialog.setAttribute('aria-labelledby','dialog-title');
+    dialog.setAttribute('aria-describedby','dialog-description');
     renderedStem = '';
     image.hidden = true;
     image.parentElement.querySelectorAll(':scope > .scene-layer,:scope > .scene-backing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
-    thumbs.replaceChildren();
-    project.images.forEach((stem, index) => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.setAttribute('aria-label', text(project.captions[index]));
-      const thumbnail = document.createElement('img');
-      thumbnail.src = `assets/images/${stem}-thumb.webp`;
-      thumbnail.alt = '';
-      thumbnail.width = 72;
-      thumbnail.height = 48;
-      button.append(thumbnail);
-      if (project.models?.[stem]) { const badge=document.createElement('span'); badge.className='model-badge'; badge.textContent='3D'; button.append(badge); }
-      button.addEventListener('click', () => { if (closing) return; const direction = index >= currentIndex ? 1 : -1; currentIndex = index; renderImage(true, direction); });
-      thumbs.append(button);
-    });
     updateProjectText();
     dialog.showModal();
-    renderImage(false);
+    if (collectionEntry) { buildCollection(); showCollection(false); }
+    else renderImage(false);
     document.body.classList.add('dialog-open');
-    document.getElementById('dialog-close').focus({ preventScroll: true });
+    if (!collectionEntry) document.getElementById('dialog-close').focus({ preventScroll: true });
     // A full-screen modal has a different crop from its collection card; use the kit's opacity fallback.
     play(dialog,[{opacity:0},{opacity:1}],{duration:480});
-    fontsReady.then(() => { if (dialog.open && !closing) reveal(document.querySelector('.dialog-heading')); });
+    fontsReady.then(() => { if (dialog.open && !closing && !collectionMode) reveal(document.querySelector('.dialog-heading')); });
     return true;
   }
 
   async function closeProject() {
     if (!dialog.open || closing) return;
     closing = true;
+    cancelCollectionWheel();
     modelRevision++;
     imageRevision++;
     dialog.classList.add('is-closing');
@@ -519,7 +730,7 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     });
   });
   document.getElementById('dialog-close').addEventListener('click', closeProject);
-  dialog.addEventListener('cancel', event => { event.preventDefault(); closeProject(); });
+  dialog.addEventListener('cancel', event => { event.preventDefault(); if (collectionEntry && !collectionMode) showCollection(); else closeProject(); });
   document.getElementById('image-prev').addEventListener('click', () => moveImage(-1));
   document.getElementById('image-next').addEventListener('click', () => moveImage(1));
   let swipeStart = null;
@@ -541,12 +752,19 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeProject();
   });
   dialog.addEventListener('close', () => {
+    cancelCollectionWheel();
     document.body.classList.remove('dialog-open');
     imageRevision++;
     effects.get(image)?.cancel();
     image.style.opacity = '';
     image.parentElement.querySelectorAll(':scope > .scene-layer,:scope > .scene-backing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
     leaveModel();
+    collectionMode = false;
+    collectionEntry = false;
+    collectionPanel.hidden = true;
+    collectionBack.hidden = true;
+    collectionStage.replaceChildren();
+    dialog.classList.remove('is-collection');
     currentProject = null;
     delete root.dataset.project;
     delete root.dataset.artwork;
@@ -558,9 +776,16 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   });
   dialog.addEventListener('keydown', event => {
     if (event.composedPath().includes(modelViewer)) return;
+    if (collectionMode && (event.key === 'Home' || event.key === 'End')) {
+      event.preventDefault();
+      selectCollection(event.key === 'Home' ? 0 : currentProject.images.length - 1);
+      return;
+    }
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       event.preventDefault();
-      moveImage(event.key === 'ArrowRight' ? 1 : -1);
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      if (collectionMode) selectCollection(currentIndex + direction);
+      else moveImage(direction);
     }
   });
 
