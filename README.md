@@ -3,7 +3,9 @@
 3D ve 2D çalışmalarımı içeren kişisel portfolyom. Blender ve Photoshop çalışmalarını büyük görseller, çalışmaya göre değişen renkler ve animasyonlu geçişlerle sunar.
 
 - Türkçe ve İngilizce arayüz
-- 15 adet 3D çalışma görseli ve 4 adet 2D çalışma
+- 15 adet 3D çalışma ve 4 adet 2D çalışma
+- Kaynağı bulunan 6 çalışmada Cycles ana render ve Clay seçimi
+- Render ve Clay arka planlarıyla bütünleşen, ekran boyutuna uyarlanan sunum
 - Uygun çalışmalarda isteğe bağlı 3D görüntüleme
 - İmlecin bulunduğu bölgeye scroll ile yakınlaştırma
 - Masaüstü ve mobil uyumlu tasarım
@@ -22,6 +24,6 @@ Bu klasörde `python -m http.server 8765` komutunu çalıştırıp tarayıcıda 
 
 ## Dosyalar
 
-`index.html` ana sayfadır. `assets/` web görselleri, betikler, stiller ve hafif GLB modellerini içerir. `images/` çalışma görsellerini içerir. Blender kaynakları bu depoya dahil değildir.
+`index.html` ana sayfadır. `assets/` web görselleri, betikler, stiller ve hafif GLB modellerini içerir. `images/` özgün çalışma görsellerini, `images/renders/` ise 12 tam çözünürlüklü Cycles PNG çıktısını içerir. Web görünümünde hafif WebP dosyaları yüklenir; PNG yalnızca tam görsel bağlantısıyla açılır. Blender kaynakları bu depoya dahil değildir.
 
 Arayüz animasyonları tarayıcının Web Animations API özelliğini kullanır. 3D görüntüleyici model-viewer kütüphanesinin lisansı `assets/vendor/` klasöründedir. Önceki sürümün Motion dosyaları ve lisansı da bu klasörde korunur.

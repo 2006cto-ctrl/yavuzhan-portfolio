@@ -145,8 +145,8 @@ dialog::backdrop {background:color-mix(in srgb,var(--bg) 92%,transparent);transi
 .viewer-outgoing {z-index:1;pointer-events:none}
 .scene-layer,.scene-backing {position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .scene-layer {z-index:3}
-.scene-backing {z-index:0;object-fit:cover}
-.scene-layer img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.scene-backing {z-index:2}
+.scene-layer img,.scene-backing img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none}
 #viewer-image,.hero-image:not(.hero-outgoing) {position:relative;z-index:1}
 #viewer-image {position:absolute}
 .scene-scrim {position:absolute;inset:0;z-index:3;pointer-events:none;background:#10171999;mask-image:linear-gradient(90deg,#000,transparent 48%),linear-gradient(270deg,#000,transparent 24%),linear-gradient(0deg,#000,transparent 20%),linear-gradient(180deg,#000,transparent 16%);mask-composite:add}
@@ -169,6 +169,22 @@ html[data-artwork="2d-03"] .dialog-heading>a {display:table;width:max-content;pa
 html[data-artwork="2d-03"] .dialog-brand .brand-mark {border-radius:50%;background:var(--bg)}
 .view-model {display:block;min-height:44px;margin-top:8px;padding:12px 16px;border-radius:999px;background:#10171988;border:1px solid #eef3ed55;color:var(--text);transition:background-color 160ms var(--ease-in)}
 .view-model:hover {background:#213b40}
+.render-variants {display:flex;gap:0;padding:4px;border:1px solid #eef3ed55;border-radius:999px;background:#101719cc;flex-shrink:0}
+.render-variants button {min-width:64px;min-height:44px;padding:8px 12px;border-radius:999px;color:var(--text);font:600 14px/1.3 var(--body);transition:background-color 160ms var(--ease-in),color 160ms var(--ease-in)}
+.render-variants button[aria-pressed=true] {background:var(--text);color:var(--deep)}
+.render-variants button:not([aria-pressed=true]):hover {background:var(--surface)}
+.is-studio-render:not(.is-model) .viewer-stage {background:var(--artwork-background,linear-gradient(180deg,var(--artwork-top),var(--artwork-bottom)))}
+.viewer-stage img.studio-artwork {inset:auto;left:64%;top:50%;width:auto;height:auto;max-width:68%;max-height:76%;transform:translate(-50%,-50%);object-fit:contain;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent),linear-gradient(0deg,transparent,#000 var(--studio-edge-y,4%),#000 calc(100% - var(--studio-edge-y,4%)),transparent);mask-composite:intersect}
+@media(max-width:767px) {
+  .render-variants button {min-width:60px;padding-inline:8px}
+  .viewer-caption:has(.render-variants:not([hidden])) .scene-navigation {width:auto;gap:8px}
+  .viewer-stage img.studio-artwork {left:50%;top:61%;max-width:100%;max-height:42%}
+  .is-studio-render:not(.is-model) .dialog-heading>p:last-of-type {display:none}
+}
+@media(max-width:379px) {
+  .viewer-caption:has(.render-variants:not([hidden])) {flex-wrap:wrap;gap:8px}
+  .viewer-caption:has(.render-variants:not([hidden])) .scene-navigation {width:100%;justify-content:space-between}
+}
 
 
 

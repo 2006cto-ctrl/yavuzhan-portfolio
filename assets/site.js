@@ -1,9 +1,14 @@
-const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag": ["3D", "3D"], "cover": "environment-02", "subtitle": ["Scenes, objects and experiments in form.", "Mekânlar, objeler ve form denemeleri."], "description": ["Studies in atmosphere, light and form.", "Atmosfer, ışık ve form üzerine çalışmalar."], "images": ["environment-01", "environment-02", "environment-03", "environment-04", "environment-05", "environment-06", "props-01", "props-02", "props-03", "props-04", "materials-01", "materials-02", "materials-03", "character-01", "character-02"], "captions": [["Cabin in the trees", "Ağaçların arasındaki ev"], ["House by the water", "Su kenarındaki ev"], ["Neon alley", "Neon sokak"], ["Rock and terrain study", "Kaya ve arazi çalışması"], ["Coffee and light", "Kahve ve ışık"], ["Light and contrast study", "Işık ve kontrast çalışması"], ["Textured weapon study", "Dokulu silah çalışması"], ["Building kit", "Yapı koleksiyonu"], ["Motorcycle form study", "Motosiklet form çalışması"], ["Weapon modeling study", "Silah modelleme çalışması"], ["Blade material study", "Kılıç materyal çalışması"], ["Wood and metal study", "Ahşap ve metal çalışması"], ["Sword presentation", "Kılıç sunumu"], ["Stylized character study", "Stilize karakter çalışması"], ["Character sculpt study", "Karakter heykel çalışması"]], "themes": ["woodland", "forest", "neon", "terrain", "ember", "mono", "plum", "ember", "mono", "plum", "mono", "ember", "red", "sage", "sage"], "models": {"environment-06": {"src": "assets/models/contrast-katana.glb", "theta": 90, "phi": 75, "bytes": 1238752}, "environment-05": {"src": "assets/models/coffee-lamp.glb", "theta": 0, "phi": 75, "bytes": 247828}, "props-01": {"src": "assets/models/textured-revolver.glb", "theta": 180, "phi": 75, "bytes": 2556112}, "materials-01": {"src": "assets/models/katana-original.glb", "theta": 90, "phi": 75, "bytes": 9072184}}}, {"id": "twod", "category": "2d", "title": ["2D", "2D"], "subtitle": ["Posters, collages and visual compositions.", "Afişler, kolajlar ve görsel kompozisyonlar."], "tag": ["2D", "2D"], "cover": "2d-01", "images": ["2d-01", "2d-02", "2d-03", "2d-04"], "captions": [["Spider-Man poster study", "Spider-Man afiş çalışması"], ["Character collage", "Karakter kolajı"], ["Zero Two poster study", "Zero Two afiş çalışması"], ["Monster visual study", "Monster görsel çalışması"]], "description": ["Posters, collages and visual compositions.", "Afişler, kolajlar ve görsel kompozisyonlar."], "themes": ["red", "red", "rose", "sage"]}];
+const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag": ["3D", "3D"], "cover": "environment-02", "subtitle": ["Scenes, objects and experiments in form.", "Mekânlar, objeler ve form denemeleri."], "description": ["Studies in atmosphere, light and form.", "Atmosfer, ışık ve form üzerine çalışmalar."], "images": ["environment-01", "environment-02", "environment-03", "environment-04", "environment-05", "environment-06", "props-01", "props-02", "props-03", "props-04", "materials-01", "materials-02", "materials-03", "character-01", "character-02"], "captions": [["Cabin in the trees", "Ağaçların arasındaki ev"], ["House by the water", "Su kenarındaki ev"], ["Neon alley", "Neon sokak"], ["Rock and terrain study", "Kaya ve arazi çalışması"], ["Coffee and light", "Kahve ve ışık"], ["Light and contrast study", "Işık ve kontrast çalışması"], ["Textured weapon study", "Dokulu silah çalışması"], ["Building kit", "Yapı koleksiyonu"], ["Motorcycle form study", "Motosiklet form çalışması"], ["Weapon modeling study", "Silah modelleme çalışması"], ["Blade material study", "Kılıç materyal çalışması"], ["Wood and metal study", "Ahşap ve metal çalışması"], ["Sword presentation", "Kılıç sunumu"], ["Stylized character study", "Stilize karakter çalışması"], ["Character sculpt study", "Karakter heykel çalışması"]], "themes": ["woodland", "forest", "neon", "terrain", "ember", "mono", "plum", "ember", "mono", "plum", "mono", "ember", "red", "sage", "sage"], "models": {"environment-06": {"src": "assets/models/contrast-katana.glb", "theta": 90, "phi": 75, "bytes": 1238752}, "environment-05": {"src": "assets/models/coffee-lamp.glb", "theta": 0, "phi": 75, "bytes": 247828}, "props-01": {"src": "assets/models/textured-revolver.glb", "theta": 180, "phi": 75, "bytes": 2556112}, "materials-01": {"src": "assets/models/katana-original.glb", "theta": 90, "phi": 75, "bytes": 9072184}}, "renders": {"materials-01": {"render": "assets/images/materials-01.webp", "fullRender": "images/renders/materials-01-render.png", "renderBackdrop": ["#31353a", "#32373b"], "clay": "assets/images/materials-01-clay.webp", "fullClay": "images/renders/materials-01-clay.png", "clayBackdrop": ["#32363b", "#32373b"], "presentation": "studio"}, "props-01": {"render": "assets/images/props-01.webp", "fullRender": "images/renders/props-01-render.png", "renderBackdrop": ["#26282c", "#bbbcbd"], "clay": "assets/images/props-01-clay.webp", "fullClay": "images/renders/props-01-clay.png", "clayBackdrop": ["#5d5e63", "#e4e5e5"], "presentation": "studio"}, "environment-05": {"render": "assets/images/environment-05.webp", "fullRender": "images/renders/environment-05-render.png", "renderBackdrop": ["#000000", "#2a1c1a"], "clay": "assets/images/environment-05-clay.webp", "fullClay": "images/renders/environment-05-clay.png", "clayBackdrop": ["#abafb0", "#a9acaf"], "presentation": "scene"}, "environment-06": {"render": "assets/images/environment-06.webp", "fullRender": "images/renders/environment-06-render.png", "renderBackdrop": ["#000000", "#000000"], "clay": "assets/images/environment-06-clay.webp", "fullClay": "images/renders/environment-06-clay.png", "clayBackdrop": ["#97979d", "#aaabad"], "presentation": "scene"}, "environment-01": {"render": "assets/images/environment-01.webp", "fullRender": "images/renders/environment-01-render.png", "renderBackdrop": ["#191c19", "#4e4729"], "clay": "assets/images/environment-01-clay.webp", "fullClay": "images/renders/environment-01-clay.png", "clayBackdrop": ["#44484c", "#adafb1"], "presentation": "scene"}, "props-02": {"render": "assets/images/props-02.webp", "fullRender": "images/renders/props-02-render.png", "renderBackdrop": ["#5e6368", "#a2a6a8"], "clay": "assets/images/props-02-clay.webp", "fullClay": "images/renders/props-02-clay.png", "clayBackdrop": ["#b4b6b8", "#d7d8d9"], "presentation": "studio"}}}, {"id": "twod", "category": "2d", "title": ["2D", "2D"], "subtitle": ["Posters, collages and visual compositions.", "Afişler, kolajlar ve görsel kompozisyonlar."], "tag": ["2D", "2D"], "cover": "2d-01", "images": ["2d-01", "2d-02", "2d-03", "2d-04"], "captions": [["Spider-Man poster study", "Spider-Man afiş çalışması"], ["Character collage", "Karakter kolajı"], ["Zero Two poster study", "Zero Two afiş çalışması"], ["Monster visual study", "Monster görsel çalışması"]], "description": ["Posters, collages and visual compositions.", "Afişler, kolajlar ve görsel kompozisyonlar."], "themes": ["red", "red", "rose", "sage"]}];
 (() => {
   'use strict';
   const root = document.documentElement;
   const dialog = document.getElementById('project-dialog');
   const image = document.getElementById('viewer-image');
+  const renderVariants = document.getElementById('render-variants');
+  const variantButtons = [...renderVariants.querySelectorAll('button')];
+  let viewVariant = 'render';
+  let renderedVariant = '';
+  let studioBackdrop = null;
   const collectionPanel = document.getElementById('collection-panel');
   const collectionStage = document.getElementById('collection-stage');
   const collectionBack = document.getElementById('collection-back');
@@ -151,7 +156,8 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     root.lang = language;
     languageButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.language === language)));
     updateHeroText();
-    document.querySelector('.about-portrait img').alt = text(['A wooden cabin with warm window lights in a dark forest', 'Karanlık bir ormanda, pencerelerinden sıcak ışık yayılan ahşap bir ev']);
+    document.querySelector('.about-portrait img').alt = text(['A house among trees with warm interior lighting', 'Ağaçlar arasında, sıcak iç aydınlatmalı bir ev']);
+    renderVariants.setAttribute('aria-label',text(['Artwork view','Çalışma görünümü']));
     PROJECTS.forEach(project => {
       const coverImage = document.querySelector(`.${project.id}-card .project-art img`);
       if (coverImage) coverImage.alt = text(project.captions[project.images.indexOf(project.cover)]);
@@ -397,10 +403,44 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
   window.addEventListener('resize', () => { if (collectionMode) positionCollection(); });
   reducedMotion.addEventListener('change', () => { if (collectionMode) positionCollection(); });
 
+  function updateStudioBackdrop() {
+    if (!studioBackdrop || !dialog.open || collectionMode || modelMode || !dialog.classList.contains('is-studio-render')) return;
+    const stage = image.parentElement.getBoundingClientRect();
+    const artwork = image.getBoundingClientRect();
+    if (!stage.height || !artwork.height) return;
+    // Extend the render's actual edge colours at the artwork's displayed height.
+    // A full-height two-colour gradient cannot line up with a smaller image.
+    const stops = studioBackdrop.map((color,index) => {
+      const y = (artwork.top-stage.top + artwork.height*index/(studioBackdrop.length-1))/stage.height;
+      return `${color} ${(Math.max(0,Math.min(1,y))*100).toFixed(3)}%`;
+    });
+    dialog.style.setProperty('--artwork-background',`linear-gradient(180deg,${studioBackdrop[0]} 0%,${stops.join(',')},${studioBackdrop.at(-1)} 100%)`);
+  }
+  function prepareStudioBackdrop(candidate) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 64; canvas.height = 64;
+    const context = canvas.getContext('2d',{willReadFrequently:true});
+    context.drawImage(candidate,0,0,64,64);
+    const pixels = context.getImageData(0,0,64,64).data;
+    studioBackdrop = Array.from({length:64},(_,y) => {
+      const channels = [0,1,2].map(channel => {
+        const left = pixels[(y*64)*4+channel];
+        const right = pixels[(y*64+63)*4+channel];
+        return Math.round((left+right)/2);
+      });
+      return `rgb(${channels.join(',')})`;
+    });
+    updateStudioBackdrop();
+  }
+  const studioResize = new ResizeObserver(updateStudioBackdrop);
+  studioResize.observe(image.parentElement);
+  studioResize.observe(image);
+
   // Capture the currently visible blend before interrupting a transition.
   function freezeFrame(element) {
     const stage = element.parentElement;
     const layer = document.createElement('div');
+    layer.style.background = getComputedStyle(stage).background;
     layer.className = 'scene-layer';
     layer.setAttribute('aria-hidden','true');
     [...stage.children].filter(node => node === element || node.classList.contains('scene-layer') || node.classList.contains('scene-backing')).forEach(node => {
@@ -414,6 +454,7 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
         copy.style.objectFit = presentation.objectFit;
         copy.style.objectPosition = presentation.objectPosition;
         copy.style.zIndex = '1';
+        ['left','right','top','bottom','width','height','maskImage','maskComposite'].forEach(property => { copy.style[property] = presentation[property]; });
       }
       layer.append(copy);
       effects.get(node)?.cancel();
@@ -423,17 +464,21 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     return layer;
   }
   function transitionScene(incoming, outgoing) {
-    const backing = incoming.cloneNode();
-    backing.removeAttribute('id');
+    // Composite the artwork with its canvas before fading. Stacking masked
+    // images directly makes translucent edges change when the backing is removed.
+    const backing = document.createElement('div');
     backing.className = 'scene-backing';
-    backing.alt = '';
     backing.setAttribute('aria-hidden','true');
-    backing.style.opacity = '1';
-    backing.style.transform = '';
-    backing.style.objectPosition = getComputedStyle(incoming).objectPosition;
+    backing.style.background = getComputedStyle(incoming.parentElement).background;
+    const copy = incoming.cloneNode();
+    copy.removeAttribute('id');
+    copy.alt = '';
+    copy.style.opacity = '1';
+    const presentation = getComputedStyle(incoming);
+    ['left','right','top','bottom','width','height','objectFit','objectPosition','maskImage','maskComposite','transform'].forEach(property => { copy.style[property] = presentation[property]; });
+    backing.append(copy);
     incoming.parentElement.prepend(backing);
-    // An opaque backing prevents the midpoint from darkening or exposing the stage.
-    play(incoming,[{opacity:0},{opacity:1}],{duration:550,easing:blendEase});
+    play(backing,[{opacity:0},{opacity:1}],{duration:550,easing:blendEase});
     if (outgoing) play(outgoing,[{opacity:1},{opacity:0}],{duration:550,easing:blendEase}).then(() => { outgoing.remove(); backing.remove(); });
     else backing.remove();
   }
@@ -461,7 +506,23 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     modelButton.textContent = text(modelMode ? ['Back to artwork','Görsele dön'] : ['View in 3D','3D görüntüle']);
     modelButton.setAttribute('aria-pressed',String(modelMode));
     modelButton.setAttribute('aria-controls','artwork-model');
+    updateVariantControls();
   }
+  function updateVariantControls() {
+    renderVariants.hidden = !currentProject?.renders?.[renderedStem];
+    variantButtons.forEach(button => {
+      button.setAttribute('aria-pressed',String(!modelMode && button.dataset.renderVariant === viewVariant));
+      button.setAttribute('aria-controls','viewer-image');
+    });
+  }
+  variantButtons.forEach(button => button.addEventListener('click', () => {
+    if (!currentProject || collectionMode || closing || currentProject.images[currentIndex] !== renderedStem) return;
+    const next = button.dataset.renderVariant;
+    if (!currentProject.renders?.[renderedStem]?.[next] || (next === viewVariant && !modelMode)) return;
+    viewVariant = next;
+    if (modelMode) leaveModel();
+    renderImage(true);
+  }));
   function resetModel() {
     if (!modelLoaded || !activeModel) return;
     cancelAnimationFrame(cameraReset);
@@ -637,19 +698,32 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     const project = currentProject;
     const index = currentIndex;
     const stem = project.images[index];
+    const variants = project.renders?.[stem];
+    const variant = stem !== renderedStem || !variants ? 'render' : viewVariant;
+    viewVariant = variant;
     const revision = ++imageRevision;
-    const candidate = await loadArtwork(`assets/images/${stem}.webp`);
+    const candidate = await loadArtwork(variants?.[variant] || `assets/images/${stem}.webp`);
     if (revision !== imageRevision || currentProject !== project || !dialog.open || closing) return;
     if (!candidate) {
       modelStatus.hidden = false;
       showModelStatus(['Image unavailable. Try another image.','Görsel yüklenemedi. Başka bir görsel seçebilirsin.']);
       return;
     }
-    const caption = text(project.captions[index]);
-    const changing = animateChange && stem !== renderedStem && image.complete && image.naturalWidth && !image.hidden;
+    const caption = text(project.captions[index]) + (variant === 'clay' ? ' · Clay' : '');
+    const changing = animateChange && (stem !== renderedStem || variant !== renderedVariant) && image.complete && image.naturalWidth && !image.hidden;
     const outgoing = changing ? freezeFrame(image) : null;
     if (stem !== renderedStem) leaveModel();
     renderedStem = stem;
+    renderedVariant = variant;
+    root.dataset.renderVariant = variant;
+    dialog.classList.toggle('is-studio-render',variants?.presentation === 'studio');
+    image.classList.toggle('studio-artwork',variants?.presentation === 'studio');
+    image.style.setProperty('--studio-edge-y',stem === 'props-02' ? '12%' : '4%');
+    const backdrop = variants?.[variant+'Backdrop'];
+    if (backdrop) {
+      dialog.style.setProperty('--artwork-top',backdrop[0]);
+      dialog.style.setProperty('--artwork-bottom',backdrop[1]);
+    }
     root.dataset.artwork = stem;
     updateModelControls();
     updateProjectText();
@@ -658,13 +732,15 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     applyTheme(project.themes[index]);
     image.src = candidate.src;
     const focalPoints = {'environment-01':'50% 43%','2d-01':'50% 42%','2d-03':'50% 34%','materials-01':'50% 45%','character-02':'50% 38%'};
-    image.style.objectPosition = focalPoints[stem] || '50% 50%';
+    image.style.objectPosition = variants?.presentation === 'studio' ? '50% 50%' : focalPoints[stem] || '50% 50%';
     image.alt = caption;
     document.getElementById('image-caption').textContent = caption;
     document.getElementById('image-counter').textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(currentProject.images.length).padStart(2, '0')}`;
-    document.getElementById('original-image').href = `images/${stem}.jpg`;
+    document.getElementById('original-image').href = variants?.[variant === 'clay' ? 'fullClay' : 'fullRender'] || `images/${stem}.jpg`;
     image.hidden = modelMode && modelLoaded;
     image.style.opacity = '';
+    if (variants?.presentation === 'studio') prepareStudioBackdrop(candidate);
+    else { studioBackdrop = null; dialog.style.removeProperty('--artwork-background'); }
     if (changing) transitionScene(image,outgoing);
     // Load only the next image instead of eagerly loading every gallery.
     if (currentProject.images.length > 1) {
@@ -691,6 +767,8 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     dialog.setAttribute('aria-labelledby','dialog-title');
     dialog.setAttribute('aria-describedby','dialog-description');
     renderedStem = '';
+    renderedVariant = '';
+    viewVariant = 'render';
     image.hidden = true;
     image.parentElement.querySelectorAll(':scope > .scene-layer,:scope > .scene-backing').forEach(node => { effects.get(node)?.cancel(); node.remove(); });
     updateProjectText();
@@ -768,6 +846,8 @@ const PROJECTS = [{"id": "three", "category": "3d", "title": ["3D", "3D"], "tag"
     currentProject = null;
     delete root.dataset.project;
     delete root.dataset.artwork;
+    delete root.dataset.renderVariant;
+    dialog.classList.remove('is-studio-render');
     applyTheme(homeTheme());
     renderedStem = '';
     closing = false;

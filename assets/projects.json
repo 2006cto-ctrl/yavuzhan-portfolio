@@ -140,6 +140,98 @@
         "phi": 75,
         "bytes": 9072184
       }
+    },
+    "renders": {
+      "materials-01": {
+        "render": "assets/images/materials-01.webp",
+        "fullRender": "images/renders/materials-01-render.png",
+        "renderBackdrop": [
+          "#31353a",
+          "#32373b"
+        ],
+        "clay": "assets/images/materials-01-clay.webp",
+        "fullClay": "images/renders/materials-01-clay.png",
+        "clayBackdrop": [
+          "#32363b",
+          "#32373b"
+        ],
+        "presentation": "studio"
+      },
+      "props-01": {
+        "render": "assets/images/props-01.webp",
+        "fullRender": "images/renders/props-01-render.png",
+        "renderBackdrop": [
+          "#26282c",
+          "#bbbcbd"
+        ],
+        "clay": "assets/images/props-01-clay.webp",
+        "fullClay": "images/renders/props-01-clay.png",
+        "clayBackdrop": [
+          "#5d5e63",
+          "#e4e5e5"
+        ],
+        "presentation": "studio"
+      },
+      "environment-05": {
+        "render": "assets/images/environment-05.webp",
+        "fullRender": "images/renders/environment-05-render.png",
+        "renderBackdrop": [
+          "#000000",
+          "#2a1c1a"
+        ],
+        "clay": "assets/images/environment-05-clay.webp",
+        "fullClay": "images/renders/environment-05-clay.png",
+        "clayBackdrop": [
+          "#abafb0",
+          "#a9acaf"
+        ],
+        "presentation": "scene"
+      },
+      "environment-06": {
+        "render": "assets/images/environment-06.webp",
+        "fullRender": "images/renders/environment-06-render.png",
+        "renderBackdrop": [
+          "#000000",
+          "#000000"
+        ],
+        "clay": "assets/images/environment-06-clay.webp",
+        "fullClay": "images/renders/environment-06-clay.png",
+        "clayBackdrop": [
+          "#97979d",
+          "#aaabad"
+        ],
+        "presentation": "scene"
+      },
+      "environment-01": {
+        "render": "assets/images/environment-01.webp",
+        "fullRender": "images/renders/environment-01-render.png",
+        "renderBackdrop": [
+          "#191c19",
+          "#4e4729"
+        ],
+        "clay": "assets/images/environment-01-clay.webp",
+        "fullClay": "images/renders/environment-01-clay.png",
+        "clayBackdrop": [
+          "#44484c",
+          "#adafb1"
+        ],
+        "presentation": "scene"
+      },
+      "props-02": {
+        "render": "assets/images/props-02.webp",
+        "fullRender": "images/renders/props-02-render.png",
+        "renderBackdrop": [
+          "#5e6368",
+          "#a2a6a8"
+        ],
+        "clay": "assets/images/props-02-clay.webp",
+        "fullClay": "images/renders/props-02-clay.png",
+        "clayBackdrop": [
+          "#b4b6b8",
+          "#d7d8d9"
+        ],
+        "presentation": "studio"
+      }
     }
   },
   {

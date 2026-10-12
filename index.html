@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
   <link rel="preload" href="assets/images/environment-02.webp" as="image"/>
-  <link rel="stylesheet" href="assets/site.css?v=1.2.2"/>
-  <script defer src="assets/site.js?v=1.2.2"></script>
+  <link rel="stylesheet" href="assets/site.css?v=1.2.6"/>
+  <script defer src="assets/site.js?v=1.2.6"></script>
 </head>
 <body>
   <a class="skip-link" href="#main"><span lang="en" class="en">Skip to content</span><span lang="tr" class="tr">İçeriğe geç</span></a>
@@ -73,7 +73,7 @@
         <div class="collection-footer"><div class="collection-selection"><p id="collection-counter"></p><h3 id="collection-name" aria-live="polite"></h3></div><div class="collection-navigation"><button id="collection-prev" class="viewer-arrow" type="button" aria-label="Previous artwork"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><button id="collection-inspect" class="collection-inspect" type="button"><span lang="en" class="en">Explore artwork</span><span lang="tr" class="tr">Çalışmayı incele</span><span aria-hidden="true">↗</span></button><button id="collection-next" class="viewer-arrow" type="button" aria-label="Next artwork"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div><p class="collection-hint"><span lang="en" class="en">Scroll or drag to explore</span><span lang="tr" class="tr">Gezinmek için kaydır veya sürükle</span></p></div>
       </section>
       <div class="dialog-heading"><p class="dialog-kicker" id="dialog-category"></p><h2 id="dialog-title"></h2><p id="dialog-description"></p><a id="original-image" target="_blank" rel="noopener"><span id="original-label"><span lang="en" class="en">View full artwork</span><span lang="tr" class="tr">Görselin tamamını gör</span></span><span aria-hidden="true">↗</span></a><button type="button" id="view-model" class="view-model" hidden></button></div>
-      <div class="viewer-caption"><p id="image-caption" aria-live="polite"></p><div class="scene-navigation"><span id="image-counter"></span><div class="gallery-controls"><button id="image-prev" class="viewer-arrow previous" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><span class="gallery-divider" aria-hidden="true"></span><button id="image-next" class="viewer-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div></div>
+      <div class="viewer-caption"><p id="image-caption" aria-live="polite"></p><div id="render-variants" class="render-variants" role="group" aria-label="Artwork view" hidden><button type="button" data-render-variant="render" aria-pressed="true">Render</button><button type="button" data-render-variant="clay" aria-pressed="false">Clay</button></div><div class="scene-navigation"><span id="image-counter"></span><div class="gallery-controls"><button id="image-prev" class="viewer-arrow previous" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><span class="gallery-divider" aria-hidden="true"></span><button id="image-next" class="viewer-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div></div>
       <p class="viewer-hint"><span lang="en" class="en">← → Explore the collection · Esc Return</span><span lang="tr" class="tr">← → Koleksiyonda gezin · Esc Geri dön</span></p>
     </div>
   </dialog>
