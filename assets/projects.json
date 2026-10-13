@@ -27,6 +27,7 @@
       "environment-05",
       "environment-06",
       "props-01",
+      "rifle",
       "props-02",
       "props-03",
       "props-04",
@@ -64,6 +65,10 @@
       [
         "Textured weapon study",
         "Dokulu silah çalışması"
+      ],
+      [
+        "Rifle study",
+        "Rifle çalışması"
       ],
       [
         "Building kit",
@@ -106,6 +111,7 @@
       "ember",
       "mono",
       "plum",
+      "mono",
       "ember",
       "mono",
       "plum",
@@ -139,6 +145,13 @@
         "theta": 90,
         "phi": 75,
         "bytes": 9072184
+      },
+      "rifle": {
+        "src": "assets/models/rifle.glb",
+        "theta": 80,
+        "phi": 82,
+        "bytes": 11658960,
+        "exposure": 0.65
       }
     },
     "renders": {
@@ -231,6 +244,22 @@
           "#d7d8d9"
         ],
         "presentation": "studio"
+      },
+      "rifle": {
+        "presentation": "studio",
+        "transparent": true,
+        "render": "assets/images/rifle.webp",
+        "fullRender": "images/renders/rifle-render.png",
+        "renderBackdrop": [
+          "#22292e",
+          "#22292e"
+        ],
+        "clay": "assets/images/rifle-clay.webp",
+        "fullClay": "images/renders/rifle-clay.png",
+        "clayBackdrop": [
+          "#22292e",
+          "#22292e"
+        ]
       }
     }
   },

@@ -175,6 +175,8 @@ html[data-artwork="2d-03"] .dialog-brand .brand-mark {border-radius:50%;backgrou
 .render-variants button:not([aria-pressed=true]):hover {background:var(--surface)}
 .is-studio-render:not(.is-model) .viewer-stage {background:var(--artwork-background,linear-gradient(180deg,var(--artwork-top),var(--artwork-bottom)))}
 .viewer-stage img.studio-artwork {inset:auto;left:64%;top:50%;width:auto;height:auto;max-width:68%;max-height:76%;transform:translate(-50%,-50%);object-fit:contain;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent),linear-gradient(0deg,transparent,#000 var(--studio-edge-y,4%),#000 calc(100% - var(--studio-edge-y,4%)),transparent);mask-composite:intersect}
+.is-transparent-render:not(.is-model) .viewer-stage {background:var(--bg)}
+.is-transparent-render .viewer-stage img.studio-artwork {mask-image:none}
 @media(max-width:767px) {
   .render-variants button {min-width:60px;padding-inline:8px}
   .viewer-caption:has(.render-variants:not([hidden])) .scene-navigation {width:auto;gap:8px}
